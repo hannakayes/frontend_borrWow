@@ -23,7 +23,7 @@ function LoginPage() {
     setError(null);
 
     try {
-      // Check if the user exists
+    
       const userResponse = await fetch(`http://localhost:5005/api/users?username=${encodeURIComponent(email)}`);
       
       if (!userResponse.ok) {
@@ -33,11 +33,10 @@ function LoginPage() {
       const userData = await userResponse.json();
 
       if (userData.length === 0) {
-        // If the user does not exist, throw an error
+       
         throw new Error("User does not exist.");
       }
-
-      // Proceed with login if user exists
+      
       const loginResponse = await fetch("http://localhost:5005/auth/login", {
         method: "POST",
         headers: {
@@ -54,7 +53,7 @@ function LoginPage() {
       const data = await loginResponse.json();
       console.log("Login successful:", data);
 
-      // Store token and redirect
+      
       localStorage.setItem('token', data.token);
       navigate("/");
     } catch (err) {

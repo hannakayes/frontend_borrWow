@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   TextInput,
   PasswordInput,
@@ -8,6 +8,7 @@ import {
   Container,
 } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
+import { SessionContext } from "../contexts/SessionContext";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -15,17 +16,20 @@ function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+  const { setToken } = useContext(SessionContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     setLoading(true);
     setError(null);
 
     try {
-    
-      const userResponse = await fetch(`http://localhost:5005/api/users?username=${encodeURIComponent(email)}`);
-      
+      // Check if the user exists
+      const userResponse = await fetch(
+        `http://localhost:5005/api/users?username=${encodeURIComponent(email)}`
+      );
+
       if (!userResponse.ok) {
         throw new Error("Failed to fetch user information.");
       }
@@ -33,10 +37,11 @@ function LoginPage() {
       const userData = await userResponse.json();
 
       if (userData.length === 0) {
-       
+        // If the user does not exist, throw an error
         throw new Error("User does not exist.");
       }
-      
+
+      // Proceed with login if user exists
       const loginResponse = await fetch("http://localhost:5005/auth/login", {
         method: "POST",
         headers: {
@@ -53,9 +58,14 @@ function LoginPage() {
       const data = await loginResponse.json();
       console.log("Login successful:", data);
 
-      
-      localStorage.setItem('token', data.token);
-      navigate("/");
+      // Store token and update context
+      localStorage.setItem("authToken", data.token);
+      setToken(data.token); // Update context token
+
+      // Delay navigation to ensure context updates
+      setTimeout(() => {
+        navigate("/userdash");
+      }, 100);
     } catch (err) {
       setError(err.message || "Login failed. Please try again.");
     } finally {
@@ -68,7 +78,7 @@ function LoginPage() {
       <Title align="center">Login</Title>
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
         <form onSubmit={handleSubmit}>
-          {error && <p style={{ color: 'red' }}>{error}</p>}
+          {error && <p style={{ color: "red" }}>{error}</p>}
           <TextInput
             label="Email"
             placeholder="you@example.com"

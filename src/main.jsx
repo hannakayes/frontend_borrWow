@@ -12,8 +12,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <MantineProvider theme={theme}>
       <BrowserRouter>
-        {" "}
-        {/* Ensure this is only used here */}
         <SessionContextProvider>
           <App />
         </SessionContextProvider>

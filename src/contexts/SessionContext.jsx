@@ -3,7 +3,7 @@ import { createContext, useEffect, useState } from "react";
 export const SessionContext = createContext();
 
 const SessionContextProvider = ({ children }) => {
-  const [token, setToken] = useState();
+  const [token, setToken] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -52,30 +52,9 @@ const SessionContextProvider = ({ children }) => {
     }
   }, [token]);
 
-  const fetchWithToken = async (endpoint, method = "GET", payload) => {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api${endpoint}`,
-        {
-          method,
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(payload),
-        }
-      );
-      if (response.ok) {
-        return response.json();
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const handleLogout = () => {
     removeToken();
-    setToken();
+    setToken(null);
     setIsAuthenticated(false);
   };
 
@@ -86,7 +65,6 @@ const SessionContextProvider = ({ children }) => {
         isLoading,
         token,
         setToken,
-        fetchWithToken,
         handleLogout,
       }}
     >

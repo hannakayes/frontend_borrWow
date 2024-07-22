@@ -24,8 +24,8 @@ function SignUpPage() {
     setError(null);
 
     try {
-      // API'ınıza POST isteği gönderin
-      const response = await fetch("http://localhost:5005/api/signup", { // Replace with your actual sign-up URL
+    
+      const response = await fetch("http://localhost:5005/auth/signup", { 
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,7 +37,7 @@ function SignUpPage() {
         throw new Error("Sign up failed.");
       }
 
-      // Redirect upon successful sign up
+  
       navigate("/login");
     } catch (err) {
       setError(err.message);

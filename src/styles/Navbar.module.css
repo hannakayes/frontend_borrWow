@@ -1,25 +1,30 @@
 .navbar {
   display: flex;
-  justify-content: space-between; /* Distribute space between items */
-  align-items: center; /* Align items vertically */
-  padding: 10px 20px; /* Padding inside the navbar */
-  width: 100%; /* Full width of the browser window */
+  justify-content: space-between;
+  align-items: center; 
+  padding: 10px 20px; 
+  width: 100%; 
   border-bottom: 1px solid #ddd;
-  box-sizing: border-box; /* Include padding and border in the element’s total width and height */
+  box-sizing: border-box; 
 }
 
 .navLink {
   text-decoration: none;
-  display: inline-block; /* Ensure the image behaves as a block element */
+  display: inline-block; 
 }
 
 .navImage {
   display: block;
-  width: 50px; /* Adjust size as needed */
+  width: 50px; 
   height: auto;
-  transition: opacity 0.3s ease; /* Smooth transition for hover effect */
+  transition: opacity 0.3s ease; 
 }
 
+.buttonContainer {
+  display: flex; 
+  gap: 10px;
+  margin-left: auto;
+}
 .button {
-  /* Add additional styles for the button if needed */
+ 
 }

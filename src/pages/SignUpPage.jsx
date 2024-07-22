@@ -9,7 +9,8 @@ import {
 } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
 
-function LoginPage() {
+function SignUpPage() {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -23,42 +24,23 @@ function LoginPage() {
     setError(null);
 
     try {
-      // Check if the user exists
-      const userResponse = await fetch(`http://localhost:5005/api/users?username=${encodeURIComponent(email)}`);
-      
-      if (!userResponse.ok) {
-        throw new Error("Failed to fetch user information.");
-      }
-
-      const userData = await userResponse.json();
-
-      if (userData.length === 0) {
-        // If the user does not exist, throw an error
-        throw new Error("User does not exist.");
-      }
-
-      // Proceed with login if user exists
-      const loginResponse = await fetch("http://localhost:5005/auth/login", {
+      // API'ınıza POST isteği gönderin
+      const response = await fetch("http://localhost:5005/api/signup", { // Replace with your actual sign-up URL
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username: email, password }),
+        body: JSON.stringify({ username, email, password }),
       });
 
-      if (!loginResponse.ok) {
-        const errorData = await loginResponse.json();
-        throw new Error(errorData.message || "Login failed.");
+      if (!response.ok) {
+        throw new Error("Sign up failed.");
       }
 
-      const data = await loginResponse.json();
-      console.log("Login successful:", data);
-
-      // Store token and redirect
-      localStorage.setItem('token', data.token);
-      navigate("/");
+      // Redirect upon successful sign up
+      navigate("/login");
     } catch (err) {
-      setError(err.message || "Login failed. Please try again.");
+      setError(err.message);
     } finally {
       setLoading(false);
     }
@@ -66,16 +48,24 @@ function LoginPage() {
 
   return (
     <Container size={420} my={40}>
-      <Title align="center">Login</Title>
+      <Title align="center">Sign Up</Title>
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
         <form onSubmit={handleSubmit}>
           {error && <p style={{ color: 'red' }}>{error}</p>}
+          <TextInput
+            label="Username"
+            placeholder="Your username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
           <TextInput
             label="Email"
             placeholder="you@example.com"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            mt="md"
           />
           <PasswordInput
             label="Password"
@@ -86,7 +76,7 @@ function LoginPage() {
             mt="md"
           />
           <Button fullWidth mt="xl" type="submit" disabled={loading}>
-            {loading ? "Logging in..." : "Login"}
+            {loading ? "Signing up..." : "Sign Up"}
           </Button>
         </form>
       </Paper>
@@ -94,4 +84,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default SignUpPage;

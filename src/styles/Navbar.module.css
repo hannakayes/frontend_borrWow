@@ -1,0 +1,25 @@
+.navbar {
+  display: flex;
+  justify-content: space-between; /* Distribute space between items */
+  align-items: center; /* Align items vertically */
+  padding: 10px 20px; /* Padding inside the navbar */
+  width: 100%; /* Full width of the browser window */
+  border-bottom: 1px solid #ddd;
+  box-sizing: border-box; /* Include padding and border in the element’s total width and height */
+}
+
+.navLink {
+  text-decoration: none;
+  display: inline-block; /* Ensure the image behaves as a block element */
+}
+
+.navImage {
+  display: block;
+  width: 50px; /* Adjust size as needed */
+  height: auto;
+  transition: opacity 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.button {
+  /* Add additional styles for the button if needed */
+}

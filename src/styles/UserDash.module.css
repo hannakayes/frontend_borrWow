@@ -1,0 +1,37 @@
+.container {
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.center {
+  text-align: center;
+  flex-direction: column;
+}
+
+.logo {
+  width: 100px; /* Adjust size as needed */
+  height: auto;
+  margin-bottom: 20px; /* Adjust spacing as needed */
+}
+
+.loginLink {
+  text-decoration: none; /* Remove default link styles */
+}
+
+.activity {
+  margin-top: 40px;
+  border: 2px gray solid;
+  border-radius: 20px;
+  background-color: rgb(114, 134, 222);
+  color: white; /* Added for better visibility */
+  text-align: center; /* Center the text */
+  padding: 20px; /* Add padding for better appearance */
+  cursor: pointer; /* Change cursor to pointer to indicate clickable area */
+}
+
+.link {
+  text-decoration: none; /* Remove default link styles */
+  display: block; /* Make the link fill the parent div */
+}

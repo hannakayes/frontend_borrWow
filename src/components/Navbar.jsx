@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button } from "@mantine/core";
 import { Link } from "react-router-dom";
-import styles from "../styles/Navbar.module.css"; 
+import styles from "../styles/Navbar.module.css";
 import handshakeBlue from "../assets/images/handshake_blue.png";
 import handshakeBlack from "../assets/images/handshake_black.png";
+import { SessionContext } from "../contexts/SessionContext";
 
 function Navbar() {
+  const { isAuthenticated, handleLogout } = useContext(SessionContext);
+  // if logged in remove login and signup and add dashboard & logout
+
   return (
     <div className={styles.navbar}>
-      
       <Link to="/" className={styles.navLink}>
         <img
           src={handshakeBlue}
@@ -19,24 +22,44 @@ function Navbar() {
         />
       </Link>
       <div className={styles.buttonContainer}>
-     
-        <Button
-          component={Link}
-          to="/login"
-          variant="outline"
-          className={styles.button}
-        >
-          Log In
-        </Button>
-        
-        <Button
-          component={Link}
-          to="/signup"
-          variant="filled"
-          className={styles.button}
-        >
-          Sign Up
-        </Button>
+        {!isAuthenticated ? (
+          <>
+            <Button
+              component={Link}
+              to="/login"
+              variant="outline"
+              className={styles.button}
+            >
+              Log In
+            </Button>
+            <Button
+              component={Link}
+              to="/signup"
+              variant="filled"
+              className={styles.button}
+            >
+              Sign Up
+            </Button>
+          </>
+        ) : (
+          <>
+            <Button
+              component={Link}
+              to="/userdash"
+              variant="outline"
+              className={styles.button}
+            >
+              Dashboard
+            </Button>
+            <Button
+              onClick={handleLogout}
+              variant="filled"
+              className={styles.button}
+            >
+              Log Out
+            </Button>
+          </>
+        )}
       </div>
     </div>
   );

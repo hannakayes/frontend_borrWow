@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const SessionContext = createContext();
 
@@ -6,7 +7,7 @@ const SessionContextProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-
+  const navigate = useNavigate();
   const removeToken = () => {
     window.localStorage.removeItem("authToken");
   };
@@ -56,6 +57,7 @@ const SessionContextProvider = ({ children }) => {
     removeToken();
     setToken(null);
     setIsAuthenticated(false);
+    navigate("/");
   };
 
   return (

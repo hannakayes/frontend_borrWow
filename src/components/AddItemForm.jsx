@@ -2,8 +2,10 @@ import React from "react";
 import { Select, Button, Checkbox, Group, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import styles from "../styles/AddItemForm.module.css";
+import { useNavigate } from "react-router-dom";
 
 function AddItemForm() {
+  const navigate = useNavigate();
   const form = useForm({
     mode: "uncontrolled",
     initialValues: {
@@ -45,6 +47,7 @@ function AddItemForm() {
 
       const data = await response.json();
       console.log("BorrWow created:", data);
+      navigate("/userdash");
     } catch (error) {
       console.error("Error:", error);
     }

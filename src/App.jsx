@@ -8,6 +8,9 @@ import SignUpPage from "./pages/SignUpPage";
 import UserDash from "./pages/UserDash";
 import PrivateRoute from "./components/PrivateRoute";
 import CreateNewItemPage from "./pages/CreateNewItemPage";
+import ItemListPage from "./pages/ItemListPage";
+import ItemDetailsPage from "./pages/ItemDetailsPage";
+
 function App() {
   return (
     <>
@@ -17,8 +20,6 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
-          {/*           <Route path="/userdash" element={<UserDash />} />
-           */}{" "}
           <Route
             path="/userdash"
             element={
@@ -31,10 +32,12 @@ function App() {
             path="/newitem"
             element={
               <PrivateRoute>
-                <CreateNewItemPage />{" "}
+                <CreateNewItemPage />
               </PrivateRoute>
             }
           />
+          <Route path="/items" element={<ItemListPage />} />
+          <Route path="/items/:id" element={<ItemDetailsPage />} />
         </Routes>
       </main>
       <Footer />

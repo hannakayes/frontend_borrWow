@@ -8,6 +8,7 @@ import SignUpPage from "./pages/SignUpPage";
 import UserDash from "./pages/UserDash";
 import PrivateRoute from "./components/PrivateRoute";
 import AddItemPage from "./pages/AddItemPage";
+import EditBorrWow from "./components/EditBorrWow";
 
 function App() {
   return (
@@ -33,6 +34,14 @@ function App() {
             element={
               <PrivateRoute>
                 <AddItemPage />{" "}
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/edit/:id"
+            element={
+              <PrivateRoute>
+                <EditBorrWow />
               </PrivateRoute>
             }
           />

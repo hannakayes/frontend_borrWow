@@ -28,6 +28,7 @@ function Navbar() {
               component={Link}
               to="/login"
               variant="outline"
+              color="#224eff"
               className={styles.button}
             >
               Log In
@@ -36,6 +37,7 @@ function Navbar() {
               component={Link}
               to="/signup"
               variant="filled"
+              color="#224eff"
               className={styles.button}
             >
               Sign Up
@@ -47,6 +49,7 @@ function Navbar() {
               component={Link}
               to="/userdash"
               variant="outline"
+              color="#224eff"
               className={styles.button}
             >
               Dashboard
@@ -54,6 +57,7 @@ function Navbar() {
             <Button
               onClick={handleLogout}
               variant="filled"
+              color="#224eff"
               className={styles.button}
             >
               Log Out

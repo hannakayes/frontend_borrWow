@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import SignUpPage from "./pages/SignUpPage";
 import UserDash from "./pages/UserDash";
 import PrivateRoute from "./components/PrivateRoute";
+import CreateNewItemPage from "./pages/CreateNewItemPage";
 function App() {
   return (
     <>
@@ -23,6 +24,14 @@ function App() {
             element={
               <PrivateRoute>
                 <UserDash />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/newitem"
+            element={
+              <PrivateRoute>
+                <CreateNewItemPage />{" "}
               </PrivateRoute>
             }
           />

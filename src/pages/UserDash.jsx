@@ -1,5 +1,12 @@
-import React, { useState } from "react";
-import { SimpleGrid, Container, Title, Text, Center } from "@mantine/core";
+import React from "react";
+import {
+  SimpleGrid,
+  Container,
+  Title,
+  Text,
+  Center,
+  Button,
+} from "@mantine/core";
 import { Link } from "react-router-dom";
 import styles from "../styles/UserDash.module.css"; // Import CSS module
 
@@ -7,41 +14,62 @@ function UserDash() {
   return (
     <Container className={styles.container}>
       <Center className={styles.center}>
-        {/* Image above the title */}
-
         <div>
           <Title align="center">Your User Dashboard</Title>
-          <Text align="center" mt="md">
-            Here there'll be links to all different things you can do on our
-            page
+          <Text align="center" mt="md" className={styles.textWithSpacing}>
+            Access all your activities and manage your borrWow interactions.
           </Text>
-          <div
-            style={{
-              resize: "horizontal",
-              overflow: "hidden",
-              maxWidth: "100%",
-            }}
-          >
+          <div className={styles.gridContainer}>
             <SimpleGrid
               type="container"
               cols={{ base: 1, "300px": 2, "500px": 5 }}
               spacing={{ base: 10, "300px": "xl" }}
             >
-              <Link to="/newitem" className={styles.link}>
-                <div className={styles.activity}>Create new borrWow</div>
-              </Link>
-              <Link to="/manage-things" className={styles.link}>
-                <div className={styles.activity}>Manage your borrWows</div>
-              </Link>
-              <Link to="/activity-history" className={styles.link}>
-                <div className={styles.activity}>Activity History</div>
-              </Link>
-              <Link to="/edit-profile" className={styles.link}>
-                <div className={styles.activity}>Edit Profile</div>
-              </Link>
-              <Link to="/logout" className={styles.link}>
-                <div className={styles.activity}>Logout</div>
-              </Link>
+              <Button
+                component={Link}
+                to="/newitem"
+                variant="outline"
+                color="#224eff"
+                className={styles.button}
+              >
+                Create new borrWow
+              </Button>
+              <Button
+                component={Link}
+                to="/manage-things"
+                variant="outline"
+                color="#224eff"
+                className={styles.button}
+              >
+                Manage your borrWows
+              </Button>
+              <Button
+                component={Link}
+                to="/activity-history"
+                variant="outline"
+                color="#224eff"
+                className={styles.button}
+              >
+                Activity History
+              </Button>
+              <Button
+                component={Link}
+                to="/edit-profile"
+                variant="outline"
+                color="#224eff"
+                className={styles.button}
+              >
+                Edit Profile
+              </Button>
+              <Button
+                component={Link}
+                to="/logout"
+                variant="outline"
+                color="#224eff"
+                className={styles.button}
+              >
+                Logout
+              </Button>
             </SimpleGrid>
           </div>
           <Center mt="lg">

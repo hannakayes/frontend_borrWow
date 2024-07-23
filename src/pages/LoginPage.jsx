@@ -94,7 +94,13 @@ function LoginPage() {
             required
             mt="md"
           />
-          <Button fullWidth mt="xl" type="submit" disabled={loading}>
+          <Button
+            fullWidth
+            mt="xl"
+            type="submit"
+            color="#224eff"
+            disabled={loading}
+          >
             {loading ? "Logging in..." : "Login"}
           </Button>
         </form>

@@ -1,0 +1,129 @@
+.card {
+  border: 1px solid #e0e0e0; /* Light gray border */
+  border-radius: 12px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  overflow: hidden; /* Ensure corners are rounded for images too */
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  background-color: #ffffff; /* White background */
+  max-width: 300px; /* Maximum width for cards */
+  margin: 16px; /* Space around the card */
+  position: relative; /* Position relative for category label positioning */
+}
+
+.card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
+  transform: translateY(-4px); /* Slight lift effect on hover */
+}
+
+.image {
+  width: 100%;
+  height: 200px; /* Fixed height for images */
+  object-fit: cover; /* Ensures image covers the area without distortion */
+}
+
+.details {
+  padding: 16px; /* Space inside the card */
+}
+
+.itemName {
+  font-size: 1.25em; /* Larger font size for item name */
+  font-weight: bold; /* Bold item name */
+  margin: 0; /* Remove default margin */
+  color: #333; /* Dark text color */
+}
+
+.description {
+  font-size: 0.9em; /* Slightly smaller font for description */
+  color: #666; /* Gray text color */
+  margin: 8px 0; /* Margin for spacing */
+  overflow: hidden; /* Hide overflowing text */
+  text-overflow: ellipsis; /* Show ellipsis for overflowed text */
+  white-space: nowrap; /* Prevent text wrapping */
+}
+
+.categoryLabel {
+  position: absolute; /* Absolute positioning for label */
+  top: 0; /* Top edge of the card */
+  left: 0; /* Left edge of the card */
+  padding: 8px 12px; /* Padding around the label */
+  font-weight: bold; /* Bold text */
+  color: #ffffff; /* White text color */
+  border-bottom-right-radius: 12px; /* Rounded bottom-right corner */
+  z-index: 1; /* Ensure label is above other content */
+}
+
+.categoryLabel.electronics {
+  background-color: #ff8c8c;
+} /* Light Pastel Red */
+.categoryLabel.beauty {
+  background-color: #ff8ce6;
+} /* Light Pastel Pink */
+.categoryLabel.music {
+  background-color: #9ca3ff;
+} /* Light Pastel Blue */
+.categoryLabel.tools {
+  background-color: #9aff9a;
+} /* Light Pastel Green */
+.categoryLabel.clothes {
+  background-color: #ffff99;
+} /* Light Pastel Yellow */
+.categoryLabel.rooms {
+  background-color: #ffad8a;
+} /* Light Pastel Orange */
+.categoryLabel.outdoor {
+  background-color: #a2f2f2;
+} /* Light Pastel Teal */
+.categoryLabel.services {
+  background-color: #c2b9f5;
+} /* Light Pastel Purple */
+
+.status {
+  font-size: 0.9em;
+  font-weight: bold;
+  padding: 6px 12px;
+  border-radius: 4px;
+  color: #ffffff;
+}
+
+.status.available {
+  background-color: #4caf50;
+} /* Green */
+.status.notAvailable {
+  background-color: #f44336;
+} /* Red */
+.status.hidden {
+  background-color: #9e9e9e;
+} /* Grey */
+
+.detailsLink {
+  display: inline-block;
+  padding: 10px 16px; /* Padding around the link */
+  background-color: #224eff; /* Primary color */
+  color: #ffffff; /* White text color */
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 4px; /* Rounded corners */
+  margin-top: 12px; /* Space above the link */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.detailsLink:hover {
+  background-color: #1a3bcb; /* Darker shade of the primary color on hover */
+  transform: translateY(-2px); /* Slight lift effect on hover */
+}
+
+@media (max-width: 768px) {
+  .card {
+    max-width: 100%; /* Full width on smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .image {
+    height: 150px; /* Smaller height for images on very small screens */
+  }
+
+  .card {
+    margin: 8px; /* Reduce margin on very small screens */
+  }
+}

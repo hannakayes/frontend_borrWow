@@ -8,7 +8,6 @@ import { SessionContext } from "../contexts/SessionContext";
 
 function Navbar() {
   const { isAuthenticated, handleLogout } = useContext(SessionContext);
-  // if logged in remove login and signup and add dashboard & logout
 
   return (
     <div className={styles.navbar}>
@@ -22,6 +21,9 @@ function Navbar() {
         />
       </Link>
       <div className={styles.buttonContainer}>
+        <Link to="/items" className={styles.borrowLink}>
+          BORROW NOW!
+        </Link>
         {!isAuthenticated ? (
           <>
             <Button

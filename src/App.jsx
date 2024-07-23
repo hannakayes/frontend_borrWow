@@ -10,6 +10,8 @@ import PrivateRoute from "./components/PrivateRoute";
 import CreateNewItemPage from "./pages/CreateNewItemPage";
 import ItemListPage from "./pages/ItemListPage";
 import ItemDetailsPage from "./pages/ItemDetailsPage";
+import AddItemPage from "./pages/AddItemPage";
+import EditBorrWow from "./components/EditBorrWow";
 
 function App() {
   return (
@@ -33,6 +35,15 @@ function App() {
             element={
               <PrivateRoute>
                 <CreateNewItemPage />
+                <AddItemPage />{" "}
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/edit/:id"
+            element={
+              <PrivateRoute>
+                <EditBorrWow />
               </PrivateRoute>
             }
           />

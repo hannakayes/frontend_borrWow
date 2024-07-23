@@ -10,8 +10,10 @@ function EditBorrWow() {
   const { id } = useParams();
   const { token } = useContext(SessionContext);
 
+  // State to hold the fetched item data
+  const [itemData, setItemData] = useState(null);
+
   const form = useForm({
-    mode: "uncontrolled",
     initialValues: {
       itemname: "",
       description: "",
@@ -42,13 +44,14 @@ function EditBorrWow() {
         }
 
         const data = await response.json();
-        form.setValues({
-          itemname: data.itemname,
-          description: data.description,
-          category: data.category,
-          availability: data.availability,
-          termsOfService: data.termsOfService,
-        });
+        setItemData(data); // Update state with fetched data
+        /*      form.setValues({
+          itemname: data.itemname || "",
+          description: data.description || "",
+          category: data.category || "",
+          availability: data.availability || "",
+          termsOfService: data.termsOfService || false,
+        }); */
       } catch (error) {
         console.error("Error fetching item data:", error);
       }
@@ -89,22 +92,20 @@ function EditBorrWow() {
       <TextInput
         withAsterisk
         label="Item name"
-        placeholder="What do you want to BorrWow out?"
-        key={form.key("itemname")}
+        placeholder={itemData ? itemData.itemname : "Loading..."}
         {...form.getInputProps("itemname")}
       />
       <TextInput
         withAsterisk
         label="Description"
-        placeholder="How would you describe what you could BorrWow out?"
-        key={form.key("description")}
+        placeholder={itemData ? itemData.description : "Loading..."}
         {...form.getInputProps("description")}
       />
 
       <Select
         label="Category"
         withAsterisk
-        placeholder="Select the category"
+        placeholder={itemData ? itemData.category : "Loading..."}
         data={[
           { value: "electronics", label: "electronics" },
           { value: "beauty", label: "beauty" },
@@ -119,7 +120,7 @@ function EditBorrWow() {
       <Select
         label="Availability"
         withAsterisk
-        placeholder="Do you want people to see this BorrWow?"
+        placeholder={itemData ? itemData.availability : "Loading..."}
         data={[
           { value: "Available", label: "Available" },
           { value: "Hidden", label: "Hidden" },
@@ -130,7 +131,6 @@ function EditBorrWow() {
       <Checkbox
         mt="md"
         label="Agree to terms"
-        key={form.key("termsOfService")}
         {...form.getInputProps("termsOfService", { type: "checkbox" })}
       />
 

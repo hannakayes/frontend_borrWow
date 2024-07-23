@@ -27,7 +27,7 @@ function UserDash() {
               cols={{ base: 1, "300px": 2, "500px": 5 }}
               spacing={{ base: 10, "300px": "xl" }}
             >
-              <Link to="/list-new-thing" className={styles.link}>
+              <Link to="/newitem" className={styles.link}>
                 <div className={styles.activity}>Create new borrWow</div>
               </Link>
               <Link to="/manage-things" className={styles.link}>

@@ -35,3 +35,11 @@
   text-decoration: none; /* Remove default link styles */
   display: block; /* Make the link fill the parent div */
 }
+
+.textWithSpacing {
+  margin-bottom: 20px; /* Adjust the spacing as needed */
+}
+
+.gridContainer {
+  margin-top: 20px; /* Adjust the spacing as needed */
+}

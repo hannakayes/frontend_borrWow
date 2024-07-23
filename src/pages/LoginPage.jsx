@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   TextInput,
   PasswordInput,
@@ -16,39 +16,32 @@ function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const { setToken } = useContext(SessionContext);
+  const { token, setToken, isLoading, isAuthenticated } =
+    useContext(SessionContext);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/userdash");
+      console.log("this is the authtoken: " + token);
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setLoading(true);
     setError(null);
 
     try {
-      // Check if the user exists
-      const userResponse = await fetch(
-        `http://localhost:5005/api/users?username=${encodeURIComponent(email)}`
+      const loginResponse = await fetch(
+        `${import.meta.env.VITE_API_URL}/auth/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username: email, password }),
+        }
       );
-
-      if (!userResponse.ok) {
-        throw new Error("Failed to fetch user information.");
-      }
-
-      const userData = await userResponse.json();
-
-      if (userData.length === 0) {
-        // If the user does not exist, throw an error
-        throw new Error("User does not exist.");
-      }
-
-      // Proceed with login if user exists
-      const loginResponse = await fetch("http://localhost:5005/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username: email, password }),
-      });
 
       if (!loginResponse.ok) {
         const errorData = await loginResponse.json();
@@ -56,22 +49,18 @@ function LoginPage() {
       }
 
       const data = await loginResponse.json();
-      console.log("Login successful:", data);
-
-      // Store token and update context
       localStorage.setItem("authToken", data.token);
       setToken(data.token); // Update context token
-
-      // Delay navigation to ensure context updates
-      setTimeout(() => {
-        navigate("/userdash");
-      }, 100);
     } catch (err) {
       setError(err.message || "Login failed. Please try again.");
     } finally {
       setLoading(false);
     }
   };
+
+  if (isLoading) {
+    return <div>Logging you in</div>;
+  }
 
   return (
     <Container size={420} my={40}>

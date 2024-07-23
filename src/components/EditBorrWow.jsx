@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Select, Button, Checkbox, Group, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { useNavigate } from "react-router-dom";
 import styles from "../styles/AddItemForm.module.css";
+import { useNavigate, useParams } from "react-router-dom";
+import { SessionContext } from "../contexts/SessionContext";
 
-function AddItemForm() {
+function EditBorrWow() {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const { token } = useContext(SessionContext);
 
-  // Initialize form with default values for adding a new item
   const form = useForm({
+    mode: "uncontrolled",
     initialValues: {
       itemname: "",
       description: "",
@@ -24,16 +27,41 @@ function AddItemForm() {
     },
   });
 
+  // Fetch the item data when component mounts
+  useEffect(() => {
+    const fetchItemData = async () => {
+      try {
+        const response = await fetch(`http://localhost:5005/api/items/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to get item info");
+        }
+
+        const data = await response.json();
+        form.setValues({
+          itemname: data.itemname,
+          description: data.description,
+          category: data.category,
+          availability: data.availability,
+          termsOfService: data.termsOfService,
+        });
+      } catch (error) {
+        console.error("Error fetching item data:", error);
+      }
+    };
+
+    fetchItemData();
+  }, [id, token, form]);
+
+  // Handle form submission
   const handleSubmit = async (values) => {
     try {
-      const token = localStorage.getItem("authToken");
-
-      if (!token) {
-        throw new Error("No authentication token found");
-      }
-
-      const response = await fetch("http://localhost:5005/api/items", {
-        method: "POST",
+      const response = await fetch(`http://localhost:5005/api/items/${id}`, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -42,14 +70,14 @@ function AddItemForm() {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to submit item");
+        throw new Error("Failed to update item");
       }
 
       const data = await response.json();
-      console.log("Item created:", data);
+      console.log("Item updated:", data);
       navigate("/userdash");
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error updating item:", error);
     }
   };
 
@@ -62,12 +90,14 @@ function AddItemForm() {
         withAsterisk
         label="Item name"
         placeholder="What do you want to BorrWow out?"
+        key={form.key("itemname")}
         {...form.getInputProps("itemname")}
       />
       <TextInput
         withAsterisk
         label="Description"
         placeholder="How would you describe what you could BorrWow out?"
+        key={form.key("description")}
         {...form.getInputProps("description")}
       />
 
@@ -76,13 +106,12 @@ function AddItemForm() {
         withAsterisk
         placeholder="Select the category"
         data={[
-          { value: "electronics", label: "Electronics" },
-          { value: "beauty", label: "Beauty" },
-          { value: "music", label: "Music" },
-          { value: "tools", label: "Tools" },
-          { value: "clothes", label: "Clothes" },
-          { value: "rooms", label: "Rooms" },
-          { value: "outdoor area", label: "Outdoor Area" },
+          { value: "electronics", label: "electronics" },
+          { value: "beauty", label: "beauty" },
+          { value: "music", label: "music" },
+          { value: "clothes", label: "clothes" },
+          { value: "rooms", label: "rooms" },
+          { value: "outdoor area", label: "outdoor area" },
         ]}
         {...form.getInputProps("category")}
       />
@@ -93,7 +122,6 @@ function AddItemForm() {
         placeholder="Do you want people to see this BorrWow?"
         data={[
           { value: "Available", label: "Available" },
-          { value: "Not Available", label: "Not Available" },
           { value: "Hidden", label: "Hidden" },
         ]}
         {...form.getInputProps("availability")}
@@ -102,6 +130,7 @@ function AddItemForm() {
       <Checkbox
         mt="md"
         label="Agree to terms"
+        key={form.key("termsOfService")}
         {...form.getInputProps("termsOfService", { type: "checkbox" })}
       />
 
@@ -112,4 +141,4 @@ function AddItemForm() {
   );
 }
 
-export default AddItemForm;
+export default EditBorrWow;

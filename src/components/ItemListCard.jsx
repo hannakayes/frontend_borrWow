@@ -31,9 +31,7 @@ const ItemListCard = ({ item }) => {
         <h2 className={styles.itemName}>{itemname}</h2>
         <p className={styles.description}>{truncatedDescription}</p>
         <p className={styles.location}>Location: {location}</p>
-        <p className={`${styles.status} ${styles[availability.toLowerCase()]}`}>
-          {availability}
-        </p>
+        <p className={styles.status}>{availability}</p>
         <Link to={`/items/${_id}`} className={styles.detailsLink}>
           View Details
         </Link>

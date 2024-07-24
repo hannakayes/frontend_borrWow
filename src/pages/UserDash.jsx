@@ -36,12 +36,12 @@ function UserDash() {
               </Button>
               <Button
                 component={Link}
-                to="/manage-things"
+                to="/items"
                 variant="outline"
                 color="#224eff"
                 className={styles.button}
               >
-                Manage your borrWows
+                See all BorrWows{" "}
               </Button>
               <Button
                 component={Link}

@@ -13,6 +13,7 @@ import ItemDetailsPage from "./pages/ItemDetailsPage";
 import AddItemPage from "./pages/AddItemPage";
 import EditBorrWow from "./components/EditBorrWow";
 import BRequestsBYUserPage from "./pages/BRequestsBYUserPage";
+import FavoritesPage from "./pages/FavoritesPage"; // Import your FavoritesPage component
 
 function App() {
   return (
@@ -36,7 +37,7 @@ function App() {
             element={
               <PrivateRoute>
                 <CreateNewItemPage />
-                <AddItemPage />{" "}
+                <AddItemPage />
               </PrivateRoute>
             }
           />
@@ -47,12 +48,20 @@ function App() {
                 <EditBorrWow />
               </PrivateRoute>
             }
-          />{" "}
+          />
           <Route
             path="/requestedByYOU"
             element={
               <PrivateRoute>
                 <BRequestsBYUserPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/favorites"
+            element={
+              <PrivateRoute>
+                <FavoritesPage />
               </PrivateRoute>
             }
           />

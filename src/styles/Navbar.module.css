@@ -1,3 +1,5 @@
+/* Navbar.module.css */
+
 .navbar {
   display: flex;
   align-items: center; /* Align items vertically in the center */
@@ -20,26 +22,61 @@
   transition: opacity 0.3s ease;
 }
 
-.borrowLink {
-  text-decoration: none;
-  color: #224eff; /* Default color of the link text */
-  font-weight: bold; /* Make text bold */
-  text-transform: uppercase; /* Convert text to uppercase */
-  margin-right: 20px; /* Space between the link and the buttons */
-  font-size: 16px; /* Adjust font size as needed */
-  position: absolute; /* Use absolute positioning */
-  left: 100px; /* Adjust the left positioning to align with the home button */
-  top: 50%; /* Center vertically */
-  transform: translateY(-50%); /* Adjust for vertical centering */
-  transition: color 0.3s ease; /* Smooth color transition */
+/* Container for left-side links */
+.leftSideLinks {
+  display: flex;
+  align-items: center; /* Center items vertically */
+  margin-right: auto; /* Pushes the button container to the right */
 }
 
-.borrowLink:hover {
+.borrowLink,
+.favoritesLink {
+  text-decoration: none;
+  color: #224eff;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-left: 20px;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.borrowLink:hover,
+.favoritesLink:hover {
   color: black; /* Color when hovered */
 }
 
 .buttonContainer {
   display: flex;
   gap: 10px;
-  margin-left: auto; /* Pushes button container to the right */
+}
+
+.favoritesLink {
+  margin-right: 20px; /* Adjust spacing as needed */
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .borrowLink,
+  .favoritesLink {
+    display: none; /* Hide links on smaller screens */
+  }
+
+  .navLink {
+    margin-right: 20px; /* Adjust spacing for smaller screens */
+  }
+
+  .buttonContainer {
+    margin-left: auto; /* Ensure buttons are aligned properly */
+  }
+}
+
+@media (max-width: 480px) {
+  .navImage {
+    width: 40px; /* Smaller logo for very small screens */
+  }
+
+  .borrowLink,
+  .favoritesLink {
+    display: none; /* Ensure these are hidden on very small screens */
+  }
 }

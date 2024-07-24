@@ -24,7 +24,7 @@ function LoginPage() {
       navigate("/userdash");
       console.log("this is the authtoken: " + token);
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate, token]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,14 +43,21 @@ function LoginPage() {
         }
       );
 
+      // Check if the response is OK and if the content type is JSON
       if (!loginResponse.ok) {
-        const errorData = await loginResponse.json();
-        throw new Error(errorData.message || "Login failed.");
+        const errorData = await loginResponse.text();
+        throw new Error(errorData || "Login failed.");
       }
 
-      const data = await loginResponse.json();
-      localStorage.setItem("authToken", data.token);
-      setToken(data.token); // Update context token
+      // Ensure response is JSON
+      const contentType = loginResponse.headers.get("content-type");
+      if (contentType && contentType.indexOf("application/json") !== -1) {
+        const data = await loginResponse.json();
+        localStorage.setItem("authToken", data.token);
+        setToken(data.token); // Update context token
+      } else {
+        throw new Error("Unexpected response format.");
+      }
     } catch (err) {
       setError(err.message || "Login failed. Please try again.");
     } finally {
@@ -59,7 +66,7 @@ function LoginPage() {
   };
 
   if (isLoading) {
-    return <div>Logging you in</div>;
+    return <div>Loading...</div>;
   }
 
   return (

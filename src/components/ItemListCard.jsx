@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mantine/core";
 import styles from "../styles/ItemListCard.module.css";
-const ItemListCard = ({ item }) => {
+
+const ItemListCard = ({ item, onFavoriteChange }) => {
   const {
     itemname,
     description,
@@ -12,24 +13,69 @@ const ItemListCard = ({ item }) => {
     _id,
     image,
   } = item;
-  // Truncate description to 80 characters
+
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    // Check local storage to determine if item is already a favorite
+    const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    setIsFavorite(favorites.includes(_id));
+  }, [_id]);
+
+  // Truncate description to 140 characters
   const truncatedDescription =
     description.length > 140
       ? `${description.substring(0, 140)}...`
       : description;
+
   // Use useNavigate hook for navigation
   const navigate = useNavigate();
+
   // Handle button click to navigate to item details
   const handleViewDetails = () => {
     navigate(`/items/${_id}`);
   };
+
+  // Handle favorite button click
+  const handleFavoriteClick = () => {
+    const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    const newFavorites = isFavorite
+      ? favorites.filter((id) => id !== _id)
+      : [...favorites, _id];
+
+    localStorage.setItem("favorites", JSON.stringify(newFavorites));
+    setIsFavorite(!isFavorite);
+
+    // Notify parent component about the favorite change
+    if (onFavoriteChange) {
+      onFavoriteChange(newFavorites);
+    }
+  };
+
+  // Format category to match CSS class names
+  const formatCategory = (category) => {
+    return category
+      .toLowerCase()
+      .replace(/ & /g, "-and-")
+      .replace(/ /g, "-")
+      .replace(/[^a-z0-9-]/g, ""); // Remove any non-alphanumeric characters except dashes
+  };
+
+  const formattedCategory = formatCategory(category);
+
   // Determine the appropriate status class
   const statusClass = `${styles.status} ${styles[availability]}`;
+
   return (
     <div className={styles.card}>
-      <div
-        className={`${styles.categoryLabel} ${styles[category.toLowerCase()]}`}
+      <button
+        className={`${styles.favoriteBtn} ${isFavorite ? styles.active : ""}`}
+        onClick={handleFavoriteClick}
+        aria-label="Toggle favorite"
       >
+        ♥
+      </button>
+      <div className={`${styles.categoryLabel} ${styles[formattedCategory]}`}>
         {category}
       </div>
       <img src={image} alt={itemname} className={styles.image} />
@@ -43,7 +89,7 @@ const ItemListCard = ({ item }) => {
         <div className={styles.buttonContainer}>
           <Button
             onClick={handleViewDetails}
-            variant="filled"
+            variant="outline"
             color="#224EFF"
             size="xs"
             className={styles.button}
@@ -55,4 +101,5 @@ const ItemListCard = ({ item }) => {
     </div>
   );
 };
+
 export default ItemListCard;

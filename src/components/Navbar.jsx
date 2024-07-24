@@ -20,10 +20,17 @@ function Navbar() {
           onMouseLeave={(e) => (e.currentTarget.src = handshakeBlue)}
         />
       </Link>
-      <div className={styles.buttonContainer}>
+      <div className={styles.leftSideLinks}>
         <Link to="/items" className={styles.borrowLink}>
           BORROW NOW!
         </Link>
+        {isAuthenticated && (
+          <Link to="/favorites" className={styles.favoritesLink}>
+            FAVORITES
+          </Link>
+        )}
+      </div>
+      <div className={styles.buttonContainer}>
         {!isAuthenticated ? (
           <>
             <Button

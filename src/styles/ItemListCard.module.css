@@ -1,100 +1,151 @@
 .card {
-  border: 1px solid #e0e0e0; /* Light gray border */
-  border-radius: 12px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  overflow: hidden; /* Ensure corners are rounded for images too */
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
   transition: box-shadow 0.3s ease, transform 0.3s ease;
-  background-color: #ffffff; /* White background */
-  max-width: 300px; /* Maximum width for cards */
-  margin: 16px; /* Space around the card */
-  position: relative; /* Position relative for category label positioning */
+  background-color: #ffffff;
+  max-width: 300px;
+  margin: 16px;
+  position: relative;
 }
+
 .card:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
-  transform: translateY(-4px); /* Slight lift effect on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-4px);
 }
+
 .image {
   width: 100%;
-  height: 200px; /* Fixed height for images */
-  object-fit: cover; /* Ensures image covers the area without distortion */
+  height: 200px;
+  object-fit: cover;
 }
+
 .details {
-  padding: 16px; /* Space inside the card */
+  padding: 16px;
   display: flex;
   flex-direction: column;
 }
+
 .buttonContainer {
-  margin-top: auto; /* Push the button to the bottom of the card */
-  text-align: right; /* Align button to the right */
+  margin-top: auto;
+  text-align: right;
 }
+
 .itemNameContainer {
-  display: flex; /* Use flex to place item name and status on the same line */
-  align-items: baseline; /* Align items vertically */
-  justify-content: space-between; /* Push status to the end */
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
 }
+
 .itemName {
   font-size: 1.25em;
   font-weight: bold;
   margin: 0;
   color: #333;
 }
+
 .description {
-  font-size: 0.9em; /* Slightly smaller font for description */
-  color: #666; /* Gray text color */
-  margin: 8px 0; /* Margin for spacing */
-  overflow: visible; /* Ensure full text is visible */
-  white-space: normal; /* Allow text wrapping */
+  font-size: 0.9em;
+  color: #666;
+  margin: 8px 0;
+  overflow: visible;
+  white-space: normal;
 }
+
 .categoryLabel {
-  position: absolute; /* Absolute positioning for label */
-  top: 0; /* Top edge of the card */
-  left: 0; /* Left edge of the card */
-  padding: 8px 12px; /* Padding around the label */
-  font-weight: bold; /* Bold text */
-  color: #ffffff; /* White text color */
-  border-bottom-right-radius: 12px; /* Rounded bottom-right corner */
-  z-index: 1; /* Ensure label is above other content */
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 8px 12px;
+  font-weight: bold;
+  color: #ffffff;
+  border-bottom-right-radius: 12px;
+  z-index: 1;
 }
+
 .categoryLabel.electronics {
   background-color: #ff8c8c;
-} /* Light Pastel Red */
+}
+
 .categoryLabel.beauty {
   background-color: #ff8ce6;
-} /* Light Pastel Pink */
+}
+
 .categoryLabel.music {
   background-color: #9ca3ff;
-} /* Light Pastel Blue */
+}
+
 .categoryLabel.tools {
   background-color: #9aff9a;
-} /* Light Pastel Green */
-.categoryLabel.clothes {
-  background-color: #ffff99;
-} /* Light Pastel Yellow */
-.categoryLabel.rooms {
-  background-color: #ffad8a;
-} /* Light Pastel Orange */
-.categoryLabel.outdoor {
-  background-color: #a2f2f2;
-} /* Light Pastel Teal */
-.categoryLabel.services {
-  background-color: #c2b9f5;
-} /* Light Pastel Purple */
-.status {
-  font-size: 0.8em; /* Smaller font size */
-  margin-left: 8px; /* Small margin to separate from item name */
-  align-self: center; /* Align status text properly */
-  color: #9e9e9e; /* Grey */
 }
+
+.categoryLabel.clothes {
+  background-color: #f7e47b;
+}
+
+.categoryLabel.rooms-and-facilities {
+  background-color: #ffad8a;
+}
+
+.categoryLabel.outdoor-area {
+  background-color: #a2f2f2;
+}
+
+.categoryLabel.acts-of-service {
+  background-color: #c2b9f5;
+}
+
+.status {
+  font-size: 0.8em;
+  margin-left: 8px;
+  align-self: center;
+  color: #9e9e9e;
+}
+
+.favoriteBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.3s, background-color 0.3s;
+}
+
+.favoriteBtn:hover {
+  color: #f00; /* Red color on hover */
+  background-color: #f0f0f0;
+}
+
+.favoriteBtn.active {
+  color: #f00; /* Red color when active */
+  background-color: #fff;
+}
+
+.favoriteBtn:focus {
+  outline: none;
+}
+
 @media (max-width: 768px) {
   .card {
-    max-width: 100%; /* Full width on smaller screens */
+    max-width: 100%;
   }
 }
+
 @media (max-width: 480px) {
   .image {
-    height: 150px; /* Smaller height for images on very small screens */
+    height: 150px;
   }
   .card {
-    margin: 8px; /* Reduce margin on very small screens */
+    margin: 8px;
   }
 }

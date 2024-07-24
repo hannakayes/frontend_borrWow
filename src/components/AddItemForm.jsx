@@ -47,7 +47,7 @@ function AddItemForm() {
 
       const data = await response.json();
       console.log("BorrWow created:", data);
-      navigate("/userdash");
+      navigate("/items");
     } catch (error) {
       console.error("Error:", error);
     }

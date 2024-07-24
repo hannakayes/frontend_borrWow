@@ -36,12 +36,12 @@ function UserDash() {
               </Button>
               <Button
                 component={Link}
-                to="/manage-things"
+                to="/items"
                 variant="outline"
                 color="#224eff"
                 className={styles.button}
               >
-                Manage your borrWows
+                See all BorrWows{" "}
               </Button>
               <Button
                 component={Link}
@@ -54,21 +54,21 @@ function UserDash() {
               </Button>
               <Button
                 component={Link}
-                to="/edit-profile"
+                to="/incomingrequests"
                 variant="outline"
                 color="#224eff"
                 className={styles.button}
               >
-                Edit Profile
+                incoming borrWow requests
               </Button>
               <Button
                 component={Link}
-                to="/logout"
+                to="/borrowed"
                 variant="outline"
                 color="#224eff"
                 className={styles.button}
               >
-                Logout
+                things you want to borrWow from others
               </Button>
             </SimpleGrid>
           </div>

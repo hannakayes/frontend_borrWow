@@ -12,6 +12,7 @@ import ItemListPage from "./pages/ItemListPage";
 import ItemDetailsPage from "./pages/ItemDetailsPage";
 import AddItemPage from "./pages/AddItemPage";
 import EditBorrWow from "./components/EditBorrWow";
+import BRequestsBYUserPage from "./pages/BRequestsBYUserPage";
 
 function App() {
   return (
@@ -44,6 +45,14 @@ function App() {
             element={
               <PrivateRoute>
                 <EditBorrWow />
+              </PrivateRoute>
+            }
+          />{" "}
+          <Route
+            path="/requestedByYOU"
+            element={
+              <PrivateRoute>
+                <BRequestsBYUserPage />
               </PrivateRoute>
             }
           />

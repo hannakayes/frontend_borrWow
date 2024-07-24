@@ -1,7 +1,7 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@mantine/core";
 import styles from "../styles/ItemListCard.module.css";
-
 const ItemListCard = ({ item }) => {
   const {
     itemname,
@@ -12,13 +12,19 @@ const ItemListCard = ({ item }) => {
     _id,
     image,
   } = item;
-
   // Truncate description to 80 characters
   const truncatedDescription =
-    description.length > 80
-      ? `${description.substring(0, 80)}...`
+    description.length > 140
+      ? `${description.substring(0, 140)}...`
       : description;
-
+  // Use useNavigate hook for navigation
+  const navigate = useNavigate();
+  // Handle button click to navigate to item details
+  const handleViewDetails = () => {
+    navigate(`/items/${_id}`);
+  };
+  // Determine the appropriate status class
+  const statusClass = `${styles.status} ${styles[availability]}`;
   return (
     <div className={styles.card}>
       <div
@@ -28,16 +34,25 @@ const ItemListCard = ({ item }) => {
       </div>
       <img src={image} alt={itemname} className={styles.image} />
       <div className={styles.details}>
-        <h2 className={styles.itemName}>{itemname}</h2>
+        <div className={styles.itemNameContainer}>
+          <h2 className={styles.itemName}>{itemname}</h2>
+          <p className={statusClass}>{availability}</p>
+        </div>
         <p className={styles.description}>{truncatedDescription}</p>
         <p className={styles.location}>Location: {location}</p>
-        <p className={styles.status}>{availability}</p>
-        <Link to={`/items/${_id}`} className={styles.detailsLink}>
-          View Details
-        </Link>
+        <div className={styles.buttonContainer}>
+          <Button
+            onClick={handleViewDetails}
+            variant="filled"
+            color="#224EFF"
+            size="xs"
+            className={styles.button}
+          >
+            View Details
+          </Button>
+        </div>
       </div>
     </div>
   );
 };
-
 export default ItemListCard;

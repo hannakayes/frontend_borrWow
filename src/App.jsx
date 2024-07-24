@@ -13,6 +13,7 @@ import ItemDetailsPage from "./pages/ItemDetailsPage";
 import AddItemPage from "./pages/AddItemPage";
 import EditBorrWow from "./components/EditBorrWow";
 import BRequestsBYUserPage from "./pages/BRequestsBYUserPage";
+import CreateBRequestPage from "./pages/CreateNewBRequestPage";
 
 function App() {
   return (
@@ -53,6 +54,14 @@ function App() {
             element={
               <PrivateRoute>
                 <BRequestsBYUserPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/borrWow/:id"
+            element={
+              <PrivateRoute>
+                <CreateBRequestPage />
               </PrivateRoute>
             }
           />

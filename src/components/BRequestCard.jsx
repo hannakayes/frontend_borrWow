@@ -1,14 +1,23 @@
 import React from "react";
 import { Button } from "@mantine/core";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "../styles/ItemListCard.module.css";
 
 const BRequestCard = ({ request }) => {
   const navigate = useNavigate();
-  const { id } = useParams();
 
   // Extract properties from request
-  const { item, borrower, owner, requestDate, location, status, _id } = request;
+  const {
+    item,
+    borrower,
+    owner,
+    pickupDate,
+    returnDate,
+    pickupLocation,
+    returnLocation,
+    status,
+    _id,
+  } = request;
 
   // Handle button click to navigate to details
   const handleViewDetails = () => {
@@ -34,10 +43,14 @@ const BRequestCard = ({ request }) => {
           <p className={statusClass}>{status}</p>
         </div>
         <p className={styles.location}>
-          Location: {location || "Unknown Location"}
+          Pickup Location: {pickupLocation || "Unknown Location"}
+        </p>
+        <p className={styles.location}>
+          Return Location: {returnLocation || "Unknown Location"}
         </p>
         <p className={styles.requestDate}>
-          Request Date-Range: {new Date(requestDate).toLocaleDateString()}
+          Request Date Range: {new Date(pickupDate).toLocaleDateString()} -{" "}
+          {new Date(returnDate).toLocaleDateString()}
         </p>
         <div className={styles.buttonContainer}>
           <Button
@@ -56,7 +69,7 @@ const BRequestCard = ({ request }) => {
             size="xs"
             className={styles.button}
           >
-            Edit BorrowRequest
+            Edit Borrow Request
           </Button>
         </div>
       </div>

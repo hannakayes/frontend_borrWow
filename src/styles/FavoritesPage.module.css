@@ -1,8 +1,12 @@
-/* FavoritesPage.module.css */
-
 .page {
   padding: 40px; /* Match padding to the ItemListPage */
   background-color: #f9f9f9; /* Light gray background */
+  text-align: center; /* Center all text within the page */
+}
+
+.headline {
+  text-align: center; /* Center the headline specifically */
+  margin-bottom: 20px; /* Space below the headline */
 }
 
 .itemsContainer {
@@ -10,6 +14,7 @@
   flex-wrap: wrap;
   gap: 20px; /* Space between cards */
   justify-content: center; /* Center the cards horizontally */
+  text-align: left;
 }
 
 .card {
@@ -22,11 +27,10 @@
   max-width: 300px;
   margin: 16px;
   position: relative;
+  text-align: left;
 }
 
 .card:hover {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   transform: translateY(-4px);
 }
-
-/* Other styles from ItemListCard.module.css should be included here if you want the same styling */

@@ -39,7 +39,7 @@ const FavoritesPage = () => {
 
   return (
     <div className={styles.page}>
-      <h1>Favorites</h1>
+      <h1 className={styles.headline}>You'd probably like to borrWow these.</h1>
       <div className={styles.itemsContainer}>
         {favoriteItems.length > 0 ? (
           favoriteItems.map((item) => (

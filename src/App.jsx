@@ -7,7 +7,6 @@ import UserDash from "./pages/UserDash";
 import CreateNewItemPage from "./pages/CreateNewItemPage";
 import ItemListPage from "./pages/ItemListPage";
 import ItemDetailsPage from "./pages/ItemDetailsPage";
-import EditBorrWow from "./components/EditBorrWow";
 import BRequestsBYUserPage from "./pages/BRequestsBYUserPage";
 import FavoritesPage from "./pages/FavoritesPage"; // Import your FavoritesPage component
 import ErrorPage from "./pages/404ErrorPage"; // Import the ErrorPage component

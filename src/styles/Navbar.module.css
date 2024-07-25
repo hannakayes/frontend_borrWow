@@ -30,7 +30,8 @@
 }
 
 .borrowLink,
-.favoritesLink {
+.favoritesLink,
+.shareLink {
   text-decoration: none;
   color: #224eff;
   font-weight: bold;
@@ -51,13 +52,16 @@
 }
 
 .favoritesLink {
+  margin-right: 5px; /* Adjust spacing as needed */
+}
+
+.shareLink {
   margin-right: 20px; /* Adjust spacing as needed */
 }
 
 /* Mobile styles */
 @media (max-width: 768px) {
-  .borrowLink,
-  .favoritesLink {
+  .favoritesLink .shareLink {
     display: none; /* Hide links on smaller screens */
   }
 
@@ -76,7 +80,8 @@
   }
 
   .borrowLink,
-  .favoritesLink {
+  .favoritesLink,
+  .shareLink {
     display: none; /* Ensure these are hidden on very small screens */
   }
 }

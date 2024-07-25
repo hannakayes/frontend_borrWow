@@ -16,7 +16,7 @@ function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const { token, setToken, isLoading, isAuthenticated } =
+  const { token, setToken, setUserId, isLoading, isAuthenticated } =
     useContext(SessionContext);
 
   useEffect(() => {
@@ -49,15 +49,9 @@ function LoginPage() {
         throw new Error(errorData || "Login failed.");
       }
 
-      // Ensure response is JSON
-      const contentType = loginResponse.headers.get("content-type");
-      if (contentType && contentType.indexOf("application/json") !== -1) {
-        const data = await loginResponse.json();
-        localStorage.setItem("authToken", data.token);
-        setToken(data.token); // Update context token
-      } else {
-        throw new Error("Unexpected response format.");
-      }
+      const data = await loginResponse.json();
+      localStorage.setItem("authToken", data.token);
+      setToken(data.token); // Update context token
     } catch (err) {
       setError(err.message || "Login failed. Please try again.");
     } finally {

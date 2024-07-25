@@ -63,7 +63,7 @@ function UserDash() {
               </Button>
               <Button
                 component={Link}
-                to="/borrowed"
+                to="/requestedByYOU"
                 variant="outline"
                 color="#224eff"
                 className={styles.button}

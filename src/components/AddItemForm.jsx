@@ -92,12 +92,12 @@ function AddItemForm() {
       <Checkbox
         mt="md"
         label="Agree to terms"
-        color="#224eff"
+        color="#224EFF"
         key={form.key("termsOfService")}
         {...form.getInputProps("termsOfService", { type: "checkbox" })}
       />
-      <Group justify="flex-end" mt="md" color="#224eff">
-        <Button type="submit" color="#224eff">
+      <Group justify="flex-end" mt="md" color="#224EFF">
+        <Button type="submit" color="#224EFF">
           Submit
         </Button>
       </Group>
@@ -105,4 +105,3 @@ function AddItemForm() {
   );
 }
 export default AddItemForm;
-

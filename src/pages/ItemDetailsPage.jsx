@@ -142,6 +142,20 @@ const ItemDetailsPage = () => {
             >
               Return
             </Button>
+
+            {token &&
+              user &&
+              item.owner &&
+              user.id === item.owner.id && ( // Check if user is the owner
+                <Button
+                  variant="filled"
+                  color="#224eff"
+                  className={styles.button}
+                  onClick={() => navigate(`/edit/${id}`)}
+                >
+                  Edit this BorrWow item
+                </Button>
+              )}
           </div>
         </div>
         <div className={styles.imageContainer}>

@@ -7,7 +7,6 @@ import UserDash from "./pages/UserDash";
 import CreateNewItemPage from "./pages/CreateNewItemPage";
 import ItemListPage from "./pages/ItemListPage";
 import ItemDetailsPage from "./pages/ItemDetailsPage";
-import AddItemPage from "./pages/AddItemPage";
 import BRequestsBYUserPage from "./pages/BRequestsBYUserPage";
 import FavoritesPage from "./pages/FavoritesPage"; // Import your FavoritesPage component
 import ErrorPage from "./pages/404ErrorPage"; // Import the ErrorPage component
@@ -39,7 +38,6 @@ function App() {
             element={
               <PrivateRoute>
                 <CreateNewItemPage />
-                <AddItemPage />
               </PrivateRoute>
             }
           />

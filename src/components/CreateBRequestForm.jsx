@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { SessionContext } from "../contexts/SessionContext";
 import styles from "../styles/AddItemForm.module.css";
 
-function CreateBRequest() {
+function CreateBRequestForm() {
   const { token, userId } = useContext(SessionContext); // Get userId from context
   const navigate = useNavigate();
   const { id } = useParams(); // Assuming the item ID is passed as a URL parameter
@@ -18,13 +18,10 @@ function CreateBRequest() {
   });
 
   const handleSubmit = async (values) => {
+    console.log("Token:", token);
     try {
       if (!token) {
-        throw new Error("No authentication token found");
-      }
-
-      if (!userId) {
-        throw new Error("No user ID found");
+        throw new Error("No authentication token");
       }
 
       const response = await fetch("http://localhost:5005/api/borrowrequests", {
@@ -36,7 +33,6 @@ function CreateBRequest() {
         body: JSON.stringify({
           ...values,
           item: id, // Include the item ID in the request
-          borrower: userId, // Use the userId from context
         }),
       });
 
@@ -64,12 +60,13 @@ function CreateBRequest() {
         {...form.getInputProps("location")}
       />
 
-      <Select
-        label="Category"
-        placeholder="Select your location"
-        data={locations} // Assuming locations are fetched or predefined
-        {...form.getInputProps("location")}
-      />
+      {/* Optional: Add a select field for locations if you have predefined options */}
+      {/* <Select
+      label="Location"
+      placeholder="Select your location"
+      data={locations} // Assuming locations are fetched or predefined
+      {...form.getInputProps("location")}
+    /> */}
 
       <Checkbox
         mt="md"
@@ -84,4 +81,4 @@ function CreateBRequest() {
   );
 }
 
-export default CreateBRequest;
+export default CreateBRequestForm;

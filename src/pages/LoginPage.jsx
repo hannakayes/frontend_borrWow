@@ -16,7 +16,7 @@ function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const { token, setToken, isLoading, isAuthenticated } =
+  const { token, setToken, setUserId, isLoading, isAuthenticated } =
     useContext(SessionContext);
 
   useEffect(() => {
@@ -51,6 +51,7 @@ function LoginPage() {
       const data = await loginResponse.json();
       localStorage.setItem("authToken", data.token);
       setToken(data.token); // Update context token
+      setUserId(data.userId); // Update context userId
     } catch (err) {
       setError(err.message || "Login failed. Please try again.");
     } finally {

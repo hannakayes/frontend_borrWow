@@ -5,6 +5,7 @@ export const SessionContext = createContext();
 
 const SessionContextProvider = ({ children }) => {
   const [token, setToken] = useState(null);
+  const [userId, setUserId] = useState(null); // Added userId state
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
@@ -24,7 +25,9 @@ const SessionContextProvider = ({ children }) => {
         }
       );
       if (response.status === 200) {
+        const data = await response.json(); // Added to get userId
         setToken(tokenToVerify);
+        setUserId(data.userId); // Store userId
         setIsAuthenticated(true);
       } else {
         removeToken();
@@ -58,6 +61,7 @@ const SessionContextProvider = ({ children }) => {
   const handleLogout = () => {
     removeToken();
     setToken(null);
+    setUserId(null); // Clear userId on logout
     setIsAuthenticated(false);
     navigate("/");
   };
@@ -68,6 +72,7 @@ const SessionContextProvider = ({ children }) => {
         isAuthenticated,
         isLoading,
         token,
+        userId, // Provide userId in context
         setToken,
         handleLogout,
       }}

@@ -94,7 +94,7 @@ const ItemListCard = ({ item, onFavoriteChange }) => {
             size="xs"
             className={styles.button}
           >
-            View Details
+            borrWow!
           </Button>
         </div>
       </div>

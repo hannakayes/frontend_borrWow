@@ -1,129 +1,141 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Select, Button, Checkbox, Group, TextInput } from "@mantine/core";
+import {
+  Select,
+  Button,
+  Checkbox,
+  Group,
+  TextInput,
+  DatePicker,
+} from "@mantine/core";
 import { useForm } from "@mantine/form";
-import styles from "../styles/AddItemForm.module.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { SessionContext } from "../contexts/SessionContext";
+import styles from "../styles/AddItemForm.module.css";
 
 function EditBRequestForm() {
   const navigate = useNavigate();
   const { id } = useParams();
   const { token } = useContext(SessionContext);
 
-  // State to hold the fetched item data
+  // State to hold the fetched borrow request data
   const [borrowRequestData, setBorrowRequestData] = useState(null);
 
   const form = useForm({
     initialValues: {
-      location: "",
-      date: "",
+      pickupDate: "",
+      returnDate: "",
+      pickupLocation: "",
+      returnLocation: "",
       termsOfService: false,
     },
     validate: {
-      itemname: (value) => (value ? null : "Item name is required"),
-      description: (value) => (value ? null : "Description is required"),
-      category: (value) => (value ? null : "Category is required"),
-      availability: (value) => (value ? null : "Availability is required"),
+      pickupDate: (value) => (value ? null : "Pickup date is required"),
+      returnDate: (value) => (value ? null : "Return date is required"),
+      pickupLocation: (value) => (value ? null : "Pickup location is required"),
+      returnLocation: (value) => (value ? null : "Return location is required"),
     },
   });
 
-  // Fetch the item data when component mounts
+  // Fetch the borrow request data when component mounts
   useEffect(() => {
-    const fetchItemData = async () => {
+    const fetchBorrowRequestData = async () => {
       try {
-        const response = await fetch(`http://localhost:5005/api/items/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await fetch(
+          `http://localhost:5005/api/borrowrequests/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         if (!response.ok) {
-          throw new Error("Failed to get item info");
+          throw new Error("Failed to get borrow request info");
         }
 
         const data = await response.json();
-        setItemData(data); // Update state with fetched data
-        /*      form.setValues({
-          itemname: data.itemname || "",
-          description: data.description || "",
-          category: data.category || "",
-          availability: data.availability || "",
+        setBorrowRequestData(data); // Update state with fetched data
+        form.setValues({
+          pickupDate: new Date(data.pickupDate),
+          returnDate: new Date(data.returnDate),
+          pickupLocation: data.pickupLocation,
+          returnLocation: data.returnLocation,
           termsOfService: data.termsOfService || false,
-        }); */
+        });
       } catch (error) {
-        console.error("Error fetching item data:", error);
+        console.error("Error fetching borrow request data:", error);
       }
     };
 
-    fetchItemData();
+    fetchBorrowRequestData();
   }, [id, token, form]);
 
   // Handle form submission
   const handleSubmit = async (values) => {
     try {
-      const response = await fetch(`http://localhost:5005/api/items/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(values),
-      });
+      const response = await fetch(
+        `http://localhost:5005/api/borrowrequests/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(values),
+        }
+      );
 
       if (!response.ok) {
-        throw new Error("Failed to update item");
+        throw new Error("Failed to update borrow request");
       }
 
       const data = await response.json();
-      console.log("Item updated:", data);
-      navigate("/userdash");
+      console.log("Borrow request updated:", data);
+      navigate("/requestedByYOU");
     } catch (error) {
-      console.error("Error updating item:", error);
+      console.error("Error updating borrow request:", error);
     }
   };
+
+  if (!borrowRequestData) return <div>Loading...</div>;
 
   return (
     <form
       className={styles.container}
       onSubmit={form.onSubmit((values) => handleSubmit(values))}
     >
-      <TextInput
-        withAsterisk
-        label="Item name"
-        placeholder={itemData ? itemData.itemname : "Loading..."}
-        {...form.getInputProps("itemname")}
-      />
-      <TextInput
-        withAsterisk
-        label="Description"
-        placeholder={itemData ? itemData.description : "Loading..."}
-        {...form.getInputProps("description")}
-      />
-
-      <Select
-        label="Category"
-        withAsterisk
-        placeholder={itemData ? itemData.category : "Loading..."}
-        data={[
-          { value: "electronics", label: "electronics" },
-          { value: "beauty", label: "beauty" },
-          { value: "music", label: "music" },
-          { value: "clothes", label: "clothes" },
-          { value: "rooms", label: "rooms" },
-          { value: "outdoor area", label: "outdoor area" },
-        ]}
-        {...form.getInputProps("category")}
+      <DatePicker
+        type="range"
+        label="Select Date Range"
+        value={[form.values.pickupDate, form.values.returnDate]}
+        onChange={(dates) => {
+          if (dates && dates.length === 2) {
+            form.setValues({
+              ...form.values,
+              pickupDate: dates[0],
+              returnDate: dates[1],
+            });
+          }
+        }}
+        classNames={{ input: styles.datePicker }}
       />
 
-      <Select
-        label="Availability"
+      <TextInput
         withAsterisk
-        placeholder={itemData ? itemData.availability : "Loading..."}
-        data={[
-          { value: "Available", label: "Available" },
-          { value: "Hidden", label: "Hidden" },
-        ]}
-        {...form.getInputProps("availability")}
+        label="Pickup Location"
+        placeholder={
+          borrowRequestData ? borrowRequestData.pickupLocation : "Loading..."
+        }
+        {...form.getInputProps("pickupLocation")}
+      />
+
+      <TextInput
+        withAsterisk
+        label="Return Location"
+        placeholder={
+          borrowRequestData ? borrowRequestData.returnLocation : "Loading..."
+        }
+        {...form.getInputProps("returnLocation")}
       />
 
       <Checkbox

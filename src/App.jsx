@@ -14,7 +14,6 @@ import ErrorPage from "./pages/404ErrorPage"; // Import the ErrorPage component
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
-import CreateBRequestPage from "./pages/CreateNewBRequestPage"; // Ensure this import is correct
 
 function App() {
   return (
@@ -65,14 +64,7 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route
-            path="/borrWow/:id"
-            element={
-              <PrivateRoute>
-                <CreateBRequestPage />
-              </PrivateRoute>
-            }
-          />
+
           <Route path="/items" element={<ItemListPage />} />
           <Route path="/items/:id" element={<ItemDetailsPage />} />
           {/* Catch-all route for undefined paths */}

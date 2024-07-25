@@ -69,13 +69,13 @@ function AddItemForm() {
         withAsterisk
         placeholder="Select the category"
         data={[
-          { value: "electronics", label: "electronics" },
-          { value: "beauty", label: "beauty" },
-          { value: "music", label: "music" },
-          { value: "clothes", label: "clothes" },
-          { value: "rooms & facilities", label: "rooms & facilities" },
-          { value: "outdoor area", label: "outdoor area" },
-          { value: "acts of service", label: "acts of service" },
+          { value: "Electronics", label: "Electronics" },
+          { value: "Beauty", label: "Beauty" },
+          { value: "Music", label: "Music" },
+          { value: "Clothes", label: "Clothes" },
+          { value: "Rooms & Facilities", label: "Rooms & Facilities" },
+          { value: "Outdoor area", label: "Outdoor Area" },
+          { value: "Acts of Service", label: "Acts of Service" },
         ]}
         {...form.getInputProps("category")}
       />
@@ -92,13 +92,17 @@ function AddItemForm() {
       <Checkbox
         mt="md"
         label="Agree to terms"
+        color="#224eff"
         key={form.key("termsOfService")}
         {...form.getInputProps("termsOfService", { type: "checkbox" })}
       />
-      <Group justify="flex-end" mt="md">
-        <Button type="submit">Submit</Button>
+      <Group justify="flex-end" mt="md" color="#224eff">
+        <Button type="submit" color="#224eff">
+          Submit
+        </Button>
       </Group>
     </form>
   );
 }
 export default AddItemForm;
+

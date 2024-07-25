@@ -37,7 +37,7 @@ const BRequestCard = ({ request }) => {
           Location: {location || "Unknown Location"}
         </p>
         <p className={styles.requestDate}>
-          Request Date: {new Date(requestDate).toLocaleDateString()}
+          Request Date-Range: {new Date(requestDate).toLocaleDateString()}
         </p>
         <div className={styles.buttonContainer}>
           <Button

@@ -172,8 +172,8 @@ const ItemDetailsPage = () => {
           label="Select Date Range"
           value={dateRange}
           onChange={setDateRange}
-          classNames={{ input: modalStyles.datePicker }}
         />
+
         <TextInput
           label="Pickup Location"
           value={pickupLocation}

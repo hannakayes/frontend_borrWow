@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom"; // Import useNavigate
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@mantine/core"; // Import Mantine Button
 import styles from "../styles/ItemDetailsPage.module.css";
+import { SessionContext } from "../contexts/SessionContext";
 
 const ItemDetailsPage = () => {
   const { id } = useParams();
@@ -12,7 +13,7 @@ const ItemDetailsPage = () => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [error, setError] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  const { token } = useContext(SessionContext);
   useEffect(() => {
     // Check if user is logged in
     const token = localStorage.getItem("authToken");
@@ -37,7 +38,49 @@ const ItemDetailsPage = () => {
 
     fetchItem();
   }, [id]);
+  const handleRequest = async () => {
+    console.log("Token:", token);
 
+    try {
+      if (!token) {
+        throw new Error("No authentication token");
+      }
+
+      const values = {
+        example: "data",
+        // Add other necessary fields here
+        location: item.location, // Assuming 'item' is defined and has 'location' property
+      };
+
+      console.log("Values being sent:", values);
+
+      const bodyData = JSON.stringify({
+        ...values,
+        item: id, // Include the item ID in the request
+      });
+
+      console.log("Serialized body data:", bodyData);
+
+      const response = await fetch("http://localhost:5005/api/borrowrequests", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: bodyData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create borrow request");
+      }
+
+      const data = await response.json();
+      console.log("Borrow request created:", data);
+      navigate("/requestedByYOU");
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
   const handleFavoriteClick = () => {
     const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
     const newFavorites = isFavorite
@@ -76,9 +119,9 @@ const ItemDetailsPage = () => {
               variant="filled"
               color="#224eff"
               className={styles.button}
-              onClick={() => navigate(`/contact-owner/${item.owner?.id}`)} // Redirect to contact page
+              onClick={handleRequest} // Redirect to contact page
             >
-              BorrWow
+              Request to BorrWow
             </Button>
             <Button
               variant="outline"

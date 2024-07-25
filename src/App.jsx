@@ -1,4 +1,5 @@
 import React from "react";
+import "@mantine/core/styles.css";
 import { Route, Routes } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
@@ -7,9 +8,9 @@ import UserDash from "./pages/UserDash";
 import CreateNewItemPage from "./pages/CreateNewItemPage";
 import ItemListPage from "./pages/ItemListPage";
 import ItemDetailsPage from "./pages/ItemDetailsPage";
-import AddItemPage from "./pages/AddItemPage";
 import BRequestsBYUserPage from "./pages/BRequestsBYUserPage";
 import FavoritesPage from "./pages/FavoritesPage"; // Import your FavoritesPage component
+import EditBorrWow from "./components/EditBorrWow";
 import ErrorPage from "./pages/404ErrorPage"; // Import the ErrorPage component
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";

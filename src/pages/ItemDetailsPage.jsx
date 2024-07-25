@@ -1,12 +1,13 @@
+// src/pages/ItemDetailsPage.jsx
+
 import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { Button, Modal, TextInput } from "@mantine/core";
-import { DatePicker } from "@mantine/dates";
+import { Button } from "@mantine/core";
 import styles from "../styles/ItemDetailsPage.module.css";
-import modalStyles from "../styles/Modal.module.css"; // Import the new CSS module
 import { SessionContext } from "../contexts/SessionContext";
+import BRequestModal from "../components/BRequestModal";
 
 const ItemDetailsPage = () => {
   const { id } = useParams();
@@ -15,12 +16,6 @@ const ItemDetailsPage = () => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [error, setError] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const { token } = useContext(SessionContext);
-
-  const [dateRange, setDateRange] = useState([null, null]);
-
-  const [pickupLocation, setPickupLocation] = useState("");
-  const [returnLocation, setReturnLocation] = useState("");
   const [modalOpened, setModalOpened] = useState(false);
 
   useEffect(() => {
@@ -45,52 +40,6 @@ const ItemDetailsPage = () => {
 
     fetchItem();
   }, [id]);
-
-  const handleRequest = async () => {
-    console.log("Token:", token);
-
-    try {
-      if (!token) {
-        throw new Error("No authentication token");
-      }
-
-      const values = {
-        pickupDate: dateRange[0],
-        returnDate: dateRange[1],
-        pickupLocation,
-        returnLocation,
-      };
-
-      console.log("Values being sent:", values);
-
-      const bodyData = JSON.stringify({
-        ...values,
-        item: id,
-      });
-
-      console.log("Serialized body data:", bodyData);
-
-      const response = await fetch("http://localhost:5005/api/borrowrequests", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: bodyData,
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to create borrow request");
-      }
-
-      const data = await response.json();
-      console.log("Borrow request created:", data);
-      navigate("/requestedByYOU");
-      setModalOpened(false); // Close modal after successful request
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
 
   const handleFavoriteClick = () => {
     const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
@@ -160,38 +109,13 @@ const ItemDetailsPage = () => {
         </div>
       </div>
 
-      <Modal
-        opened={modalOpened}
-        onClose={() => setModalOpened(false)}
-        title="Request to BorrWow"
-        classNames={{ modal: modalStyles.modalContent }}
-      >
-        <DatePicker
-          type="range"
-          allowSingleDateInRange
-          label="Select Date Range"
-          value={dateRange}
-          onChange={setDateRange}
-        />
-
-        <TextInput
-          label="Pickup Location"
-          value={pickupLocation}
-          onChange={(e) => setPickupLocation(e.currentTarget.value)}
-          classNames={{ input: modalStyles.textInput }}
-        />
-        <TextInput
-          label="Return Location"
-          value={returnLocation}
-          onChange={(e) => setReturnLocation(e.currentTarget.value)}
-          classNames={{ input: modalStyles.textInput }}
-        />
-        <Button onClick={handleRequest} fullWidth mt="md">
-          Submit Request
-        </Button>
-      </Modal>
+      <BRequestModal
+        itemId={id}
+        modalOpened={modalOpened}
+        setModalOpened={setModalOpened}
+      />
     </div>
   );
 };
-//force push comment
+
 export default ItemDetailsPage;

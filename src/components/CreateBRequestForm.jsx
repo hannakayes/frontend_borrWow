@@ -42,7 +42,7 @@ function CreateBRequestForm() {
 
       const data = await response.json();
       console.log("Borrow request created:", data);
-      navigate("/myrequests"); // Redirect to a page showing the user's requests
+      navigate("/requestedByYOU"); // Redirect to a page showing the user's requests
     } catch (error) {
       console.error("Error:", error);
     }

@@ -84,7 +84,7 @@ const ItemDetailsPage = () => {
               variant="outline"
               color="#224eff"
               className={styles.button}
-              onClick={handleReturnClick} // Use handleReturnClick for navigation
+              onClick={() => navigate(`/items`)} // Use handleReturnClick for navigation
             >
               Return
             </Button>

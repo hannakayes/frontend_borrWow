@@ -10,7 +10,6 @@ import PrivateRoute from "./components/PrivateRoute";
 import CreateNewItemPage from "./pages/CreateNewItemPage";
 import ItemListPage from "./pages/ItemListPage";
 import ItemDetailsPage from "./pages/ItemDetailsPage";
-import AddItemPage from "./pages/AddItemPage";
 import EditBorrWow from "./components/EditBorrWow";
 import BRequestsBYUserPage from "./pages/BRequestsBYUserPage";
 import FavoritesPage from "./pages/FavoritesPage"; // Import your FavoritesPage component
@@ -37,7 +36,6 @@ function App() {
             element={
               <PrivateRoute>
                 <CreateNewItemPage />
-                <AddItemPage />
               </PrivateRoute>
             }
           />

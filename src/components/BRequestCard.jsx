@@ -23,7 +23,7 @@ const BRequestCard = ({ request }) => {
   };
 
   const handleEditRequest = () => {
-    navigate(`/editBorrWow/${_id}`);
+    navigate(`/borrWow/${_id}`);
   };
 
   // Determine the appropriate status class

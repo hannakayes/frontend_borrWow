@@ -14,6 +14,7 @@ import ErrorPage from "./pages/404ErrorPage"; // Import the ErrorPage component
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
+import EditItemPage from "./pages/EditItemPage";
 
 function App() {
   return (
@@ -44,7 +45,7 @@ function App() {
             path="/edit/:id"
             element={
               <PrivateRoute>
-                <EditBorrWow />
+                <EditItemPage />
               </PrivateRoute>
             }
           />

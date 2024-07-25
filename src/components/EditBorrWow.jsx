@@ -105,14 +105,15 @@ function EditBorrWow() {
       <Select
         label="Category"
         withAsterisk
-        placeholder={itemData ? itemData.category : "Loading..."}
+        placeholder="Select the category"
         data={[
-          { value: "electronics", label: "electronics" },
-          { value: "beauty", label: "beauty" },
-          { value: "music", label: "music" },
-          { value: "clothes", label: "clothes" },
-          { value: "rooms", label: "rooms" },
-          { value: "outdoor area", label: "outdoor area" },
+          { value: "Electronics", label: "Electronics" },
+          { value: "Beauty", label: "Beauty" },
+          { value: "Music", label: "Music" },
+          { value: "Clothes", label: "Clothes" },
+          { value: "Rooms & Facilities", label: "Rooms & Facilities" },
+          { value: "Outdoor area", label: "Outdoor Area" },
+          { value: "Acts of Service", label: "Acts of Service" },
         ]}
         {...form.getInputProps("category")}
       />

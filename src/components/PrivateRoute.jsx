@@ -5,9 +5,9 @@ import { Navigate } from "react-router-dom";
 const PrivateRoute = ({ children }) => {
   const { isAuthenticated, isLoading } = useContext(SessionContext);
 
-  console.log("Loading:", isLoading); // Debugging line
+  /*   console.log("Loading:", isLoading); // Debugging line
   console.log("Authenticated:", isAuthenticated); // Debugging line
-
+ */
   if (isLoading) {
     return <h1>Loading...</h1>;
   }

@@ -1,5 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Select, Button, TextInput, Checkbox, Group } from "@mantine/core";
+import { DatePicker } from "@mantine/dates";
+
 import { useForm } from "@mantine/form";
 import { useNavigate, useParams } from "react-router-dom";
 import { SessionContext } from "../contexts/SessionContext";
@@ -17,12 +19,29 @@ function CreateBRequestForm() {
     },
   });
 
-  const handleRequest = async (values) => {
+  const handleRequest = async () => {
     console.log("Token:", token);
+
     try {
       if (!token) {
         throw new Error("No authentication token");
       }
+
+      const values = {
+        pickupDate: dateRange[0],
+        returnDate: dateRange[1],
+        pickupLocation,
+        returnLocation,
+      };
+
+      console.log("Values being sent:", values);
+
+      const bodyData = JSON.stringify({
+        ...values,
+        item: id,
+      });
+
+      console.log("Serialized body data:", bodyData);
 
       const response = await fetch("http://localhost:5005/api/borrowrequests", {
         method: "POST",
@@ -30,10 +49,7 @@ function CreateBRequestForm() {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({
-          ...values,
-          item: id, // Include the item ID in the request
-        }),
+        body: bodyData,
       });
 
       if (!response.ok) {
@@ -42,7 +58,8 @@ function CreateBRequestForm() {
 
       const data = await response.json();
       console.log("Borrow request created:", data);
-      navigate("/requestedByYOU"); // Redirect to a page showing the user's requests
+      navigate("/requestedByYOU");
+      setModalOpened(false); // Close modal after successful request
     } catch (error) {
       console.error("Error:", error);
     }
@@ -53,30 +70,29 @@ function CreateBRequestForm() {
       className={styles.container}
       onSubmit={form.onSubmit((values) => handleSubmit(values))}
     >
+      <DatePicker
+        type="range"
+        allowSingleDateInRange
+        label="Select Date Range"
+        value={dateRange}
+        onChange={setDateRange}
+        classNames={{ input: modalStyles.datePicker }}
+      />
       <TextInput
-        withAsterisk
-        label="Location"
-        placeholder="Where will you pick up the item?"
-        {...form.getInputProps("location")}
+        label="Pickup Location"
+        value={pickupLocation}
+        onChange={(e) => setPickupLocation(e.currentTarget.value)}
+        classNames={{ input: modalStyles.textInput }}
       />
-
-      {/* Optional: Add a select field for locations if you have predefined options */}
-      {/* <Select
-      label="Location"
-      placeholder="Select your location"
-      data={locations} // Assuming locations are fetched or predefined
-      {...form.getInputProps("location")}
-    /> */}
-
-      <Checkbox
-        mt="md"
-        label="Agree to terms"
-        {...form.getInputProps("termsOfService", { type: "checkbox" })}
+      <TextInput
+        label="Return Location"
+        value={returnLocation}
+        onChange={(e) => setReturnLocation(e.currentTarget.value)}
+        classNames={{ input: modalStyles.textInput }}
       />
-
-      <Group justify="flex-end" mt="md">
-        <Button type="submit">Submit</Button>
-      </Group>
+      <Button onClick={handleRequest} fullWidth mt="md">
+        Submit Request
+      </Button>
     </form>
   );
 }

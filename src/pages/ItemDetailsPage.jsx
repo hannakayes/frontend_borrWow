@@ -1,23 +1,31 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams, useNavigate } from "react-router-dom"; // Import useNavigate
+import { useParams, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import { Button } from "@mantine/core"; // Import Mantine Button
+import { Button, Modal, TextInput } from "@mantine/core";
+import { DatePicker } from "@mantine/dates";
 import styles from "../styles/ItemDetailsPage.module.css";
+import modalStyles from "../styles/Modal.module.css"; // Import the new CSS module
 import { SessionContext } from "../contexts/SessionContext";
 
 const ItemDetailsPage = () => {
   const { id } = useParams();
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
   const [item, setItem] = useState(null);
   const [isFavorite, setIsFavorite] = useState(false);
   const [error, setError] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { token } = useContext(SessionContext);
+
+  const [dateRange, setDateRange] = useState([null, null]);
+
+  const [pickupLocation, setPickupLocation] = useState("");
+  const [returnLocation, setReturnLocation] = useState("");
+  const [modalOpened, setModalOpened] = useState(false);
+
   useEffect(() => {
-    // Check if user is logged in
     const token = localStorage.getItem("authToken");
-    setIsLoggedIn(!!token); // Set login state based on presence of token
+    setIsLoggedIn(!!token);
 
     const fetchItem = async () => {
       try {
@@ -28,7 +36,6 @@ const ItemDetailsPage = () => {
         const data = await response.json();
         setItem(data);
 
-        // Check if the item is a favorite
         const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
         setIsFavorite(favorites.includes(id));
       } catch (error) {
@@ -38,6 +45,7 @@ const ItemDetailsPage = () => {
 
     fetchItem();
   }, [id]);
+
   const handleRequest = async () => {
     console.log("Token:", token);
 
@@ -47,16 +55,17 @@ const ItemDetailsPage = () => {
       }
 
       const values = {
-        example: "data",
-        // Add other necessary fields here
-        location: item.location, // Assuming 'item' is defined and has 'location' property
+        pickupDate: dateRange[0],
+        returnDate: dateRange[1],
+        pickupLocation,
+        returnLocation,
       };
 
       console.log("Values being sent:", values);
 
       const bodyData = JSON.stringify({
         ...values,
-        item: id, // Include the item ID in the request
+        item: id,
       });
 
       console.log("Serialized body data:", bodyData);
@@ -77,10 +86,12 @@ const ItemDetailsPage = () => {
       const data = await response.json();
       console.log("Borrow request created:", data);
       navigate("/requestedByYOU");
+      setModalOpened(false); // Close modal after successful request
     } catch (error) {
       console.error("Error:", error);
     }
   };
+
   const handleFavoriteClick = () => {
     const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
     const newFavorites = isFavorite
@@ -92,7 +103,7 @@ const ItemDetailsPage = () => {
   };
 
   const handleReturnClick = () => {
-    const previousPage = localStorage.getItem("previousPage") || "/"; // Default to home if no previous page
+    const previousPage = localStorage.getItem("previousPage") || "/";
     navigate(previousPage);
   };
 
@@ -119,7 +130,7 @@ const ItemDetailsPage = () => {
               variant="filled"
               color="#224eff"
               className={styles.button}
-              onClick={handleRequest} // Redirect to contact page
+              onClick={() => setModalOpened(true)}
             >
               Request to BorrWow
             </Button>
@@ -127,7 +138,7 @@ const ItemDetailsPage = () => {
               variant="outline"
               color="#224eff"
               className={styles.button}
-              onClick={() => navigate(`/items`)} // Use handleReturnClick for navigation
+              onClick={() => navigate(`/items`)}
             >
               Return
             </Button>
@@ -148,6 +159,37 @@ const ItemDetailsPage = () => {
           <img src={item.image} alt={item.itemname} className={styles.image} />
         </div>
       </div>
+
+      <Modal
+        opened={modalOpened}
+        onClose={() => setModalOpened(false)}
+        title="Request to BorrWow"
+        classNames={{ modal: modalStyles.modalContent }}
+      >
+        <DatePicker
+          type="range"
+          allowSingleDateInRange
+          label="Select Date Range"
+          value={dateRange}
+          onChange={setDateRange}
+          classNames={{ input: modalStyles.datePicker }}
+        />
+        <TextInput
+          label="Pickup Location"
+          value={pickupLocation}
+          onChange={(e) => setPickupLocation(e.currentTarget.value)}
+          classNames={{ input: modalStyles.textInput }}
+        />
+        <TextInput
+          label="Return Location"
+          value={returnLocation}
+          onChange={(e) => setReturnLocation(e.currentTarget.value)}
+          classNames={{ input: modalStyles.textInput }}
+        />
+        <Button onClick={handleRequest} fullWidth mt="md">
+          Submit Request
+        </Button>
+      </Modal>
     </div>
   );
 };

@@ -1,10 +1,11 @@
 import React from "react";
 import { Button } from "@mantine/core";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styles from "../styles/ItemListCard.module.css";
 
 const BRequestCard = ({ request }) => {
   const navigate = useNavigate();
+  const { id } = useParams();
 
   // Extract properties from request
   const { item, borrower, owner, requestDate, location, status, _id } = request;
@@ -14,10 +15,13 @@ const BRequestCard = ({ request }) => {
     navigate(`/borrowrequests/${_id}`);
   };
 
+  const handleEditRequest = () => {
+    navigate(`/editBorrWow/${_id}`);
+  };
+
   // Determine the appropriate status class
   const statusClass = `${styles.status} ${styles[status] || ""}`;
 
-  // Ensure item and location are strings and status is valid
   return (
     <div className={styles.card}>
       <div className={styles.categoryLabel}>{status}</div>
@@ -44,6 +48,15 @@ const BRequestCard = ({ request }) => {
             className={styles.button}
           >
             View Details
+          </Button>
+          <Button
+            onClick={handleEditRequest}
+            variant="filled"
+            color="#224EFF"
+            size="xs"
+            className={styles.button}
+          >
+            Edit BorrowRequest
           </Button>
         </div>
       </div>

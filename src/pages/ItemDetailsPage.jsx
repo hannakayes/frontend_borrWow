@@ -11,8 +11,13 @@ const ItemDetailsPage = () => {
   const [item, setItem] = useState(null);
   const [isFavorite, setIsFavorite] = useState(false);
   const [error, setError] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
+    // Check if user is logged in
+    const token = localStorage.getItem("authToken");
+    setIsLoggedIn(!!token); // Set login state based on presence of token
+
     const fetchItem = async () => {
       try {
         const response = await fetch(`http://localhost:5005/api/items/${id}`);
@@ -41,6 +46,11 @@ const ItemDetailsPage = () => {
 
     localStorage.setItem("favorites", JSON.stringify(newFavorites));
     setIsFavorite(!isFavorite);
+  };
+
+  const handleReturnClick = () => {
+    const previousPage = localStorage.getItem("previousPage") || "/"; // Default to home if no previous page
+    navigate(previousPage);
   };
 
   if (error) return <p>Error: {error}</p>;
@@ -74,22 +84,24 @@ const ItemDetailsPage = () => {
               variant="outline"
               color="#224eff"
               className={styles.button}
-              onClick={() => navigate("/items")} // Redirect to borrow page
+              onClick={handleReturnClick} // Use handleReturnClick for navigation
             >
               Return
             </Button>
           </div>
         </div>
         <div className={styles.imageContainer}>
-          <button
-            className={`${styles.favoriteBtn} ${
-              isFavorite ? styles.active : ""
-            }`}
-            onClick={handleFavoriteClick}
-            aria-label="Toggle favorite"
-          >
-            ♥
-          </button>
+          {isLoggedIn && (
+            <button
+              className={`${styles.favoriteBtn} ${
+                isFavorite ? styles.active : ""
+              }`}
+              onClick={handleFavoriteClick}
+              aria-label="Toggle favorite"
+            >
+              ♥
+            </button>
+          )}
           <img src={item.image} alt={item.itemname} className={styles.image} />
         </div>
       </div>

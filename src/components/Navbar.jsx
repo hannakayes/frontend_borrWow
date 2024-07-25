@@ -22,7 +22,7 @@ function Navbar() {
       </Link>
       <div className={styles.leftSideLinks}>
         <Link to="/items" className={styles.borrowLink}>
-          BORROW NOW!
+          BORROW
         </Link>
         {isAuthenticated && (
           <Link to="/favorites" className={styles.favoritesLink}>

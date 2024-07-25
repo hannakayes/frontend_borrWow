@@ -122,12 +122,12 @@
 }
 
 .favoriteBtn:hover {
-  color: #f00; /* Red color on hover */
+  color: #224eff; /* Red color on hover */
   background-color: #f0f0f0;
 }
 
 .favoriteBtn.active {
-  color: #f00; /* Red color when active */
+  color: #224eff; /* Red color when active */
   background-color: #fff;
 }
 

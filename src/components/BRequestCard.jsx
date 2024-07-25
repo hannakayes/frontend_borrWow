@@ -9,8 +9,6 @@ const BRequestCard = ({ request }) => {
   // Extract properties from request
   const {
     item,
-    borrower,
-    owner,
     pickupDate,
     returnDate,
     pickupLocation,

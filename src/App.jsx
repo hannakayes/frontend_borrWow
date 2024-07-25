@@ -9,13 +9,13 @@ import ItemListPage from "./pages/ItemListPage";
 import ItemDetailsPage from "./pages/ItemDetailsPage";
 import AddItemPage from "./pages/AddItemPage";
 import BRequestsBYUserPage from "./pages/BRequestsBYUserPage";
-import FavoritesPage from "./pages/FavoritesPage";
+import FavoritesPage from "./pages/FavoritesPage"; // Import your FavoritesPage component
 import ErrorPage from "./pages/404ErrorPage"; // Import the ErrorPage component
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
 import EditBorrWow from "./components/EditBorrWow";
-import CreateBRequestPage from "./pages/CreateNewBRequestPage"; // Ensure this import is correct
+
 
 function App() {
   return (
@@ -67,14 +67,7 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route
-            path="/borrWow/:id"
-            element={
-              <PrivateRoute>
-                <CreateBRequestPage />
-              </PrivateRoute>
-            }
-          />
+          
           <Route path="/items" element={<ItemListPage />} />
           <Route path="/items/:id" element={<ItemDetailsPage />} />
           {/* Catch-all route for undefined paths */}

@@ -82,8 +82,9 @@ function AddItemForm() {
           { value: "beauty", label: "beauty" },
           { value: "music", label: "music" },
           { value: "clothes", label: "clothes" },
-          { value: "rooms", label: "rooms" },
+          { value: "rooms & facilities", label: "rooms & facilities" },
           { value: "outdoor area", label: "outdoor area" },
+          { value: "acts of service", label: "acts of service" },
         ]}
         {...form.getInputProps("category")}
       />

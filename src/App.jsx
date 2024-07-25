@@ -15,6 +15,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
 import EditBorrWow from "./components/EditBorrWow";
+import CreateBRequestPage from "./pages/CreateNewBRequestPage"; // Ensure this import is correct
 
 function App() {
   return (
@@ -63,6 +64,14 @@ function App() {
             element={
               <PrivateRoute>
                 <FavoritesPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/borrWow/:id"
+            element={
+              <PrivateRoute>
+                <CreateBRequestPage />
               </PrivateRoute>
             }
           />

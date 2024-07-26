@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Select, Button, Checkbox, Group, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import styles from "../styles/AddItemForm.module.css";
+import styles from "../styles/EditBorrWow.module.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { SessionContext } from "../contexts/SessionContext";
 
@@ -10,7 +10,6 @@ function EditBorrWow() {
   const { id } = useParams();
   const { token } = useContext(SessionContext);
 
-  // State to hold the fetched item data
   const [itemData, setItemData] = useState(null);
 
   const form = useForm({
@@ -19,6 +18,8 @@ function EditBorrWow() {
       description: "",
       category: "",
       availability: "",
+      location: "",
+      imageUrl: "",
       termsOfService: false,
     },
     validate: {
@@ -26,10 +27,10 @@ function EditBorrWow() {
       description: (value) => (value ? null : "Description is required"),
       category: (value) => (value ? null : "Category is required"),
       availability: (value) => (value ? null : "Availability is required"),
+      location: (value) => (value ? null : "Location is required"),
     },
   });
 
-  // Fetch the item data when component mounts
   useEffect(() => {
     const fetchItemData = async () => {
       try {
@@ -40,27 +41,35 @@ function EditBorrWow() {
         });
 
         if (!response.ok) {
+          const errorText = await response.text();
+          console.error(
+            "Failed to fetch item data:",
+            response.status,
+            errorText
+          );
           throw new Error("Failed to get item info");
         }
 
         const data = await response.json();
-        setItemData(data); // Update state with fetched data
-        /*      form.setValues({
+        setItemData(data);
+
+        form.setValues({
           itemname: data.itemname || "",
           description: data.description || "",
           category: data.category || "",
           availability: data.availability || "",
+          location: data.location || "",
+          imageUrl: data.imageUrl || "",
           termsOfService: data.termsOfService || false,
-        }); */
+        });
       } catch (error) {
         console.error("Error fetching item data:", error);
       }
     };
 
     fetchItemData();
-  }, [id, token, form]);
+  }, [id, token]);
 
-  // Handle form submission
   const handleSubmit = async (values) => {
     try {
       const response = await fetch(`http://localhost:5005/api/items/${id}`, {
@@ -73,72 +82,110 @@ function EditBorrWow() {
       });
 
       if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Failed to update item:", errorText);
         throw new Error("Failed to update item");
       }
 
-      const data = await response.json();
-      console.log("Item updated:", data);
-      navigate("/userdash");
+      navigate(`/items/${id}`);
     } catch (error) {
       console.error("Error updating item:", error);
     }
   };
 
+  const berlinDistricts = [
+    "Charlottenburg",
+    "Friedrichshain",
+    "Kreuzberg",
+    "Lichtenberg",
+    "Mitte",
+    "Neukölln",
+    "Pankow",
+    "Schöneberg",
+    "Wedding",
+    "Köpenick",
+  ];
+
   return (
-    <form
-      className={styles.container}
-      onSubmit={form.onSubmit((values) => handleSubmit(values))}
-    >
-      <TextInput
-        withAsterisk
-        label="Item name"
-        placeholder={itemData ? itemData.itemname : "Loading..."}
-        {...form.getInputProps("itemname")}
-      />
-      <TextInput
-        withAsterisk
-        label="Description"
-        placeholder={itemData ? itemData.description : "Loading..."}
-        {...form.getInputProps("description")}
-      />
-
-      <Select
-        label="Category"
-        withAsterisk
-        placeholder="Select the category"
-        data={[
-          { value: "Electronics", label: "Electronics" },
-          { value: "Beauty", label: "Beauty" },
-          { value: "Music", label: "Music" },
-          { value: "Clothes", label: "Clothes" },
-          { value: "Rooms & Facilities", label: "Rooms & Facilities" },
-          { value: "Outdoor area", label: "Outdoor Area" },
-          { value: "Acts of Service", label: "Acts of Service" },
-        ]}
-        {...form.getInputProps("category")}
-      />
-
-      <Select
-        label="Availability"
-        withAsterisk
-        placeholder={itemData ? itemData.availability : "Loading..."}
-        data={[
-          { value: "Available", label: "Available" },
-          { value: "Hidden", label: "Hidden" },
-        ]}
-        {...form.getInputProps("availability")}
-      />
-
-      <Checkbox
-        mt="md"
-        label="Agree to terms"
-        {...form.getInputProps("termsOfService", { type: "checkbox" })}
-      />
-
-      <Group justify="flex-end" mt="md">
-        <Button type="submit">Submit</Button>
-      </Group>
-    </form>
+    <div className={styles.container}>
+      <form
+        className={styles.form}
+        onSubmit={form.onSubmit((values) => handleSubmit(values))}
+      >
+        <TextInput
+          withAsterisk
+          label="Item name"
+          placeholder="What do you want to BorrWow out?"
+          {...form.getInputProps("itemname")}
+        />
+        <TextInput
+          withAsterisk
+          label="Description"
+          placeholder="How would you describe what you could BorrWow out?"
+          {...form.getInputProps("description")}
+        />
+        <Select
+          label="Category"
+          withAsterisk
+          placeholder="Select the category"
+          data={[
+            { value: "Electronics", label: "Electronics" },
+            { value: "Beauty", label: "Beauty" },
+            { value: "Music", label: "Music" },
+            { value: "Clothes", label: "Clothes" },
+            { value: "Rooms & Facilities", label: "Rooms & Facilities" },
+            { value: "Outdoor Area", label: "Outdoor Area" },
+            { value: "Acts of Service", label: "Acts of Service" },
+            { value: "Vehicles", label: "Vehicles" },
+          ]}
+          {...form.getInputProps("category")}
+        />
+        <Select
+          label="Availability"
+          withAsterisk
+          placeholder="Do you want people to see this BorrWow?"
+          data={[
+            { value: "Available", label: "Available" },
+            { value: "Hidden", label: "Hidden" },
+          ]}
+          {...form.getInputProps("availability")}
+        />
+        <Select
+          label="Location"
+          withAsterisk
+          placeholder="Select the location"
+          data={berlinDistricts.map((district) => ({
+            value: district,
+            label: district,
+          }))}
+          {...form.getInputProps("location")}
+        />
+        <TextInput
+          label="Image URL"
+          placeholder="Enter the image URL"
+          {...form.getInputProps("imageUrl")}
+        />
+        <Checkbox
+          mt="md"
+          label="Agree to terms"
+          color="#224EFF"
+          {...form.getInputProps("termsOfService", { type: "checkbox" })}
+        />
+        <Group className={styles.buttons} justify="flex-end" mt="md">
+          <Button
+            type="button"
+            color="#224eff"
+            variant="outline"
+            onClick={() => navigate(`/items/${id}`)}
+          >
+            Return
+          </Button>
+          <Button type="submit" color="#224eff">
+            Submit
+          </Button>
+        </Group>
+      </form>
+    </div>
   );
 }
 

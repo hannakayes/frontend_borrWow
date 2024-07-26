@@ -1,5 +1,3 @@
-// src/pages/ItemDetailsPage.jsx
-
 import React, { useEffect, useState, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -9,6 +7,14 @@ import styles from "../styles/ItemDetailsPage.module.css";
 import { SessionContext } from "../contexts/SessionContext";
 import BRequestModal from "../components/BRequestModal";
 
+const toTitleCase = (str) => {
+  return str
+    .toLowerCase()
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
+
 const ItemDetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -17,8 +23,6 @@ const ItemDetailsPage = () => {
   const [error, setError] = useState(null);
   const [modalOpened, setModalOpened] = useState(false);
   const { userId, token, isAuthenticated } = useContext(SessionContext);
-  console.log("Token:", token);
-  console.log("UserId:", userId);
 
   useEffect(() => {
     const fetchItem = async () => {
@@ -55,19 +59,33 @@ const ItemDetailsPage = () => {
     navigate(previousPage);
   };
 
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`http://localhost:5005/api/items/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to delete the item.");
+      }
+      navigate("/items");
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   if (error) return <p>Error: {error}</p>;
   if (!item) return <p>Loading...</p>;
-
-  // Logging values to debug why the edit button isn't appearing
-  console.log("Token:", token);
-  console.log("UserId:", userId);
-  console.log("Item Owner ID:", item.owner);
 
   return (
     <div className={styles.page}>
       <div className={styles.container}>
         <div className={styles.details}>
-          <div className={styles.categoryLabel}>{item.category}</div>
+          <div className={`${styles.categoryLabel} ${styles[item.category]}`}>
+            {toTitleCase(item.category)}
+          </div>
           <div className={styles.itemNameContainer}>
             <h2 className={styles.itemName}>{item.itemname}</h2>
             <p className={styles.status}>{item.availability}</p>
@@ -91,7 +109,7 @@ const ItemDetailsPage = () => {
               variant="outline"
               color="#224eff"
               className={styles.button}
-              onClick={() => navigate(`/items`)}
+              onClick={handleReturnClick}
             >
               Return
             </Button>
@@ -109,29 +127,42 @@ const ItemDetailsPage = () => {
               ♥
             </button>
           )}
-          <img src={item.image} alt={item.itemname} className={styles.image} />
+          <img
+            src={item.imageUrl}
+            alt={item.itemname}
+            className={styles.image}
+          />
+          {token &&
+            userId &&
+            item.owner &&
+            userId === item.owner._id.toString() && (
+              <div className={styles.editDeleteContainer}>
+                <Button
+                  variant="filled"
+                  color="#224eff"
+                  className={styles.button}
+                  onClick={() => navigate(`/edit/${id}`)}
+                >
+                  Edit
+                </Button>
+                <Button
+                  variant="filled"
+                  color="red"
+                  className={styles.button}
+                  onClick={handleDelete}
+                >
+                  Delete
+                </Button>
+              </div>
+            )}
         </div>
 
-        {token &&
-          userId &&
-          item.owner &&
-          userId === item.owner._id.toString() && (
-            <Button
-              variant="filled"
-              color="#224eff"
-              className={styles.button}
-              onClick={() => navigate(`/edit/${id}`)}
-            >
-              Edit this BorrWow item
-            </Button>
-          )}
+        <BRequestModal
+          itemId={id}
+          modalOpened={modalOpened}
+          setModalOpened={setModalOpened}
+        />
       </div>
-
-      <BRequestModal
-        itemId={id}
-        modalOpened={modalOpened}
-        setModalOpened={setModalOpened}
-      />
     </div>
   );
 };

@@ -5,6 +5,7 @@ import styles from "../styles/Navbar.module.css";
 import handshakeBlue from "../assets/images/handshake_blue.png";
 import handshakeBlack from "../assets/images/handshake_black.png";
 import { SessionContext } from "../contexts/SessionContext";
+import SearchBar from "./SearchBar";
 
 function Navbar() {
   const { isAuthenticated, handleLogout } = useContext(SessionContext);
@@ -29,6 +30,9 @@ function Navbar() {
             FAVORITES
           </Link>
         )}
+      </div>
+      <div className={styles.searchContainer}> {/* Add a container for the search bar */}
+        <SearchBar /> {/* Add the SearchBar component */}
       </div>
       <div className={styles.buttonContainer}>
         {!isAuthenticated ? (

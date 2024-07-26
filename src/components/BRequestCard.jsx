@@ -27,8 +27,8 @@ const BRequestCard = ({ request }) => {
 
   return (
     <div className={styles.card}>
-      {item.image && (
-        <img src={item.image} alt={item.itemname} className={styles.image} />
+      {item.imageUrl && (
+        <img src={item.imageUrl} alt={item.itemname} className={styles.image} />
       )}
       <div className={statusClass}>{status}</div>
       <div className={styles.details}>
@@ -73,7 +73,7 @@ const BRequestCard = ({ request }) => {
             size="xs"
             className={styles.button}
           >
-            Edit Borrow Request Edit Borrow Request
+            Edit Borrow Request
           </Button>
         </div>
       </div>

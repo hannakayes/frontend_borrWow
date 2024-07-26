@@ -13,9 +13,9 @@ import ErrorPage from './pages/404ErrorPage';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import PrivateRoute from './components/PrivateRoute';
-import EditBorrWow from './components/EditBorrWow';
 import CreateBRequestPage from './pages/CreateNewBRequestPage';
 import SearchResultsPage from './pages/SearchResultsPage';
+import UserBorrWows from "./pages/UserBorrWows"; // Import the new component
 
 function App() {
   return (
@@ -67,11 +67,17 @@ function App() {
               </PrivateRoute>
             }
           />
-          
+          <Route
+            path="/user-borrwows"
+            element={
+              <PrivateRoute>
+                <UserBorrWows />
+              </PrivateRoute>
+            }
+          />
           <Route path="/items" element={<ItemListPage />} />
           <Route path="/items/:id" element={<ItemDetailsPage />} />
           <Route path="/search" element={<SearchResultsPage />} />
-          
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </main>

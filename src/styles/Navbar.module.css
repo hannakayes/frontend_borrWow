@@ -42,7 +42,8 @@
 }
 
 .borrowLink:hover,
-.favoritesLink:hover {
+.favoritesLink:hover,
+.shareLink:hover {
   color: black; /* Color when hovered */
 }
 

@@ -15,14 +15,12 @@ const ItemDetailsPage = () => {
   const [item, setItem] = useState(null);
   const [isFavorite, setIsFavorite] = useState(false);
   const [error, setError] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [modalOpened, setModalOpened] = useState(false);
-  const { token, userId } = useContext(SessionContext);
+  const { userId, token, isAuthenticated } = useContext(SessionContext);
+  console.log("Token:", token);
+  console.log("UserId:", userId);
 
   useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    setIsLoggedIn(!!token);
-
     const fetchItem = async () => {
       try {
         const response = await fetch(`http://localhost:5005/api/items/${id}`);
@@ -60,6 +58,11 @@ const ItemDetailsPage = () => {
   if (error) return <p>Error: {error}</p>;
   if (!item) return <p>Loading...</p>;
 
+  // Logging values to debug why the edit button isn't appearing
+  console.log("Token:", token);
+  console.log("UserId:", userId);
+  console.log("Item Owner ID:", item.owner);
+
   return (
     <div className={styles.page}>
       <div className={styles.container}>
@@ -92,24 +95,10 @@ const ItemDetailsPage = () => {
             >
               Return
             </Button>
-
-            {token &&
-              userId &&
-              item.owner &&
-              userId === item.owner.id && ( // Check if user is the owner
-                <Button
-                  variant="filled"
-                  color="#224eff"
-                  className={styles.button}
-                  onClick={() => navigate(`/edit/${id}`)}
-                >
-                  Edit this BorrWow item
-                </Button>
-              )}
           </div>
         </div>
         <div className={styles.imageContainer}>
-          {isLoggedIn && (
+          {isAuthenticated && (
             <button
               className={`${styles.favoriteBtn} ${
                 isFavorite ? styles.active : ""
@@ -122,6 +111,20 @@ const ItemDetailsPage = () => {
           )}
           <img src={item.image} alt={item.itemname} className={styles.image} />
         </div>
+
+        {token &&
+          userId &&
+          item.owner &&
+          userId === item.owner._id.toString() && (
+            <Button
+              variant="filled"
+              color="#224eff"
+              className={styles.button}
+              onClick={() => navigate(`/edit/${id}`)}
+            >
+              Edit this BorrWow item
+            </Button>
+          )}
       </div>
 
       <BRequestModal

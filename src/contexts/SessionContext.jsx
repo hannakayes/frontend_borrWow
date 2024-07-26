@@ -5,13 +5,14 @@ export const SessionContext = createContext();
 
 const SessionContextProvider = ({ children }) => {
   const [token, setToken] = useState(null);
-  const [userId, setUserId] = useState(null); // Added userId state
+  const [userId, setUserId] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   const removeToken = () => {
     window.localStorage.removeItem("authToken");
+    window.localStorage.removeItem("userId");
   };
 
   const verifyToken = async (tokenToVerify) => {
@@ -25,16 +26,17 @@ const SessionContextProvider = ({ children }) => {
         }
       );
       if (response.status === 200) {
-        const data = await response.json(); // Added to get userId
+        const data = await response.json();
+        console.log("Verify Token Response:", data); // Log the response
         setToken(tokenToVerify);
-        setUserId(data.userId); // Store userId
+        setUserId(data.userId);
         setIsAuthenticated(true);
       } else {
         removeToken();
         setIsAuthenticated(false);
       }
     } catch (error) {
-      console.error(error);
+      console.error("Error in verifyToken:", error);
       removeToken();
       setIsAuthenticated(false);
     } finally {
@@ -44,7 +46,9 @@ const SessionContextProvider = ({ children }) => {
 
   useEffect(() => {
     const localToken = window.localStorage.getItem("authToken");
-    if (localToken) {
+    const localUserId = window.localStorage.getItem("userId");
+    if (localToken && localUserId) {
+      setUserId(localUserId); // Make sure this is set correctly
       verifyToken(localToken);
     } else {
       setIsLoading(false);
@@ -54,14 +58,15 @@ const SessionContextProvider = ({ children }) => {
   useEffect(() => {
     if (token) {
       window.localStorage.setItem("authToken", token);
+      window.localStorage.setItem("userId", userId); // Ensure this line is reached
       setIsAuthenticated(true);
     }
-  }, [token]);
+  }, [token, userId]);
 
   const handleLogout = () => {
     removeToken();
     setToken(null);
-    setUserId(null); // Clear userId on logout
+    setUserId(null);
     setIsAuthenticated(false);
     navigate("/");
   };
@@ -72,7 +77,7 @@ const SessionContextProvider = ({ children }) => {
         isAuthenticated,
         isLoading,
         token,
-        userId, // Provide userId in context
+        userId,
         setToken,
         handleLogout,
       }}

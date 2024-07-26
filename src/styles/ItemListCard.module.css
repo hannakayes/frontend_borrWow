@@ -96,6 +96,10 @@
   background-color: #c2b9f5;
 }
 
+.categoryLabel.vehicles {
+  background-color: #92c3fe;
+}
+
 .status {
   font-size: 0.8em;
   margin-left: 8px;

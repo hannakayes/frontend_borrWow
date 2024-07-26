@@ -11,7 +11,7 @@ const ItemListCard = ({ item, onFavoriteChange }) => {
     location,
     availability,
     _id,
-    image,
+    imageUrl,
   } = item;
 
   const [isFavorite, setIsFavorite] = useState(false);
@@ -85,7 +85,7 @@ const ItemListCard = ({ item, onFavoriteChange }) => {
       <div className={`${styles.categoryLabel} ${styles[formattedCategory]}`}>
         {category}
       </div>
-      <img src={image} alt={itemname} className={styles.image} />
+      <img src={imageUrl} alt={itemname} className={styles.image} />
       <div className={styles.details}>
         <div className={styles.itemNameContainer}>
           <h2 className={styles.itemName}>{itemname}</h2>

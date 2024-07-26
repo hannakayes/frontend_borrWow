@@ -1,12 +1,10 @@
 import React from "react";
 import { Button } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
-import styles from "../styles/ItemListCard.module.css";
+import styles from "../styles/BRequestCard.module.css"; // Import the updated CSS module
 
 const BRequestCard = ({ request }) => {
   const navigate = useNavigate();
-
-  // Extract properties from request
   const {
     item,
     pickupDate,
@@ -17,7 +15,6 @@ const BRequestCard = ({ request }) => {
     _id,
   } = request;
 
-  // Handle button click to navigate to details
   const handleViewDetails = () => {
     navigate(`/borrowrequests/${_id}`);
   };
@@ -26,34 +23,43 @@ const BRequestCard = ({ request }) => {
     navigate(`/borrWow/${_id}`);
   };
 
-  // Determine the appropriate status class
   const statusClass = `${styles.status} ${styles[status] || ""}`;
 
   return (
     <div className={styles.card}>
-      <div className={styles.categoryLabel}>{status}</div>
-
+      {item.image && (
+        <img src={item.image} alt={item.itemname} className={styles.image} />
+      )}
+      <div className={statusClass}>{status}</div>
       <div className={styles.details}>
         <div className={styles.itemNameContainer}>
-          <h2 className={styles.item}>
+          <h2 className={styles.itemName}>
             {item ? item.itemname : "Unknown Item"}
           </h2>
-          <p className={statusClass}>{status}</p>
         </div>
-        <p className={styles.location}>
-          Pickup Location: {pickupLocation || "Unknown Location"}
+        <p>
+          Pickup Location:{" "}
+          <span className={styles.locationValue}>
+            {pickupLocation || "Unknown Location"}
+          </span>
         </p>
-        <p className={styles.location}>
-          Return Location: {returnLocation || "Unknown Location"}
+        <p>
+          Return Location:{" "}
+          <span className={styles.locationValue}>
+            {returnLocation || "Unknown Location"}
+          </span>
         </p>
-        <p className={styles.requestDate}>
-          Request Date Range: {new Date(pickupDate).toLocaleDateString()} -{" "}
-          {new Date(returnDate).toLocaleDateString()}
+        <p>
+          Request Date Range:{" "}
+          <span className={styles.requestDateValue}>
+            {new Date(pickupDate).toLocaleDateString()} -{" "}
+            {new Date(returnDate).toLocaleDateString()}
+          </span>
         </p>
         <div className={styles.buttonContainer}>
           <Button
             onClick={handleViewDetails}
-            variant="filled"
+            variant="outline"
             color="#224EFF"
             size="xs"
             className={styles.button}
@@ -62,12 +68,12 @@ const BRequestCard = ({ request }) => {
           </Button>
           <Button
             onClick={handleEditRequest}
-            variant="filled"
+            variant="outline"
             color="#224EFF"
             size="xs"
             className={styles.button}
           >
-            Edit Borrow Request
+            Edit Borrow Request Edit Borrow Request
           </Button>
         </div>
       </div>

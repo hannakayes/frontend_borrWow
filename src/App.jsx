@@ -66,7 +66,7 @@ function App() {
               </PrivateRoute>
             }
           />
-
+          
           <Route path="/items" element={<ItemListPage />} />
           <Route path="/items/:id" element={<ItemDetailsPage />} />
           {/* Catch-all route for undefined paths */}

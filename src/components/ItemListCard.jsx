@@ -15,11 +15,16 @@ const ItemListCard = ({ item, onFavoriteChange }) => {
   } = item;
 
   const [isFavorite, setIsFavorite] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     // Check local storage to determine if item is already a favorite
     const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
     setIsFavorite(favorites.includes(_id));
+
+    // Check if user is logged in
+    const token = localStorage.getItem("authToken");
+    setIsLoggedIn(!!token); // Set login state based on presence of token
   }, [_id]);
 
   // Truncate description to 140 characters
@@ -68,13 +73,15 @@ const ItemListCard = ({ item, onFavoriteChange }) => {
 
   return (
     <div className={styles.card}>
-      <button
-        className={`${styles.favoriteBtn} ${isFavorite ? styles.active : ""}`}
-        onClick={handleFavoriteClick}
-        aria-label="Toggle favorite"
-      >
-        ♥
-      </button>
+      {isLoggedIn && (
+        <button
+          className={`${styles.favoriteBtn} ${isFavorite ? styles.active : ""}`}
+          onClick={handleFavoriteClick}
+          aria-label="Toggle favorite"
+        >
+          ♥
+        </button>
+      )}
       <div className={`${styles.categoryLabel} ${styles[formattedCategory]}`}>
         {category}
       </div>
@@ -94,7 +101,7 @@ const ItemListCard = ({ item, onFavoriteChange }) => {
             size="xs"
             className={styles.button}
           >
-            View Details
+            borrWow!
           </Button>
         </div>
       </div>

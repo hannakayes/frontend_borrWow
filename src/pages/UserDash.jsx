@@ -41,7 +41,7 @@ function UserDash() {
                 color="#224eff"
                 className={styles.button}
               >
-                See all BorrWows{" "}
+                Your BorrWows{" "}
               </Button>
               <Button
                 component={Link}
@@ -59,16 +59,16 @@ function UserDash() {
                 color="#224eff"
                 className={styles.button}
               >
-                incoming borrWow requests
+                Incoming requests
               </Button>
               <Button
                 component={Link}
-                to="/borrowed"
+                to="/requestedByYOU"
                 variant="outline"
                 color="#224eff"
                 className={styles.button}
               >
-                things you want to borrWow from others
+                Your requests
               </Button>
             </SimpleGrid>
           </div>

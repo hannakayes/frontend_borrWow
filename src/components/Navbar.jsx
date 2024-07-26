@@ -22,14 +22,20 @@ function Navbar() {
       </Link>
       <div className={styles.leftSideLinks}>
         <Link to="/items" className={styles.borrowLink}>
-          BORROW NOW!
+          BORROW
         </Link>
         {isAuthenticated && (
-          <Link to="/favorites" className={styles.favoritesLink}>
-            FAVORITES
-          </Link>
+          <>
+            <Link to="/favorites" className={styles.favoritesLink}>
+              FAVORITES
+            </Link>
+            <Link to="/newitem" className={styles.shareLink}>
+              SHARE
+            </Link>
+          </>
         )}
       </div>
+
       <div className={styles.buttonContainer}>
         {!isAuthenticated ? (
           <>

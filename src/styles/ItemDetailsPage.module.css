@@ -1,7 +1,113 @@
-.container {
-  padding: 20px;
+.page {
+  padding: 40px;
+  background-color: #f9f9f9;
 }
 
-.center {
-  text-align: center;
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.imageContainer {
+  position: relative;
+}
+
+.image {
+  width: 500px;
+  height: 500px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.favoriteBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.3s, background-color 0.3s;
+}
+
+.favoriteBtn:hover {
+  color: #224eff; /* Change to your preferred color */
+  background-color: #f0f0f0;
+}
+
+.favoriteBtn.active {
+  color: #224eff; /* Change to your preferred color when active */
+  background-color: #fff;
+}
+
+.details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.categoryLabel {
+  font-weight: bold;
+  color: #fff;
+  background-color: #ff8c8c; /* Set to match the category color */
+  padding: 8px 12px;
+  border-radius: 8px;
+  align-self: flex-start;
+}
+
+.itemNameContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.itemName {
+  font-size: 2em;
+  margin: 0;
+}
+
+.status {
+  font-size: 1em;
+  color: #9e9e9e;
+}
+
+.location {
+  font-size: 1em;
+  color: #666;
+}
+
+.description {
+  font-size: 1em;
+  color: #333;
+}
+
+.owner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1em;
+  color: #666;
+}
+
+.buttonContainer {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.button {
+  padding: 10px 20px;
+  font-size: 1em;
 }

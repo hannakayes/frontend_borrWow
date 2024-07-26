@@ -17,6 +17,7 @@ const ItemDetailsPage = () => {
   const [error, setError] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [modalOpened, setModalOpened] = useState(false);
+  const { token, userId } = useContext(SessionContext);
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
@@ -93,9 +94,9 @@ const ItemDetailsPage = () => {
             </Button>
 
             {token &&
-              user &&
+              userId &&
               item.owner &&
-              user.id === item.owner.id && ( // Check if user is the owner
+              userId === item.owner.id && ( // Check if user is the owner
                 <Button
                   variant="filled"
                   color="#224eff"

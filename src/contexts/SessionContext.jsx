@@ -46,9 +46,7 @@ const SessionContextProvider = ({ children }) => {
 
   useEffect(() => {
     const localToken = window.localStorage.getItem("authToken");
-    const localUserId = window.localStorage.getItem("userId");
-    if (localToken && localUserId) {
-      setUserId(localUserId); // Make sure this is set correctly
+    if (localToken) {
       verifyToken(localToken);
     } else {
       setIsLoading(false);
@@ -58,10 +56,10 @@ const SessionContextProvider = ({ children }) => {
   useEffect(() => {
     if (token) {
       window.localStorage.setItem("authToken", token);
-      window.localStorage.setItem("userId", userId); // Ensure this line is reached
-      setIsAuthenticated(true);
+      verifyToken(token);
+      //the response of verifyToken(token) will give me the userId
     }
-  }, [token, userId]);
+  }, [token]);
 
   const handleLogout = () => {
     removeToken();

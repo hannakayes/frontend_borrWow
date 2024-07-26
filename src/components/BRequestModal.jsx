@@ -27,18 +27,16 @@ const BRequestModal = ({ itemId, modalOpened, setModalOpened }) => {
         returnLocation,
       };
 
-      const bodyData = JSON.stringify({
-        ...values,
-        item: itemId,
-      });
-
       const response = await fetch("http://localhost:5005/api/borrowrequests", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`, // Ensure token is correctly included
         },
-        body: bodyData,
+        body: JSON.stringify({
+          ...values,
+          item: itemId,
+        }),
       });
 
       if (!response.ok) {

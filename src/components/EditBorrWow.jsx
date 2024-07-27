@@ -58,7 +58,7 @@ function EditBorrWow() {
     };
 
     fetchItemData();
-  }, [id, token, form]);
+  }, [id, token]);
 
   // Handle form submission
   const handleSubmit = async (values) => {

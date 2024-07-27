@@ -68,7 +68,7 @@ function EditBRequestForm() {
     };
 
     fetchBorrowRequestData();
-  }, [id, token, form]);
+  }, [id, token]);
 
   // Handle form submission
   const handleSubmit = async (values) => {

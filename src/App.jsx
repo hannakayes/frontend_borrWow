@@ -1,21 +1,21 @@
-import React from "react";
-import "@mantine/core/styles.css";
-import { Route, Routes } from "react-router-dom";
-import LandingPage from "./pages/LandingPage";
-import LoginPage from "./pages/LoginPage";
-import SignUpPage from "./pages/SignUpPage";
-import UserDash from "./pages/UserDash";
-import CreateNewItemPage from "./pages/CreateNewItemPage";
-import ItemListPage from "./pages/ItemListPage";
-import ItemDetailsPage from "./pages/ItemDetailsPage";
-import BRequestsBYUserPage from "./pages/BRequestsBYUserPage";
-import FavoritesPage from "./pages/FavoritesPage"; // Import your FavoritesPage component
-import EditBorrWow from "./components/EditBorrWow";
-import ErrorPage from "./pages/404ErrorPage"; // Import the ErrorPage component
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
-import PrivateRoute from "./components/PrivateRoute";
-import EditItemPage from "./pages/EditItemPage";
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import LandingPage from './pages/LandingPage';
+import LoginPage from './pages/LoginPage';
+import SignUpPage from './pages/SignUpPage';
+import UserDash from './pages/UserDash';
+import CreateNewItemPage from './pages/CreateNewItemPage';
+import ItemListPage from './pages/ItemListPage';
+import ItemDetailsPage from './pages/ItemDetailsPage';
+import BRequestsBYUserPage from './pages/BRequestsBYUserPage';
+import FavoritesPage from './pages/FavoritesPage';
+import ErrorPage from './pages/404ErrorPage';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
+import PrivateRoute from './components/PrivateRoute';
+import CreateBRequestPage from './pages/CreateNewBRequestPage';
+import SearchResultsPage from './pages/SearchResultsPage';
+import UserBorrWows from "./pages/UserBorrWows"; // Import the new component
 
 function App() {
   return (
@@ -26,6 +26,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
+          
           <Route
             path="/userdash"
             element={
@@ -66,10 +67,17 @@ function App() {
               </PrivateRoute>
             }
           />
-
+          <Route
+            path="/user-borrwows"
+            element={
+              <PrivateRoute>
+                <UserBorrWows />
+              </PrivateRoute>
+            }
+          />
           <Route path="/items" element={<ItemListPage />} />
           <Route path="/items/:id" element={<ItemDetailsPage />} />
-          {/* Catch-all route for undefined paths */}
+          <Route path="/search" element={<SearchResultsPage />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </main>

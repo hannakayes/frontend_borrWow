@@ -36,13 +36,11 @@ function Navbar() {
           </>
         )}
       </div>
-<<<<<<< HEAD
-
-=======
-      <div className={styles.searchContainer}> {/* Add a container for the search bar */}
+      <div className={styles.searchContainer}>
+        {" "}
+        {/* Add a container for the search bar */}
         <SearchBar /> {/* Add the SearchBar component */}
       </div>
->>>>>>> Kubilay2
       <div className={styles.buttonContainer}>
         {!isAuthenticated ? (
           <>

@@ -1,21 +1,22 @@
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
-import LandingPage from './pages/LandingPage';
-import LoginPage from './pages/LoginPage';
-import SignUpPage from './pages/SignUpPage';
-import UserDash from './pages/UserDash';
-import CreateNewItemPage from './pages/CreateNewItemPage';
-import ItemListPage from './pages/ItemListPage';
-import ItemDetailsPage from './pages/ItemDetailsPage';
-import BRequestsBYUserPage from './pages/BRequestsBYUserPage';
-import FavoritesPage from './pages/FavoritesPage';
-import ErrorPage from './pages/404ErrorPage';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import PrivateRoute from './components/PrivateRoute';
-import CreateBRequestPage from './pages/CreateNewBRequestPage';
-import SearchResultsPage from './pages/SearchResultsPage';
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import LandingPage from "./pages/LandingPage";
+import LoginPage from "./pages/LoginPage";
+import SignUpPage from "./pages/SignUpPage";
+import UserDash from "./pages/UserDash";
+import CreateNewItemPage from "./pages/CreateNewItemPage";
+import ItemListPage from "./pages/ItemListPage";
+import ItemDetailsPage from "./pages/ItemDetailsPage";
+import BRequestsBYUserPage from "./pages/BRequestsBYUserPage";
+import FavoritesPage from "./pages/FavoritesPage";
+import ErrorPage from "./pages/404ErrorPage";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import PrivateRoute from "./components/PrivateRoute";
+//import CreateBRequestPage from './pages/CreateNewBRequestPage';
+import SearchResultsPage from "./pages/SearchResultsPage";
 import UserBorrWows from "./pages/UserBorrWows"; // Import the new component
+import EditItemPage from "./pages/EditItemPage";
 
 function App() {
   return (
@@ -26,7 +27,7 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
-          
+
           <Route
             path="/userdash"
             element={

@@ -17,6 +17,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import SearchResultsPage from "./pages/SearchResultsPage";
 import UserBorrWows from "./pages/UserBorrWows"; // Import the new component
 import EditItemPage from "./pages/EditItemPage";
+import BRequestsTOUserPage from "./pages/BRequestsTOUserPage";
 
 function App() {
   return (
@@ -57,6 +58,14 @@ function App() {
             element={
               <PrivateRoute>
                 <BRequestsBYUserPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/incomingrequests"
+            element={
+              <PrivateRoute>
+                <BRequestsTOUserPage />
               </PrivateRoute>
             }
           />

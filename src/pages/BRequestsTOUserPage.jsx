@@ -1,40 +1,50 @@
-import React, { UseContext } from "react";
-import { Link } from "react-router-dom";
-import styles from "../styles/ItemListCard.module.css";
+import { useEffect, useState, useContext } from "react";
+import BRequestCard from "../components/BRequestCard";
+import styles from "../styles/ItemListPage.module.css";
 import { SessionContext } from "../contexts/SessionContext";
-const ItemListPage = () => {
-  const [items, setItems] = useState([]);
+
+const BRequestsTOUserPage = () => {
+  const [requests, setRequests] = useState([]);
   const [error, setError] = useState(null);
+  const { token } = useContext(SessionContext);
 
   useEffect(() => {
-    const fetchItems = async () => {
+    const fetchBYRequests = async () => {
       try {
-        const response = await fetch("http://localhost:5005/api/items");
+        const response = await fetch(
+          "http://localhost:5005/api/borrowrequests/incomingrequest",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
-        setItems(data);
+        setRequests(data);
       } catch (error) {
         setError(error.message);
       }
     };
 
-    fetchItems();
-  }, []);
+    fetchBYRequests();
+  }, [token]);
 
   if (error) return <p>Error: {error}</p>;
-  if (!items.length) return <p>Loading...</p>;
+  if (!requests.length) return <p>Loading...</p>;
 
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        {items.map((item) => (
-          <ItemListCard key={item._id} item={item} />
+        {requests.map((request) => (
+          <BRequestCard key={request._id} request={request} />
         ))}
       </div>
     </div>
   );
 };
 
-export default ItemListPage;
+export default BRequestsTOUserPage;

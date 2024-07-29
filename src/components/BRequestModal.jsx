@@ -1,5 +1,3 @@
-// src/components/BRequestModal.jsx
-
 import React, { useState, useContext } from "react";
 import { Modal, Button, TextInput } from "@mantine/core";
 import { DatePicker } from "@mantine/dates";
@@ -8,7 +6,7 @@ import { SessionContext } from "../contexts/SessionContext";
 import "@mantine/dates/styles.css";
 
 const BRequestModal = ({ itemId, modalOpened, setModalOpened }) => {
-  const { token } = useContext(SessionContext);
+  const { token, userId } = useContext(SessionContext);
   const navigate = useNavigate();
   const [dateRange, setDateRange] = useState([null, null]);
   const [pickupLocation, setPickupLocation] = useState("");
@@ -25,18 +23,16 @@ const BRequestModal = ({ itemId, modalOpened, setModalOpened }) => {
         returnDate: dateRange[1],
         pickupLocation,
         returnLocation,
+        itemId,
       };
 
       const response = await fetch("http://localhost:5005/api/borrowrequests", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`, // Ensure token is correctly included
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({
-          ...values,
-          item: itemId,
-        }),
+        body: JSON.stringify(values),
       });
 
       if (!response.ok) {

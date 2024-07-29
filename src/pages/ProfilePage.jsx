@@ -13,7 +13,7 @@ function ProfilePage() {
     const fetchUser = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5005/api/users/${userId}`,
+          `${import.meta.env.VITE_API_URL}/api/users/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

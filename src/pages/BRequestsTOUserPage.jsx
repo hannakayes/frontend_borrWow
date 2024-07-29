@@ -33,7 +33,7 @@ const BRequestsTOUserPage = () => {
   }, [token]);
 
   if (error) return <p>Error: {error}</p>;
-  if (!requests.length) return <p>Loading...</p>;
+  if (!requests.length) return <p>There are no requests for you right now</p>;
 
   return (
     <div className={styles.page}>

@@ -12,14 +12,8 @@ const BRequestsTOUserPage = () => {
     const fetchBYRequests = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5005/api/borrowrequests/incomingrequest",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+          `${import.meta.env.VITE_API_URL}/api/items`
         );
-
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }

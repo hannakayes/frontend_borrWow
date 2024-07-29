@@ -20,7 +20,7 @@ function UserBorrWows() {
     const fetchUserItems = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5005/api/items/user/items",
+          `${import.meta.env.VITE_API_URL}/api/items/user/items`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -49,7 +49,7 @@ function UserBorrWows() {
   const handleDelete = async (itemId) => {
     try {
       const response = await fetch(
-        `http://localhost:5005/api/items/${itemId}`,
+        `${import.meta.env.VITE_API_URL}/api/items/${itemId}`,
         {
           method: "DELETE",
           headers: {

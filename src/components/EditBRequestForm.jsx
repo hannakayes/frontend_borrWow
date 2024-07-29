@@ -41,7 +41,7 @@ function EditBRequestForm() {
     const fetchBorrowRequestData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5005/api/borrowrequests/${id}`,
+          `${import.meta.env.VITE_API_URL}/api/borrowrequests/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -74,7 +74,7 @@ function EditBRequestForm() {
   const handleSubmit = async (values) => {
     try {
       const response = await fetch(
-        `http://localhost:5005/api/borrowrequests/${id}`,
+        `${import.meta.env.VITE_API_URL}/api/borrowrequests/${id}`,
         {
           method: "PUT",
           headers: {

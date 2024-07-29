@@ -26,14 +26,20 @@ const BRequestModal = ({ itemId, modalOpened, setModalOpened }) => {
         itemId,
       };
 
-      const response = await fetch("http://localhost:5005/api/borrowrequests", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(values),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/borrowrequests`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`, // Ensure token is correctly included
+          },
+          body: JSON.stringify({
+            ...values,
+            item: itemId,
+          }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to create borrow request");

@@ -33,14 +33,17 @@ function AddItemForm() {
         throw new Error("No authentication token found");
       }
 
-      const response = await fetch("http://localhost:5005/api/items", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(values),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/items`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(values),
+        }
+      );
 
       if (!response.ok) {
         const error = await response.text();

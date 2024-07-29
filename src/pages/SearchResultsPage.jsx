@@ -1,18 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 const SearchResultsPage = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const searchTerm = searchParams.get('query') || '';
+  const searchTerm = searchParams.get("query") || "";
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const url = `http://localhost:5005/api/items/search?query=${encodeURIComponent(searchTerm)}`;
+        const url = `${
+          import.meta.env.VITE_API_URL
+        }/api/items/search?query=${encodeURIComponent(searchTerm)}`;
         console.log(`Fetching data from URL: ${url}`);
         const response = await fetch(url);
         if (!response.ok) {
@@ -21,7 +23,7 @@ const SearchResultsPage = () => {
         const data = await response.json();
         setData(data);
       } catch (error) {
-        console.error('Error fetching search results: ', error);
+        console.error("Error fetching search results: ", error);
       } finally {
         setLoading(false);
       }
@@ -38,9 +40,7 @@ const SearchResultsPage = () => {
       ) : (
         <ul>
           {data.length > 0 ? (
-            data.map((item) => (
-              <li key={item._id}>{item.itemname}</li>
-            ))
+            data.map((item) => <li key={item._id}>{item.itemname}</li>)
           ) : (
             <li>No results found</li>
           )}

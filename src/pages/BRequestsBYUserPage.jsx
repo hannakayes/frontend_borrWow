@@ -38,6 +38,7 @@ const BRequestsBYUserPage = () => {
 
   return (
     <div className={styles.page}>
+      <h1>Outgoing Requests</h1>
       <div className={styles.container}>
         {requests.map((request) => (
           <BRequestCard key={request._id} request={request} />

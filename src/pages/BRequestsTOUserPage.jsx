@@ -9,10 +9,15 @@ const BRequestsTOUserPage = () => {
   const { token } = useContext(SessionContext);
 
   useEffect(() => {
-    const fetchBYRequests = async () => {
+    const fetchTORequests = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/items`
+          `${import.meta.env.VITE_API_URL}/api/borrowrequests/incomingrequest`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -24,7 +29,7 @@ const BRequestsTOUserPage = () => {
       }
     };
 
-    fetchBYRequests();
+    fetchTORequests();
   }, [token]);
 
   if (error) return <p>Error: {error}</p>;
@@ -32,6 +37,7 @@ const BRequestsTOUserPage = () => {
 
   return (
     <div className={styles.page}>
+      <h1>Incoming Requests</h1>
       <div className={styles.container}>
         {requests.map((request) => (
           <BRequestCard key={request._id} request={request} />

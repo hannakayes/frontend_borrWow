@@ -34,10 +34,7 @@ const BRequestModal = ({ itemId, modalOpened, setModalOpened }) => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`, // Ensure token is correctly included
           },
-          body: JSON.stringify({
-            ...values,
-            item: itemId,
-          }),
+          body: JSON.stringify(values),
         }
       );
 

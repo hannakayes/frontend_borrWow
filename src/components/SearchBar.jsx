@@ -6,7 +6,7 @@ const SearchBar = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const navigate = useNavigate();
 
-  
+  // Debounce function to delay the search
   const debounce = (func, delay) => {
     let timer;
     return function (...args) {
@@ -19,18 +19,19 @@ const SearchBar = () => {
     };
   };
 
-  
+  // Navigate to search results with the query
   const handleSearch = (query) => {
     if (query) {
       navigate(`/search?query=${encodeURIComponent(query.toLowerCase())}`);
     } else {
-      navigate(-1); 
+      navigate(-1); // Navigate back if no search term
     }
   };
 
+  // Debounced version of handleSearch
   const debouncedSearch = useCallback(debounce(handleSearch, 300), []);
 
-  
+  // Handle input change and trigger debounced search
   const handleInputChange = (event) => {
     const trimmedSearchTerm = event.target.value.trim();
     setSearchTerm(trimmedSearchTerm);
@@ -44,7 +45,7 @@ const SearchBar = () => {
         placeholder="Search..."
         value={searchTerm}
         onChange={handleInputChange}
-        className={styles.searchInput} 
+        className={styles.searchInput} // Apply styles to the input
       />
       <button type="submit" className={styles.searchButton} onClick={(e) => e.preventDefault()}>
         Search

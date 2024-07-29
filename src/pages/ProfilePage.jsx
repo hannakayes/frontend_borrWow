@@ -8,6 +8,8 @@ function ProfilePage() {
   const [username, setUsername] = useState("");
   const [image, setImage] = useState("");
   const [error, setError] = useState(null);
+  const placeholderImage =
+    "https://imgs.search.brave.com/C-UIp7kXF_5QPP3lsw0Xgy8i1KqZlQJrdPn3o9yCbmI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9jZG4x/Lmljb25maW5kZXIu/Y29tL2RhdGEvaWNv/bnMvYW5jaG9yLzEy/OC9pbWFnZS5wbmc";
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -26,7 +28,7 @@ function ProfilePage() {
         const data = await response.json();
         setUser(data);
         setUsername(data.username || "");
-        setImage(data.image || "");
+        setImage(data.imageUrl || "");
       } catch (error) {
         setError(error.message);
       }
@@ -36,6 +38,9 @@ function ProfilePage() {
   }, [userId, token]);
 
   const handleUpdate = async () => {
+    const body = JSON.stringify({ username, imageUrl: image });
+    console.log(body); // Log the body before making the request
+
     try {
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/users/${userId}`,
@@ -45,7 +50,7 @@ function ProfilePage() {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ username, image }),
+          body: body,
         }
       );
       if (!response.ok) {
@@ -66,7 +71,7 @@ function ProfilePage() {
     <Container>
       <Group direction="column" align="center">
         <Image
-          src={user.image || "default-image-url"}
+          src={user.imageUrl || placeholderImage}
           alt={user.username}
           radius="md"
           width={120}

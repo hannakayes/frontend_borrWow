@@ -18,6 +18,7 @@ import SearchResultsPage from "./pages/SearchResultsPage";
 import UserBorrWows from "./pages/UserBorrWows"; // Import the new component
 import EditItemPage from "./pages/EditItemPage";
 import BRequestsTOUserPage from "./pages/BRequestsTOUserPage";
+import ProfilePage from "./pages/ProfilePage";
 
 function App() {
   return (
@@ -34,6 +35,14 @@ function App() {
             element={
               <PrivateRoute>
                 <UserDash />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <PrivateRoute>
+                <ProfilePage />
               </PrivateRoute>
             }
           />

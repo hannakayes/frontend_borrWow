@@ -1,56 +1,39 @@
 /* SearchBar.module.css */
-.searchContainer {
-    position: relative; /* To position the suggestions absolutely */
-  }
-  
-  .searchForm {
-    display: flex;
-    align-items: center;
-    gap: 8px; /* Space between input and button */
-  }
-  
-  .searchInput {
-    flex: 1; /* Input takes up available space */
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
-  
-  .searchButton {
-    padding: 8px 16px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .searchButton:hover {
-    background-color: #0056b3;
-  }
-  
-  .suggestions {
-    position: absolute;
-    top: 100%; /* Place below the input field */
-    left: 0;
-    width: 100%;
-    max-height: 200px; /* Limit the height of suggestions list */
-    overflow-y: auto; /* Enable scrolling if there are many suggestions */
-    background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    z-index: 10; /* Ensure suggestions appear above other elements */
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-  }
-  
-  .suggestion {
-    padding: 8px;
-    cursor: pointer;
-  }
-  
-  .suggestion:hover {
-    background-color: #f0f0f0;
-  }
-  
+
+.searchForm {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between input and button */
+  height: 36px; /* Match button height */
+}
+
+.searchInput {
+  flex: 1;
+  padding: 8px;
+  border: none; /* Remove default border */
+  border-radius: 4px;
+  height: 100%; /* Match height of form */
+  box-shadow: 0 0 0 1px #ddd; /* Initial thin border simulation */
+  transition: box-shadow 0.3s ease; /* Smooth transition for box-shadow */
+}
+
+.searchInput:focus {
+  box-shadow: 0 0 0 1px #224eff; /* Thinner border effect on focus */
+  outline: none; /* Remove default outline on focus */
+}
+
+.searchButton {
+  padding: 6px 16px;
+  font-size: 1rem;
+  background-color: #224eff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  height: 100%; /* Match height of form */
+  font-weight: 500;
+}
+
+.searchButton:hover {
+  background-color: #1f46e6;
+}

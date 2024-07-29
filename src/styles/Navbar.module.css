@@ -2,12 +2,23 @@
 
 .navbar {
   display: flex;
-  align-items: center; /* Align items vertically in the center */
+  align-items: center;
   padding: 10px 20px;
   width: 100%;
   border-bottom: 1px solid #ddd;
   box-sizing: border-box;
-  position: relative; /* Ensure the positioning context for absolute positioning */
+}
+
+.leftSideLinks,
+.searchContainer,
+.buttonContainer {
+  display: flex;
+  align-items: center;
+}
+
+.searchContainer {
+  flex-grow: 1; /* Ensure it takes available space */
+  margin: 0 20px; /* Adjust margin as needed */
 }
 
 .navLink {

@@ -19,25 +19,26 @@ function SignUpPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     setLoading(true);
     setError(null);
 
     try {
-    
-      const response = await fetch("http://localhost:5005/auth/signup", { 
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, email, password }),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/auth/signup`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, email, password }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Sign up failed.");
       }
 
-  
       navigate("/login");
     } catch (err) {
       setError(err.message);
@@ -51,7 +52,7 @@ function SignUpPage() {
       <Title align="center">Sign Up</Title>
       <Paper withBorder shadow="md" p={30} mt={30} radius="md">
         <form onSubmit={handleSubmit}>
-          {error && <p style={{ color: 'red' }}>{error}</p>}
+          {error && <p style={{ color: "red" }}>{error}</p>}
           <TextInput
             label="Username"
             placeholder="Your username"

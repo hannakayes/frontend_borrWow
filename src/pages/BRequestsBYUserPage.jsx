@@ -12,7 +12,7 @@ const BRequestsBYUserPage = () => {
     const fetchBYRequests = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/borrowrequests/requested',
+          `${import.meta.env.VITE_API_URL}/api/borrowrequests/requested`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

@@ -34,11 +34,14 @@ function EditBorrWow() {
   useEffect(() => {
     const fetchItemData = async () => {
       try {
-        const response = await fetch(`http://localhost:5005/api/items/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/items/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         if (!response.ok) {
           const errorText = await response.text();
@@ -72,14 +75,17 @@ function EditBorrWow() {
 
   const handleSubmit = async (values) => {
     try {
-      const response = await fetch(`http://localhost:5005/api/items/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(values),
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/items/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(values),
+        }
+      );
 
       if (!response.ok) {
         const errorText = await response.text();

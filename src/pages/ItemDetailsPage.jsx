@@ -27,7 +27,9 @@ const ItemDetailsPage = () => {
   useEffect(() => {
     const fetchItem = async () => {
       try {
-        const response = await fetch(`http://localhost:5005/api/items/${id}`);
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/items/${id}`
+        );
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }
@@ -61,12 +63,15 @@ const ItemDetailsPage = () => {
 
   const handleDelete = async () => {
     try {
-      const response = await fetch(`http://localhost:5005/api/items/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/items/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (!response.ok) {
         throw new Error("Failed to delete the item.");
       }

@@ -12,9 +12,11 @@ const SearchBar = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (searchTerm.trim()) {
-      navigate(`/search?query=${encodeURIComponent(searchTerm.trim())}`);
+    
+      const lowerCaseSearchTerm = searchTerm.trim().toLowerCase();
+      navigate(`/search?query=${encodeURIComponent(lowerCaseSearchTerm)}`);
     } else {
-      navigate('/userdash'); // Redirect to UserDash if searchTerm is empty
+      navigate(-1); 
     }
   };
 

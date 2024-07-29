@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import ItemListCard from "../components/ItemListCard"; 
 import styles from "../styles/SearchResultsPage.module.css"; 
 
+
 const SearchResultsPage = () => {
   const [items, setItems] = useState([]);
   const [error, setError] = useState(null);

@@ -1,0 +1,56 @@
+/* SearchBar.module.css */
+.searchContainer {
+    position: relative; /* To position the suggestions absolutely */
+  }
+  
+  .searchForm {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Space between input and button */
+  }
+  
+  .searchInput {
+    flex: 1; /* Input takes up available space */
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .searchButton {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .searchButton:hover {
+    background-color: #0056b3;
+  }
+  
+  .suggestions {
+    position: absolute;
+    top: 100%; /* Place below the input field */
+    left: 0;
+    width: 100%;
+    max-height: 200px; /* Limit the height of suggestions list */
+    overflow-y: auto; /* Enable scrolling if there are many suggestions */
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    z-index: 10; /* Ensure suggestions appear above other elements */
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .suggestion {
+    padding: 8px;
+    cursor: pointer;
+  }
+  
+  .suggestion:hover {
+    background-color: #f0f0f0;
+  }
+  

@@ -1,27 +1,18 @@
-import React, { useContext, useState } from "react";
-import { Select, Button, TextInput, Checkbox, Group } from "@mantine/core";
+import React, { useState, useContext } from "react";
+import { Modal, Button, TextInput } from "@mantine/core";
 import { DatePicker } from "@mantine/dates";
-
-import { useForm } from "@mantine/form";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { SessionContext } from "../contexts/SessionContext";
-import styles from "../styles/AddItemForm.module.css";
+import "@mantine/dates/styles.css";
 
-function CreateBRequestForm() {
-  const { token, userId } = useContext(SessionContext); // Get userId from context
+const BRequestModal = ({ itemId, modalOpened, setModalOpened }) => {
+  const { token, userId } = useContext(SessionContext);
   const navigate = useNavigate();
-  const { id } = useParams(); // Assuming the item ID is passed as a URL parameter
-
-  const form = useForm({
-    initialValues: {
-      location: "",
-      termsOfService: false,
-    },
-  });
+  const [dateRange, setDateRange] = useState([null, null]);
+  const [pickupLocation, setPickupLocation] = useState("");
+  const [returnLocation, setReturnLocation] = useState("");
 
   const handleRequest = async () => {
-    console.log("Token:", token);
-
     try {
       if (!token) {
         throw new Error("No authentication token");
@@ -32,16 +23,8 @@ function CreateBRequestForm() {
         returnDate: dateRange[1],
         pickupLocation,
         returnLocation,
+        itemId,
       };
-
-      console.log("Values being sent:", values);
-
-      const bodyData = JSON.stringify({
-        ...values,
-        item: id,
-      });
-
-      console.log("Serialized body data:", bodyData);
 
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/borrowrequests`,
@@ -49,9 +32,9 @@ function CreateBRequestForm() {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`, // Ensure token is correctly included
           },
-          body: bodyData,
+          body: JSON.stringify(values),
         }
       );
 
@@ -62,16 +45,17 @@ function CreateBRequestForm() {
       const data = await response.json();
       console.log("Borrow request created:", data);
       navigate("/requestedByYOU");
-      setModalOpened(false); // Close modal after successful request
+      setModalOpened(false);
     } catch (error) {
       console.error("Error:", error);
     }
   };
 
   return (
-    <form
-      className={styles.container}
-      onSubmit={form.onSubmit((values) => handleSubmit(values))}
+    <Modal
+      opened={modalOpened}
+      onClose={() => setModalOpened(false)}
+      title="BorrWow it!"
     >
       <DatePicker
         type="range"
@@ -79,25 +63,25 @@ function CreateBRequestForm() {
         label="Select Date Range"
         value={dateRange}
         onChange={setDateRange}
-        classNames={{ input: modalStyles.datePicker }}
+        color="#224eff"
       />
       <TextInput
         label="Pickup Location"
+        color="#224eff"
         value={pickupLocation}
         onChange={(e) => setPickupLocation(e.currentTarget.value)}
-        classNames={{ input: modalStyles.textInput }}
       />
       <TextInput
         label="Return Location"
+        color="#224eff"
         value={returnLocation}
         onChange={(e) => setReturnLocation(e.currentTarget.value)}
-        classNames={{ input: modalStyles.textInput }}
       />
-      <Button onClick={handleRequest} fullWidth mt="md">
+      <Button onClick={handleRequest} fullWidth color="#224eff" mt="md">
         Submit Request
       </Button>
-    </form>
+    </Modal>
   );
-}
+};
 
-export default CreateBRequestForm;
+export default BRequestModal;

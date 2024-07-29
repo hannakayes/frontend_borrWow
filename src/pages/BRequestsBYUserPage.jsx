@@ -12,7 +12,7 @@ const BRequestsBYUserPage = () => {
     const fetchBYRequests = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5005/api/borrowrequests/requested",
+          `${import.meta.env.VITE_API_URL}/api/borrowrequests/requested`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -38,6 +38,7 @@ const BRequestsBYUserPage = () => {
 
   return (
     <div className={styles.page}>
+      <h1>Outgoing Requests</h1>
       <div className={styles.container}>
         {requests.map((request) => (
           <BRequestCard key={request._id} request={request} />

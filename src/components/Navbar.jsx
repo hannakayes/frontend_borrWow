@@ -26,12 +26,19 @@ function Navbar() {
           BORROW
         </Link>
         {isAuthenticated && (
-          <Link to="/favorites" className={styles.favoritesLink}>
-            FAVORITES
-          </Link>
+          <>
+            <Link to="/favorites" className={styles.favoritesLink}>
+              FAVORITES
+            </Link>
+            <Link to="/newitem" className={styles.shareLink}>
+              SHARE
+            </Link>
+          </>
         )}
       </div>
-      <div className={styles.searchContainer}> {/* Add a container for the search bar */}
+      <div className={styles.searchContainer}>
+        {" "}
+        {/* Add a container for the search bar */}
         <SearchBar /> {/* Add the SearchBar component */}
       </div>
       <div className={styles.buttonContainer}>

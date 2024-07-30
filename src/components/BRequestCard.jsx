@@ -1,10 +1,8 @@
 import React from "react";
 import { Button } from "@mantine/core";
-import { useNavigate } from "react-router-dom";
 import styles from "../styles/BRequestCard.module.css"; // Import the updated CSS module
 
-const BRequestCard = ({ request }) => {
-  const navigate = useNavigate();
+const BRequestCard = ({ request, onDelete, token }) => {
   const {
     item,
     pickupDate,
@@ -15,8 +13,26 @@ const BRequestCard = ({ request }) => {
     _id,
   } = request;
 
-  const handleViewDetails = () => {
-    navigate(`/borrowrequests/${_id}`);
+  const handleDeleteRequest = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/borrowrequests/${_id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to delete request");
+      }
+
+      onDelete(_id);
+    } catch (error) {
+      console.error(error.message);
+    }
   };
 
   const handleEditRequest = () => {
@@ -58,13 +74,13 @@ const BRequestCard = ({ request }) => {
         </p>
         <div className={styles.buttonContainer}>
           <Button
-            onClick={handleViewDetails}
+            onClick={handleDeleteRequest}
             variant="outline"
             color="#224EFF"
             size="xs"
             className={styles.button}
           >
-            View Details
+            Delete
           </Button>
           <Button
             onClick={handleEditRequest}

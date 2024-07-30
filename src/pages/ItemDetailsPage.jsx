@@ -102,14 +102,16 @@ const ItemDetailsPage = () => {
             <p>{item.owner ? item.owner.username : "Unknown"}</p>
           </div>
           <div className={styles.buttonContainer}>
-            <Button
-              variant="filled"
-              color="#224eff"
-              className={styles.button}
-              onClick={() => setModalOpened(true)}
-            >
-              Request to BorrWow
-            </Button>
+            {isAuthenticated && (
+              <Button
+                variant="filled"
+                color="#224eff"
+                className={styles.button}
+                onClick={() => setModalOpened(true)}
+              >
+                Request to BorrWow
+              </Button>
+            )}
             <Button
               variant="outline"
               color="#224eff"

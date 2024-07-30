@@ -40,7 +40,7 @@ const BRequestsTOUserPage = () => {
       <h1>Incoming Requests</h1>
       <div className={styles.container}>
         {requests.map((request) => (
-          <BRequestCard key={request._id} request={request} />
+          <BRequestCard key={request._id} request={request} onDelete={(id) => setRequests((prevRequests) => prevRequests.filter((request) => request._id !== id))} token={token} isIncoming />
         ))}
       </div>
     </div>

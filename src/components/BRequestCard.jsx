@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "@mantine/core";
 import styles from "../styles/BRequestCard.module.css"; // Import the updated CSS module
 
-const BRequestCard = ({ request, onDelete, token }) => {
+const BRequestCard = ({ request, onDelete, token, isIncoming }) => {
   const {
     item,
     pickupDate,
@@ -39,6 +39,28 @@ const BRequestCard = ({ request, onDelete, token }) => {
     navigate(`/borrWow/${_id}`);
   };
 
+  const handleAcceptRequest = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/borrowrequests/${_id}/accept`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to accept request");
+      }
+
+      // Optionally update the UI or provide feedback to the user
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
   const statusClass = `${styles.status} ${styles[status] || ""}`;
 
   return (
@@ -73,24 +95,49 @@ const BRequestCard = ({ request, onDelete, token }) => {
           </span>
         </p>
         <div className={styles.buttonContainer}>
-          <Button
-            onClick={handleDeleteRequest}
-            variant="outline"
-            color="#224EFF"
-            size="xs"
-            className={styles.button}
-          >
-            Delete
-          </Button>
-          <Button
-            onClick={handleEditRequest}
-            variant="outline"
-            color="#224EFF"
-            size="xs"
-            className={styles.button}
-          >
-            Edit Borrow Request
-          </Button>
+          {isIncoming ? (
+            <>
+              <Button
+                onClick={handleAcceptRequest}
+                variant="outline"
+                color="green"
+                size="xs"
+                className={styles.button}
+              >
+                Accept
+              </Button>
+              <Button
+                onClick={handleDeleteRequest}
+                variant="outline"
+                color="red"
+                size="xs"
+                className={styles.button}
+              >
+                Deny
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                onClick={handleDeleteRequest}
+                variant="outline"
+                color="#224EFF"
+                size="xs"
+                className={styles.button}
+              >
+                Delete
+              </Button>
+              <Button
+                onClick={handleEditRequest}
+                variant="outline"
+                color="#224EFF"
+                size="xs"
+                className={styles.button}
+              >
+                Edit Borrow Request
+              </Button>
+            </>
+          )}
         </div>
       </div>
     </div>

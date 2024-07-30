@@ -34,18 +34,26 @@ const BRequestsBYUserPage = () => {
   }, [token]);
 
   const handleDelete = (id) => {
-    setRequests((prevRequests) => prevRequests.filter((request) => request._id !== id));
+    setRequests((prevRequests) =>
+      prevRequests.filter((request) => request._id !== id)
+    );
   };
 
   if (error) return <p>Error: {error}</p>;
-  if (!requests.length) return <p>Loading...</p>;
+  if (!requests.length)
+    return <p>There are no outgoing requests at the moment</p>;
 
   return (
     <div className={styles.page}>
       <h1>Outgoing Requests</h1>
       <div className={styles.container}>
         {requests.map((request) => (
-          <BRequestCard key={request._id} request={request} onDelete={handleDelete} token={token} />
+          <BRequestCard
+            key={request._id}
+            request={request}
+            onDelete={handleDelete}
+            token={token}
+          />
         ))}
       </div>
     </div>

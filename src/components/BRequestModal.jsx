@@ -39,7 +39,7 @@ const BRequestModal = ({ itemId, modalOpened, setModalOpened }) => {
       );
 
       if (!response.ok) {
-        throw new Error("Failed to create borrow request");
+        throw new Error("YOU CANT BORROW YOUR OWN ITEMS");
       }
 
       const data = await response.json();

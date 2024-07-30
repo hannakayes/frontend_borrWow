@@ -18,30 +18,24 @@ const ItemListCard = ({ item, onFavoriteChange }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    // Check local storage to determine if item is already a favorite
     const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
     setIsFavorite(favorites.includes(_id));
 
-    // Check if user is logged in
     const token = localStorage.getItem("authToken");
-    setIsLoggedIn(!!token); // Set login state based on presence of token
+    setIsLoggedIn(!!token);
   }, [_id]);
 
-  // Truncate description to 140 characters
   const truncatedDescription =
     description.length > 140
       ? `${description.substring(0, 140)}...`
       : description;
 
-  // Use useNavigate hook for navigation
   const navigate = useNavigate();
 
-  // Handle button click to navigate to item details
   const handleViewDetails = () => {
     navigate(`/items/${_id}`);
   };
 
-  // Handle favorite button click
   const handleFavoriteClick = () => {
     const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
     const newFavorites = isFavorite
@@ -51,24 +45,20 @@ const ItemListCard = ({ item, onFavoriteChange }) => {
     localStorage.setItem("favorites", JSON.stringify(newFavorites));
     setIsFavorite(!isFavorite);
 
-    // Notify parent component about the favorite change
     if (onFavoriteChange) {
       onFavoriteChange(newFavorites);
     }
   };
 
-  // Format category to match CSS class names
   const formatCategory = (category) => {
     return category
       .toLowerCase()
       .replace(/ & /g, "-and-")
       .replace(/ /g, "-")
-      .replace(/[^a-z0-9-]/g, ""); // Remove any non-alphanumeric characters except dashes
+      .replace(/[^a-z0-9-]/g, "");
   };
 
   const formattedCategory = formatCategory(category);
-
-  // Determine the appropriate status class
   const statusClass = `${styles.status} ${styles[availability]}`;
 
   return (

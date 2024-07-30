@@ -76,12 +76,12 @@ function UserDash() {
               </Button>
               <Button
                 component={Link}
-                to="/activity-history"
+                to="/profile"
                 variant="outline"
                 color="#224eff"
                 className={styles.button}
               >
-                Activity History
+                Your Profile Page
               </Button>
 
               <Indicator inline label={unseenCount} size={16}>

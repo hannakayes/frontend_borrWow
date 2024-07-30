@@ -13,7 +13,7 @@ const SearchResultsPage = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5005/api/items/search?query=${query}`,
+          `${import.meta.env.VITE_API_URL}/api/items/search?query=${query}`,
           {
             method: "GET",
             headers: {

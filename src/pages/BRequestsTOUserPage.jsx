@@ -8,29 +8,33 @@ const BRequestsTOUserPage = () => {
   const [error, setError] = useState(null);
   const { token } = useContext(SessionContext);
 
-  useEffect(() => {
-    const fetchTORequests = async () => {
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/borrowrequests/incomingrequest`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
+  const fetchTORequests = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/borrowrequests/incomingrequest`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-        const data = await response.json();
-        setRequests(data);
-      } catch (error) {
-        setError(error.message);
+      );
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
       }
-    };
+      const data = await response.json();
+      setRequests(data);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
 
+  useEffect(() => {
     fetchTORequests();
   }, [token]);
+
+  const handleUpdate = () => {
+    fetchTORequests(); // Refetch requests when a status changes
+  };
 
   if (error) return <p>Error: {error}</p>;
   if (!requests.length) return <p>There are no requests for you right now</p>;
@@ -40,7 +44,18 @@ const BRequestsTOUserPage = () => {
       <h1>Incoming Requests</h1>
       <div className={styles.container}>
         {requests.map((request) => (
-          <BRequestCard key={request._id} request={request} onDelete={(id) => setRequests((prevRequests) => prevRequests.filter((request) => request._id !== id))} token={token} isIncoming />
+          <BRequestCard
+            key={request._id}
+            request={request}
+            onDelete={(id) =>
+              setRequests((prevRequests) =>
+                prevRequests.filter((request) => request._id !== id)
+              )
+            }
+            onUpdate={handleUpdate} // Pass the update function
+            token={token}
+            isIncoming
+          />
         ))}
       </div>
     </div>

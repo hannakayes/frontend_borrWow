@@ -1,8 +1,9 @@
 import React from "react";
 import { Button } from "@mantine/core";
+import { useNavigate } from "react-router-dom"; // Add this import
 import styles from "../styles/BRequestCard.module.css"; // Import the updated CSS module
 
-const BRequestCard = ({ request, onDelete, token, isIncoming }) => {
+const BRequestCard = ({ request, onDelete, onUpdate, token, isIncoming }) => {
   const {
     item,
     pickupDate,
@@ -12,6 +13,8 @@ const BRequestCard = ({ request, onDelete, token, isIncoming }) => {
     status,
     _id,
   } = request;
+
+  const navigate = useNavigate(); // Add this line
 
   const handleDeleteRequest = async () => {
     try {
@@ -35,17 +38,14 @@ const BRequestCard = ({ request, onDelete, token, isIncoming }) => {
     }
   };
 
-  const handleEditRequest = () => {
-    navigate(`/borrWow/${_id}`);
-  };
-
   const handleAcceptRequest = async () => {
     try {
       const response = await fetch(
         `${import.meta.env.VITE_API_URL}/api/borrowrequests/${_id}/accept`,
         {
-          method: "POST",
+          method: "PUT",
           headers: {
+            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
         }
@@ -55,10 +55,39 @@ const BRequestCard = ({ request, onDelete, token, isIncoming }) => {
         throw new Error("Failed to accept request");
       }
 
-      // Optionally update the UI or provide feedback to the user
+      // Trigger an update after acceptance
+      onUpdate(); // Notify the parent component to refetch data
     } catch (error) {
-      console.error(error.message);
+      console.error("Error accepting request", error);
     }
+  };
+
+  const handleRejectRequest = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/borrowrequests/${_id}/reject`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to reject request");
+      }
+
+      // Trigger an update after rejection
+      onUpdate(); // Notify the parent component to refetch data
+    } catch (error) {
+      console.error("Error rejecting request", error);
+    }
+  };
+
+  const handleEditRequest = () => {
+    navigate(`/borrWow/${_id}`);
   };
 
   const statusClass = `${styles.status} ${styles[status] || ""}`;
@@ -107,7 +136,7 @@ const BRequestCard = ({ request, onDelete, token, isIncoming }) => {
                 Accept
               </Button>
               <Button
-                onClick={handleDeleteRequest}
+                onClick={handleRejectRequest}
                 variant="outline"
                 color="red"
                 size="xs"

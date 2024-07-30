@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   SimpleGrid,
   Container,
@@ -6,11 +6,42 @@ import {
   Text,
   Center,
   Button,
+  Indicator,
 } from "@mantine/core";
 import { Link } from "react-router-dom";
 import styles from "../styles/UserDash.module.css"; // Import CSS module
+import { SessionContext } from "../contexts/SessionContext";
 
 function UserDash() {
+  const { userId, token } = useContext(SessionContext);
+  const [unseenCount, setUnseenCount] = useState(0);
+
+  useEffect(() => {
+    const fetchUnseenCount = async () => {
+      try {
+        const response = await fetch(
+          `${
+            import.meta.env.VITE_API_URL
+          }/api/borrowrequests/unseen-count/${userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch unseen count");
+        }
+        const data = await response.json();
+        setUnseenCount(data.unseenCount);
+      } catch (error) {
+        console.error("Error fetching unseen count:", error);
+      }
+    };
+
+    fetchUnseenCount();
+  }, [userId, token]);
+
   return (
     <Container className={styles.container}>
       <Center className={styles.center}>
@@ -52,15 +83,19 @@ function UserDash() {
               >
                 Activity History
               </Button>
-              <Button
-                component={Link}
-                to="/incomingrequests"
-                variant="outline"
-                color="#224eff"
-                className={styles.button}
-              >
-                Incoming requests
-              </Button>
+
+              <Indicator inline label={unseenCount} size={16}>
+                <Button
+                  component={Link}
+                  to="/incomingrequests"
+                  variant="outline"
+                  color="#224eff"
+                  className={styles.button}
+                >
+                  Incoming requests
+                </Button>
+              </Indicator>
+
               <Button
                 component={Link}
                 to="/requestedByYOU"

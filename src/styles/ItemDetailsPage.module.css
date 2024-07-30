@@ -127,6 +127,13 @@
   font-size: 1em;
 }
 
+.ownerImage {
+  width: 4em;
+  height: 4em;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
 @media (max-width: 768px) {
   .page {
     padding: 20px;

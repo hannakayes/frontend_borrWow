@@ -22,6 +22,7 @@ const ItemDetailsPage = () => {
   const [isFavorite, setIsFavorite] = useState(false);
   const [error, setError] = useState(null);
   const [modalOpened, setModalOpened] = useState(false);
+  const [user, setUser] = useState(null);
   const { userId, token, isAuthenticated } = useContext(SessionContext);
 
   useEffect(() => {
@@ -45,6 +46,32 @@ const ItemDetailsPage = () => {
 
     fetchItem();
   }, [id]);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (item && item.owner) {
+        try {
+          const response = await fetch(
+            `${import.meta.env.VITE_API_URL}/api/users/${item.owner._id}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          const data = await response.json();
+          setUser(data);
+        } catch (error) {
+          setError(error.message);
+        }
+      }
+    };
+
+    fetchUser();
+  }, [item, token]);
 
   const handleFavoriteClick = () => {
     const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
@@ -98,8 +125,16 @@ const ItemDetailsPage = () => {
           <p className={styles.location}>Location: {item.location}</p>
           <p className={styles.description}>{item.description}</p>
           <div className={styles.owner}>
-            <FontAwesomeIcon icon={faUser} size="2x" />
-            <p>{item.owner ? item.owner.username : "Unknown"}</p>
+            {user && user.imageUrl ? (
+              <img
+                src={user.imageUrl}
+                alt={user.username}
+                className={styles.ownerImage}
+              />
+            ) : (
+              <FontAwesomeIcon icon={faUser} size="2x" />
+            )}
+            <p>{user ? user.username : "Unknown"}</p>
           </div>
           <div className={styles.buttonContainer}>
             {isAuthenticated && (

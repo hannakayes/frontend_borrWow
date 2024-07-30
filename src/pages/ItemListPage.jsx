@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import ItemListCard from "../components/ItemListCard";
 import styles from "../styles/ItemListPage.module.css";
-import headerImage from "../assets/images/header.png"; // Import your header image
+import headerImage from "../assets/images/header.png";
+import { SessionContext } from "../contexts/SessionContext";
 
 const ItemListPage = () => {
   const [items, setItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [categories, setCategories] = useState([]);
   const [error, setError] = useState(null);
+  const { userId } = useContext(SessionContext); // Use session context to get user ID
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -19,12 +21,18 @@ const ItemListPage = () => {
           throw new Error("Network response was not ok");
         }
         const data = await response.json();
-        setItems(data);
-        setFilteredItems(data);
+
+        // Filter items based on availability and ownership
+        const visibleItems = data.filter(
+          (item) => item.availability === "Available" || (userId && item.owner && userId === item.owner._id.toString())
+        );
+
+        setItems(visibleItems);
+        setFilteredItems(visibleItems);
 
         // Extract unique categories
         const uniqueCategories = [
-          ...new Set(data.map((item) => item.category)),
+          ...new Set(visibleItems.map((item) => item.category)),
         ];
         setCategories(uniqueCategories);
       } catch (error) {
@@ -33,7 +41,7 @@ const ItemListPage = () => {
     };
 
     fetchItems();
-  }, []);
+  }, [userId]);
 
   const handleCategoryClick = (category) => {
     if (category === "All") {

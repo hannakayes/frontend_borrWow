@@ -131,7 +131,7 @@ const BRequestCard = ({
         <div className={styles.buttonContainer}>
           {isIncoming ? (
             status === "accepted" ? (
-              <>
+              status !== "completed" && (
                 <Button
                   onClick={handleCompleteRequest}
                   variant="outline"
@@ -141,28 +141,30 @@ const BRequestCard = ({
                 >
                   Mark as Completed
                 </Button>
-              </>
+              )
             ) : (
-              <>
-                <Button
-                  onClick={handleAcceptRequest}
-                  variant="outline"
-                  color="green"
-                  size="xs"
-                  className={styles.button}
-                >
-                  Accept
-                </Button>
-                <Button
-                  onClick={handleDeleteRequest}
-                  variant="outline"
-                  color="red"
-                  size="xs"
-                  className={styles.button}
-                >
-                  Deny
-                </Button>
-              </>
+              status !== "completed" && (
+                <>
+                  <Button
+                    onClick={handleAcceptRequest}
+                    variant="outline"
+                    color="green"
+                    size="xs"
+                    className={styles.button}
+                  >
+                    Accept
+                  </Button>
+                  <Button
+                    onClick={handleDeleteRequest}
+                    variant="outline"
+                    color="red"
+                    size="xs"
+                    className={styles.button}
+                  >
+                    Deny
+                  </Button>
+                </>
+              )
             )
           ) : (
             <>

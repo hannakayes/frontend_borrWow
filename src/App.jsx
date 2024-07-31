@@ -13,12 +13,12 @@ import ErrorPage from "./pages/404ErrorPage";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
-//import CreateBRequestPage from './pages/CreateNewBRequestPage';
 import SearchResultsPage from "./pages/SearchResultsPage";
-import UserBorrWows from "./pages/UserBorrWows"; // Import the new component
+import UserBorrWows from "./pages/UserBorrWows";
 import EditItemPage from "./pages/EditItemPage";
 import BRequestsTOUserPage from "./pages/BRequestsTOUserPage";
 import ProfilePage from "./pages/ProfilePage";
+import EditBRequestForm from "./components/EditBRequestForm"; // Import the new component
 
 function App() {
   return (
@@ -30,6 +30,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
 
+          {/* Protected Routes */}
           <Route
             path="/userdash"
             element={
@@ -91,6 +92,14 @@ function App() {
             element={
               <PrivateRoute>
                 <UserBorrWows />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/edit-borrow-request/:id"
+            element={
+              <PrivateRoute>
+                <EditBRequestForm />
               </PrivateRoute>
             }
           />

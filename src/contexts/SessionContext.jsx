@@ -6,6 +6,7 @@ export const SessionContext = createContext();
 const SessionContextProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [userId, setUserId] = useState(null);
+  const [userName, setUserName] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
@@ -13,6 +14,36 @@ const SessionContextProvider = ({ children }) => {
   const removeToken = () => {
     window.localStorage.removeItem("authToken");
     window.localStorage.removeItem("userId");
+    window.localStorage.removeItem("userName"); // Remove userName from localStorage
+  };
+
+  const fetchUserData = async () => {
+    if (!token || !userId) return;
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_URL}/api/users/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setUserName(data.username); // Set userName from response
+        window.localStorage.setItem("userName", data.username); // Save userName to localStorage
+      } else {
+        removeToken();
+        setIsAuthenticated(false);
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      removeToken();
+      setIsAuthenticated(false);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const verifyToken = async (tokenToVerify) => {
@@ -25,12 +56,13 @@ const SessionContextProvider = ({ children }) => {
           },
         }
       );
+
       if (response.status === 200) {
         const data = await response.json();
-        console.log("Verify Token Response:", data); // Log the response
         setToken(tokenToVerify);
         setUserId(data.userId);
         setIsAuthenticated(true);
+        fetchUserData(); // Fetch user data after verifying the token
       } else {
         removeToken();
         setIsAuthenticated(false);
@@ -39,14 +71,14 @@ const SessionContextProvider = ({ children }) => {
       console.error("Error in verifyToken:", error);
       removeToken();
       setIsAuthenticated(false);
-    } finally {
-      setIsLoading(false);
     }
   };
 
   useEffect(() => {
     const localToken = window.localStorage.getItem("authToken");
     if (localToken) {
+      const localUserName = window.localStorage.getItem("userName");
+      setUserName(localUserName); // Set userName from localStorage
       verifyToken(localToken);
     } else {
       setIsLoading(false);
@@ -57,7 +89,6 @@ const SessionContextProvider = ({ children }) => {
     if (token) {
       window.localStorage.setItem("authToken", token);
       verifyToken(token);
-      //the response of verifyToken(token) will give me the userId
     }
   }, [token]);
 
@@ -65,6 +96,7 @@ const SessionContextProvider = ({ children }) => {
     removeToken();
     setToken(null);
     setUserId(null);
+    setUserName(null); // Clear userName on logout
     setIsAuthenticated(false);
     navigate("/");
   };
@@ -76,6 +108,7 @@ const SessionContextProvider = ({ children }) => {
         isLoading,
         token,
         userId,
+        userName, // Add userName to context value
         setToken,
         handleLogout,
       }}

@@ -8,7 +8,10 @@ import { SessionContext } from "../contexts/SessionContext";
 import SearchBar from "./SearchBar";
 
 function Navbar() {
-  const { isAuthenticated, handleLogout } = useContext(SessionContext);
+  const { isAuthenticated, userName, handleLogout } =
+    useContext(SessionContext);
+
+  console.log("Navbar userName:", userName); // Debugging line
 
   return (
     <div className={styles.navbar}>
@@ -37,9 +40,7 @@ function Navbar() {
         )}
       </div>
       <div className={styles.searchContainer}>
-        {" "}
-        {/* Add a container for the search bar */}
-        <SearchBar /> {/* Add the SearchBar component */}
+        <SearchBar />
       </div>
       <div className={styles.buttonContainer}>
         {!isAuthenticated ? (
@@ -72,7 +73,7 @@ function Navbar() {
               color="#224eff"
               className={styles.button}
             >
-              Dashboard
+              {userName ? `${userName}` : "Dashboard"}
             </Button>
             <Button
               onClick={handleLogout}

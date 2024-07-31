@@ -1,9 +1,16 @@
 import React from "react";
 import { Button } from "@mantine/core";
-import { useNavigate } from "react-router-dom"; // Add this import
-import styles from "../styles/BRequestCard.module.css"; // Import the updated CSS module
+import { useNavigate } from "react-router-dom";
+import styles from "../styles/BRequestCard.module.css";
 
-const BRequestCard = ({ request, onDelete, onUpdate, token, isIncoming }) => {
+const BRequestCard = ({
+  request,
+  onDelete,
+  onEdit,
+  token,
+  isIncoming,
+  onUpdate,
+}) => {
   const {
     item,
     pickupDate,
@@ -14,7 +21,7 @@ const BRequestCard = ({ request, onDelete, onUpdate, token, isIncoming }) => {
     _id,
   } = request;
 
-  const navigate = useNavigate(); // Add this line
+  const navigate = useNavigate();
 
   const handleDeleteRequest = async () => {
     try {
@@ -55,17 +62,16 @@ const BRequestCard = ({ request, onDelete, onUpdate, token, isIncoming }) => {
         throw new Error("Failed to accept request");
       }
 
-      // Trigger an update after acceptance
-      onUpdate(); // Notify the parent component to refetch data
+      onUpdate(); // Refresh data
     } catch (error) {
       console.error("Error accepting request", error);
     }
   };
 
-  const handleRejectRequest = async () => {
+  const handleCompleteRequest = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/borrowrequests/${_id}/reject`,
+        `${import.meta.env.VITE_API_URL}/api/borrowrequests/${_id}/complete`,
         {
           method: "PUT",
           headers: {
@@ -76,18 +82,17 @@ const BRequestCard = ({ request, onDelete, onUpdate, token, isIncoming }) => {
       );
 
       if (!response.ok) {
-        throw new Error("Failed to reject request");
+        throw new Error("Failed to complete request");
       }
 
-      // Trigger an update after rejection
-      onUpdate(); // Notify the parent component to refetch data
+      onUpdate(); // Refresh data
     } catch (error) {
-      console.error("Error rejecting request", error);
+      console.error("Error completing request", error);
     }
   };
 
   const handleEditRequest = () => {
-    navigate(`/borrWow/${_id}`);
+    onEdit(request);
   };
 
   const statusClass = `${styles.status} ${styles[status] || ""}`;
@@ -125,45 +130,61 @@ const BRequestCard = ({ request, onDelete, onUpdate, token, isIncoming }) => {
         </p>
         <div className={styles.buttonContainer}>
           {isIncoming ? (
+            status === "accepted" ? (
+              <>
+                <Button
+                  onClick={handleCompleteRequest}
+                  variant="outline"
+                  color="blue"
+                  size="xs"
+                  className={styles.button}
+                >
+                  Mark as Completed
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  onClick={handleAcceptRequest}
+                  variant="outline"
+                  color="green"
+                  size="xs"
+                  className={styles.button}
+                >
+                  Accept
+                </Button>
+                <Button
+                  onClick={handleDeleteRequest}
+                  variant="outline"
+                  color="red"
+                  size="xs"
+                  className={styles.button}
+                >
+                  Deny
+                </Button>
+              </>
+            )
+          ) : (
             <>
+              {status !== "completed" && (
+                <Button
+                  onClick={handleEditRequest}
+                  variant="outline"
+                  color="blue"
+                  size="xs"
+                  className={styles.button}
+                >
+                  Edit
+                </Button>
+              )}
               <Button
-                onClick={handleAcceptRequest}
-                variant="outline"
-                color="green"
-                size="xs"
-                className={styles.button}
-              >
-                Accept
-              </Button>
-              <Button
-                onClick={handleRejectRequest}
+                onClick={handleDeleteRequest}
                 variant="outline"
                 color="red"
                 size="xs"
                 className={styles.button}
               >
-                Deny
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button
-                onClick={handleDeleteRequest}
-                variant="outline"
-                color="#224EFF"
-                size="xs"
-                className={styles.button}
-              >
                 Delete
-              </Button>
-              <Button
-                onClick={handleEditRequest}
-                variant="outline"
-                color="#224EFF"
-                size="xs"
-                className={styles.button}
-              >
-                Edit Borrow Request
               </Button>
             </>
           )}

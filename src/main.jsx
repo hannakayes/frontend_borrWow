@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import SessionContextProvider from "./contexts/SessionContext";
 import "@mantine/core/styles.css";
+import "@mantine/dates/styles.css";
 import "./styles/global.css";
 import theme from "./styles/theme";
 

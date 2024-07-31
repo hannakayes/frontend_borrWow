@@ -11,6 +11,7 @@ const BRequestModal = ({ itemId, modalOpened, setModalOpened }) => {
   const [dateRange, setDateRange] = useState([null, null]);
   const [pickupLocation, setPickupLocation] = useState("");
   const [returnLocation, setReturnLocation] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); // New state for error message
 
   const handleRequest = async () => {
     try {
@@ -39,7 +40,11 @@ const BRequestModal = ({ itemId, modalOpened, setModalOpened }) => {
       );
 
       if (!response.ok) {
-        throw new Error("YOU CANT BORROW YOUR OWN ITEMS");
+        const errorText = await response.text(); // Get error text from response
+        if (errorText.includes("YOU CANT BORROW YOUR OWN ITEMS")) {
+          setErrorMessage("YOU CANT BORROW YOUR OWN ITEMS");
+        }
+        throw new Error(errorText);
       }
 
       const data = await response.json();
@@ -48,6 +53,9 @@ const BRequestModal = ({ itemId, modalOpened, setModalOpened }) => {
       setModalOpened(false);
     } catch (error) {
       console.error("Error:", error);
+      if (!error.message.includes("YOU CANT BORROW YOUR OWN ITEMS")) {
+        setErrorMessage("YOU CANT BORROW YOUR OWN ITEMS.");
+      }
     }
   };
 
@@ -77,6 +85,9 @@ const BRequestModal = ({ itemId, modalOpened, setModalOpened }) => {
         value={returnLocation}
         onChange={(e) => setReturnLocation(e.currentTarget.value)}
       />
+      {errorMessage && (
+        <div style={{ color: "red", marginTop: "10px" }}>{errorMessage}</div>
+      )}
       <Button onClick={handleRequest} fullWidth color="#224eff" mt="md">
         Submit Request
       </Button>

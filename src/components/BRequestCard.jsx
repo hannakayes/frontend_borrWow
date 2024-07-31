@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "@mantine/core";
-import { useNavigate } from "react-router-dom"; // Add this import
-import styles from "../styles/BRequestCard.module.css"; // Import the updated CSS module
+import { useNavigate } from "react-router-dom";
+import styles from "../styles/BRequestCard.module.css";
 
 const BRequestCard = ({ request, onDelete, onUpdate, token, isIncoming }) => {
   const {
@@ -14,7 +14,7 @@ const BRequestCard = ({ request, onDelete, onUpdate, token, isIncoming }) => {
     _id,
   } = request;
 
-  const navigate = useNavigate(); // Add this line
+  const navigate = useNavigate();
 
   const handleDeleteRequest = async () => {
     try {
@@ -27,11 +27,9 @@ const BRequestCard = ({ request, onDelete, onUpdate, token, isIncoming }) => {
           },
         }
       );
-
       if (!response.ok) {
         throw new Error("Failed to delete request");
       }
-
       onDelete(_id);
     } catch (error) {
       console.error(error.message);
@@ -50,13 +48,10 @@ const BRequestCard = ({ request, onDelete, onUpdate, token, isIncoming }) => {
           },
         }
       );
-
       if (!response.ok) {
         throw new Error("Failed to accept request");
       }
-
-      // Trigger an update after acceptance
-      onUpdate(); // Notify the parent component to refetch data
+      onUpdate();
     } catch (error) {
       console.error("Error accepting request", error);
     }
@@ -74,13 +69,10 @@ const BRequestCard = ({ request, onDelete, onUpdate, token, isIncoming }) => {
           },
         }
       );
-
       if (!response.ok) {
         throw new Error("Failed to reject request");
       }
-
-      // Trigger an update after rejection
-      onUpdate(); // Notify the parent component to refetch data
+      onUpdate();
     } catch (error) {
       console.error("Error rejecting request", error);
     }
@@ -94,7 +86,7 @@ const BRequestCard = ({ request, onDelete, onUpdate, token, isIncoming }) => {
 
   return (
     <div className={styles.card}>
-      {item.imageUrl && (
+      {item?.imageUrl && (
         <img src={item.imageUrl} alt={item.itemname} className={styles.image} />
       )}
       <div className={statusClass}>{status}</div>

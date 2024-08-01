@@ -1,3 +1,5 @@
+/* ItemListPage.module.css */
+
 .page {
   padding: 40px; /* Larger padding for a spacious look */
   background-color: #f9f9f9; /* Light gray background */
@@ -11,6 +13,7 @@
 
 .categoryLinks {
   display: flex;
+  flex-wrap: wrap; /* Allow wrapping of buttons */
   justify-content: center;
   gap: 15px;
   margin-bottom: 20px; /* Space below the category links */
@@ -34,7 +37,26 @@
 
 .container {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* Allow wrapping of cards */
   gap: 20px; /* Space between cards */
   justify-content: center; /* Center the cards horizontally */
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .categoryLinks {
+    flex-direction: column; /* Stack buttons vertically on smaller screens */
+    align-items: center; /* Center buttons */
+  }
+
+  .container {
+    padding: 0 10px; /* Add padding on smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .categoryLinks button {
+    font-size: 0.9em; /* Adjust font size */
+    padding: 8px 16px; /* Adjust padding */
+  }
 }

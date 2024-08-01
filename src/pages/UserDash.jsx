@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import {
-  SimpleGrid,
   Container,
   Title,
   Text,
@@ -51,61 +50,79 @@ function UserDash() {
             Access all your activities and manage your borrWow interactions.
           </Text>
           <div className={styles.gridContainer}>
-            <SimpleGrid
-              type="container"
-              cols={{ base: 1, "300px": 2, "500px": 5 }}
-              spacing={{ base: 10, "300px": "xl" }}
+            <Button
+              component={Link}
+              to="/newitem"
+              variant="outline"
+              color="#224eff"
+              size="xl"
+              className={styles.button}
             >
-              <Button
-                component={Link}
-                to="/newitem"
-                variant="outline"
-                color="#224eff"
-                className={styles.button}
-              >
-                Create new borrWow
-              </Button>
-              <Button
-                component={Link}
-                to="/user-borrwows"
-                variant="outline"
-                color="#224eff"
-                className={styles.button}
-              >
-                Your BorrWows
-              </Button>
-              <Button
-                component={Link}
-                to="/profile"
-                variant="outline"
-                color="#224eff"
-                className={styles.button}
-              >
-                Your Profile Page
-              </Button>
-
-              <Indicator inline label={unseenCount} size={16}>
+              New borrWow
+            </Button>
+            <Button
+              component={Link}
+              to="/user-borrwows"
+              variant="outline"
+              color="#224eff"
+              size="xl"
+              className={styles.button}
+            >
+              Your BorrWows
+            </Button>
+            <Button
+              component={Link}
+              to="/profile"
+              variant="outline"
+              color="#224eff"
+              size="xl"
+              className={styles.button}
+            >
+              Your Profile Page
+            </Button>
+            <div className={styles.notificationIndicator}>
+              {unseenCount > 0 ? (
+                <Indicator
+                  inline
+                  label={unseenCount}
+                  color="red"
+                  size={24} // Adjust to your design needs
+                  className={styles.indicator}
+                >
+                  <Button
+                    component={Link}
+                    to="/incomingrequests"
+                    variant="outline"
+                    color="#224eff"
+                    size="xl"
+                    className={styles.button2}
+                  >
+                    Incoming Requests
+                  </Button>
+                </Indicator>
+              ) : (
                 <Button
                   component={Link}
                   to="/incomingrequests"
                   variant="outline"
                   color="#224eff"
-                  className={styles.button}
+                  size="xl"
+                  className={styles.button2}
                 >
                   Incoming Requests
                 </Button>
-              </Indicator>
-
-              <Button
-                component={Link}
-                to="/requestedByYOU"
-                variant="outline"
-                color="#224eff"
-                className={styles.button}
-              >
-                Outgoing Requests
-              </Button>
-            </SimpleGrid>
+              )}
+            </div>
+            <Button
+              component={Link}
+              to="/requestedByYOU"
+              variant="outline"
+              size="xl"
+              color="#224eff"
+              className={styles.button}
+            >
+              Outgoing Requests
+            </Button>
           </div>
           <Center mt="lg">
             <Link to="/login" className={styles.loginLink}></Link>

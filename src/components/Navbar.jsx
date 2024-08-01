@@ -1,7 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "@mantine/core";
 import styles from "../styles/Navbar.module.css";
 import handshakeBlue from "../assets/images/handshake_blue.png";
@@ -52,6 +50,9 @@ function Navbar() {
         />
       </Link>
       <div className={styles.leftSideLinks}>
+        <Link to="/about" className={styles.aboutLink}>
+          ABOUT
+        </Link>
         <Link to="/items" className={styles.borrowLink}>
           BORROW
         </Link>

@@ -18,7 +18,8 @@ import UserBorrWows from "./pages/UserBorrWows";
 import EditItemPage from "./pages/EditItemPage";
 import BRequestsTOUserPage from "./pages/BRequestsTOUserPage";
 import ProfilePage from "./pages/ProfilePage";
-import EditBRequestForm from "./components/EditBRequestForm"; // Import the new component
+import EditBRequestForm from "./components/EditBRequestForm";
+import AboutPage from "./pages/AboutPage"; // Import the new AboutPage component
 
 function App() {
   return (
@@ -29,7 +30,6 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
-          {/* Protected Routes */}
           <Route
             path="/userdash"
             element={
@@ -85,7 +85,7 @@ function App() {
                 <FavoritesPage />
               </PrivateRoute>
             }
-          />{" "}
+          />
           <Route
             path="/user-borrwows"
             element={
@@ -93,7 +93,7 @@ function App() {
                 <UserBorrWows />
               </PrivateRoute>
             }
-          />{" "}
+          />
           <Route
             path="/edit-borrow-request/:id"
             element={
@@ -105,6 +105,8 @@ function App() {
           <Route path="/items" element={<ItemListPage />} />
           <Route path="/items/:id" element={<ItemDetailsPage />} />
           <Route path="/search" element={<SearchResultsPage />} />
+          <Route path="/about" element={<AboutPage />} />{" "}
+          {/* Add route for About Page */}
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </main>

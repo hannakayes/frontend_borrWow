@@ -1,12 +1,20 @@
 /* Navbar.module.css */
-
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
   background-color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: fixed; /* Fixes the navbar at the top */
+  top: 0; /* Aligns the navbar to the top */
+  width: 100%; /* Ensures the navbar spans the full width */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow for better visibility */
+  z-index: 1000; /* Ensures the navbar is above other content */
+}
+
+/* Adjust the padding of the main content to prevent it from being hidden behind the fixed navbar */
+main {
+  padding-top: 60px; /* Adjust this value if needed based on the navbar height */
 }
 
 .navLink,
@@ -20,7 +28,6 @@
 .userImage {
   width: 40px;
   height: 40px;
-  border-radius: 50%;
   margin-right: 10px;
 }
 
@@ -29,9 +36,15 @@
   gap: 20px;
 }
 
+.aboutLink {
+  margin-left: 20px;
+}
+
 .borrowLink,
 .favoritesLink,
-.shareLink {
+.shareLink,
+.aboutLink {
+  /* Add styling for About link */
   text-decoration: none;
   color: #224eff;
   font-weight: bold;
@@ -61,7 +74,9 @@
 /* Mobile styles */
 @media (max-width: 768px) {
   .favoritesLink,
-  .shareLink {
+  .shareLink,
+  .aboutLink,
+  .searchContainer {
     display: none;
   }
 
@@ -81,7 +96,9 @@
 
   .borrowLink,
   .favoritesLink,
-  .shareLink {
+  .shareLink,
+  .aboutLink {
+    /* Hide the About link on mobile if needed */
     display: none;
   }
 }

@@ -11,13 +11,13 @@
 }
 
 .logo {
-  width: 100px; /* Adjust size as needed */
+  width: 100px;
   height: auto;
-  margin-bottom: 20px; /* Adjust spacing as needed */
+  margin-bottom: 20px;
 }
 
 .loginLink {
-  text-decoration: none; /* Remove default link styles */
+  text-decoration: none;
 }
 
 .activity {
@@ -25,21 +25,25 @@
   border: 2px gray solid;
   border-radius: 20px;
   background-color: rgb(114, 134, 222);
-  color: white; /* Added for better visibility */
-  text-align: center; /* Center the text */
-  padding: 20px; /* Add padding for better appearance */
-  cursor: pointer; /* Change cursor to pointer to indicate clickable area */
+  color: white;
+  text-align: center;
+  padding: 20px;
+  cursor: pointer;
 }
 
 .link {
-  text-decoration: none; /* Remove default link styles */
-  display: block; /* Make the link fill the parent div */
+  text-decoration: none;
+  display: block;
 }
 
 .textWithSpacing {
-  margin-bottom: 20px; /* Adjust the spacing as needed */
+  margin-bottom: 20px;
 }
 
 .gridContainer {
-  margin-top: 20px; /* Adjust the spacing as needed */
+  display: grid;
+  grid-template-columns: repeat(2, 245px); /* Two columns, each 400px wide */
+  gap: 20px; /* Space between buttons */
+  margin-top: 20px;
+  justify-content: center; /* Center the grid within the container */
 }

@@ -24,7 +24,9 @@ const ItemListPage = () => {
 
         // Filter items based on availability and ownership
         const visibleItems = data.filter(
-          (item) => item.availability === "Available" || (userId && item.owner && userId === item.owner._id.toString())
+          (item) =>
+            item.availability === "Available" ||
+            (userId && item.owner && userId === item.owner._id.toString())
         );
 
         setItems(visibleItems);

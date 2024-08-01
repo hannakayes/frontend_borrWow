@@ -92,7 +92,7 @@ function UserDash() {
                   color="#224eff"
                   className={styles.button}
                 >
-                  Incoming requests
+                  Incoming Requests
                 </Button>
               </Indicator>
 
@@ -103,7 +103,7 @@ function UserDash() {
                 color="#224eff"
                 className={styles.button}
               >
-                Your requests
+                Outgoing Requests
               </Button>
             </SimpleGrid>
           </div>

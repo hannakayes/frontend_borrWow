@@ -84,7 +84,7 @@ const ItemDetailsPage = () => {
   };
 
   const handleReturnClick = () => {
-    const previousPage = localStorage.getItem("previousPage") || "/";
+    const previousPage = localStorage.getItem("previousPage") || "/items";
     navigate(previousPage);
   };
 

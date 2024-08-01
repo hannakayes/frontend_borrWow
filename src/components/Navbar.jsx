@@ -101,15 +101,6 @@ function Navbar() {
               className={styles.button}
             >
               <div className={styles.userInfo}>
-                {user && user.imageUrl ? (
-                  <img
-                    src={user.imageUrl}
-                    alt={user.username}
-                    className={styles.userImage}
-                  />
-                ) : (
-                  <FontAwesomeIcon icon={faUser} size="lg" />
-                )}
                 {user ? `${user.username}` : "Dashboard"}
               </div>
             </Button>

@@ -29,7 +29,6 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
-
           {/* Protected Routes */}
           <Route
             path="/userdash"
@@ -86,7 +85,7 @@ function App() {
                 <FavoritesPage />
               </PrivateRoute>
             }
-          />
+          />{" "}
           <Route
             path="/user-borrwows"
             element={
@@ -94,7 +93,7 @@ function App() {
                 <UserBorrWows />
               </PrivateRoute>
             }
-          />
+          />{" "}
           <Route
             path="/edit-borrow-request/:id"
             element={

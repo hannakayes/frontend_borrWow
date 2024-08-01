@@ -22,9 +22,8 @@ function LoginPage() {
   useEffect(() => {
     if (isAuthenticated) {
       navigate("/userdash");
-      console.log("this is the authtoken: " + token);
     }
-  }, [isAuthenticated, navigate, token]);
+  }, [isAuthenticated, navigate]); // Removed token from dependencies
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,13 +42,11 @@ function LoginPage() {
         }
       );
 
-      // Check if the response is OK and if the content type is JSON
       if (!loginResponse.ok) {
         const errorData = await loginResponse.text();
         throw new Error(errorData || "Login failed.");
       }
 
-      // Ensure response is JSON
       const contentType = loginResponse.headers.get("content-type");
       if (contentType && contentType.indexOf("application/json") !== -1) {
         const data = await loginResponse.json();
@@ -76,8 +73,8 @@ function LoginPage() {
         <form onSubmit={handleSubmit}>
           {error && <p style={{ color: "red" }}>{error}</p>}
           <TextInput
-            label="Email"
-            placeholder="you@example.com"
+            label="Username"
+            placeholder="Your username"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required

@@ -50,6 +50,13 @@ main {
   font-weight: bold;
 }
 
+.borrowLink:hover,
+.favoritesLink:hover,
+.shareLink:hover,
+.aboutLink:hover {
+  color: black;
+}
+
 .searchContainer {
   flex-grow: 1;
   display: flex;

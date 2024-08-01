@@ -42,7 +42,7 @@
 
 .gridContainer {
   display: grid;
-  grid-template-columns: repeat(2, 245px); /* Two columns, each 400px wide */
+  grid-template-columns: repeat(2, 243px); /* Two columns, each 400px wide */
   gap: 20px; /* Space between buttons */
   margin-top: 20px;
   justify-content: center; /* Center the grid within the container */

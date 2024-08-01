@@ -60,7 +60,7 @@ function UserDash() {
             >
               New borrWow
             </Button>
-            <Button
+            {/* <Button
               component={Link}
               to="/user-borrwows"
               variant="outline"
@@ -69,7 +69,7 @@ function UserDash() {
               className={styles.button}
             >
               Your BorrWows
-            </Button>
+            </Button> */}
             <Button
               component={Link}
               to="/profile"

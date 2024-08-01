@@ -6,7 +6,7 @@ export const SessionContext = createContext();
 const SessionContextProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [userId, setUserId] = useState(null);
-  const [userName, setUserName] = useState(null);
+  //const [userName, setUserName] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
@@ -14,9 +14,9 @@ const SessionContextProvider = ({ children }) => {
   const removeToken = () => {
     window.localStorage.removeItem("authToken");
     window.localStorage.removeItem("userId");
-    window.localStorage.removeItem("userName"); // Remove userName from localStorage
+    // window.localStorage.removeItem("userName"); // Remove userName from localStorage
   };
-
+  /* 
   const fetchUserData = async () => {
     if (!token || !userId) return;
 
@@ -45,7 +45,7 @@ const SessionContextProvider = ({ children }) => {
       setIsLoading(false);
     }
   };
-
+ */
   const verifyToken = async (tokenToVerify) => {
     try {
       const response = await fetch(
@@ -62,7 +62,7 @@ const SessionContextProvider = ({ children }) => {
         setToken(tokenToVerify);
         setUserId(data.userId);
         setIsAuthenticated(true);
-        fetchUserData(); // Fetch user data after verifying the token
+        // fetchUserData(); // Fetch user data after verifying the token
       } else {
         removeToken();
         setIsAuthenticated(false);
@@ -77,8 +77,8 @@ const SessionContextProvider = ({ children }) => {
   useEffect(() => {
     const localToken = window.localStorage.getItem("authToken");
     if (localToken) {
-      const localUserName = window.localStorage.getItem("userName");
-      setUserName(localUserName); // Set userName from localStorage
+      //const localUserName = window.localStorage.getItem("userName");
+      // setUserName(localUserName); // Set userName from localStorage
       verifyToken(localToken);
     } else {
       setIsLoading(false);
@@ -96,7 +96,7 @@ const SessionContextProvider = ({ children }) => {
     removeToken();
     setToken(null);
     setUserId(null);
-    setUserName(null); // Clear userName on logout
+    //setUserName(null); // Clear userName on logout
     setIsAuthenticated(false);
     navigate("/");
   };
@@ -108,7 +108,7 @@ const SessionContextProvider = ({ children }) => {
         isLoading,
         token,
         userId,
-        userName, // Add userName to context value
+        // userName, // Add userName to context value
         setToken,
         handleLogout,
       }}

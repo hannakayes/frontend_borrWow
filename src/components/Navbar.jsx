@@ -1,6 +1,8 @@
-import React, { useContext } from "react";
-import { Button } from "@mantine/core";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { Button } from "@mantine/core";
 import styles from "../styles/Navbar.module.css";
 import handshakeBlue from "../assets/images/handshake_blue.png";
 import handshakeBlack from "../assets/images/handshake_black.png";
@@ -8,10 +10,35 @@ import { SessionContext } from "../contexts/SessionContext";
 import SearchBar from "./SearchBar";
 
 function Navbar() {
-  const { isAuthenticated, userName, handleLogout } =
+  const { isAuthenticated, userId, token, handleLogout } =
     useContext(SessionContext);
+  const [user, setUser] = useState(null);
 
-  console.log("Navbar userName:", userName); // Debugging line
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/api/users/${userId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setUser(data);
+      } catch (error) {
+        console.error("Failed to fetch user data:", error);
+      }
+    };
+
+    if (isAuthenticated && userId) {
+      fetchUser();
+    }
+  }, [isAuthenticated, userId, token]);
 
   return (
     <div className={styles.navbar}>
@@ -73,7 +100,18 @@ function Navbar() {
               color="#224eff"
               className={styles.button}
             >
-              {userName ? `${userName}` : "Dashboard"}
+              <div className={styles.userInfo}>
+                {user && user.imageUrl ? (
+                  <img
+                    src={user.imageUrl}
+                    alt={user.username}
+                    className={styles.userImage}
+                  />
+                ) : (
+                  <FontAwesomeIcon icon={faUser} size="lg" />
+                )}
+                {user ? `${user.username}` : "Dashboard"}
+              </div>
             </Button>
             <Button
               onClick={handleLogout}

@@ -2,42 +2,31 @@
 
 .navbar {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  width: 100%;
-  border-bottom: 1px solid #ddd;
-  box-sizing: border-box;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.leftSideLinks,
-.searchContainer,
-.buttonContainer {
+.navLink,
+.userInfo {
   display: flex;
   align-items: center;
-}
-
-.searchContainer {
-  flex-grow: 1; /* Ensure it takes available space */
-  margin: 0 20px; /* Adjust margin as needed */
-}
-
-.navLink {
   text-decoration: none;
-  display: inline-block;
 }
 
-.navImage {
-  display: block;
-  width: 50px;
-  height: auto;
-  transition: opacity 0.3s ease;
+.navImage,
+.userImage {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
 }
 
-/* Container for left-side links */
 .leftSideLinks {
   display: flex;
-  align-items: center; /* Center items vertically */
-  margin-right: auto; /* Pushes the button container to the right */
+  gap: 20px;
 }
 
 .borrowLink,
@@ -46,16 +35,12 @@
   text-decoration: none;
   color: #224eff;
   font-weight: bold;
-  text-transform: uppercase;
-  margin-left: 20px;
-  font-size: 16px;
-  transition: color 0.3s ease;
 }
 
-.borrowLink:hover,
-.favoritesLink:hover,
-.shareLink:hover {
-  color: black; /* Color when hovered */
+.searchContainer {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
 }
 
 .buttonContainer {
@@ -63,37 +48,40 @@
   gap: 10px;
 }
 
-.favoritesLink {
-  margin-right: 5px; /* Adjust spacing as needed */
+.button {
+  margin: 0;
 }
 
-.shareLink {
-  margin-right: 20px; /* Adjust spacing as needed */
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 /* Mobile styles */
 @media (max-width: 768px) {
-  .favoritesLink .shareLink {
-    display: none; /* Hide links on smaller screens */
+  .favoritesLink,
+  .shareLink {
+    display: none;
   }
 
   .navLink {
-    margin-right: 20px; /* Adjust spacing for smaller screens */
+    margin-right: 20px;
   }
 
   .buttonContainer {
-    margin-left: auto; /* Ensure buttons are aligned properly */
+    margin-left: auto;
   }
 }
 
 @media (max-width: 480px) {
   .navImage {
-    width: 40px; /* Smaller logo for very small screens */
+    width: 40px;
   }
 
   .borrowLink,
   .favoritesLink,
   .shareLink {
-    display: none; /* Ensure these are hidden on very small screens */
+    display: none;
   }
 }

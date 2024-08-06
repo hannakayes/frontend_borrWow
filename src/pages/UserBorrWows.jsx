@@ -20,7 +20,7 @@ function UserBorrWows() {
     const fetchUserItems = async () => {
       try {
         const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/items/user/items`,
+          `${import.meta.env.VITE_API_URL}/api/items/owned`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
